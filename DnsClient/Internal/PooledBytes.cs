@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Buffers;
-using System.Linq;
 
 namespace DnsClient.Internal
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-    public class PooledBytes : IDisposable
+    public sealed class PooledBytes : IDisposable
     {
-        private static readonly ArrayPool<byte> _pool = ArrayPool<byte>.Create(4096 * 2, 200);
+        private static readonly ArrayPool<byte> Pool = ArrayPool<byte>.Create(4096 * 2, 200);
 
         private readonly byte[] _buffer;
-        private bool _disposed = false;
+        private bool _disposed;
 
         public PooledBytes(int length)
         {
@@ -20,7 +19,7 @@ namespace DnsClient.Internal
                 throw new ArgumentOutOfRangeException(nameof(length));
             }
 
-            _buffer = _pool.Rent(length);
+            _buffer = Pool.Rent(length);
         }
 
         public byte[] Buffer
@@ -41,14 +40,14 @@ namespace DnsClient.Internal
             Dispose(true);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (disposing)
             {
                 if (_disposed)
                     return;
 
-                _pool.Return(_buffer);
+                Pool.Return(_buffer);
                 _disposed = true;
             }
         }
