@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "MiniDig": {
-      "commandName": "Project",
-      "commandLineArgs": " -s l.root-servers.net. google.com"
-    }
-  }
-}
