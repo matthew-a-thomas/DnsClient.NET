@@ -1,5 +1,4 @@
-﻿using System;
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.11:
@@ -40,7 +39,7 @@ namespace DnsClient.Protocol
         /// <value>
         /// The os.
         /// </value>
-        public string OS { get; }
+        public string Os { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HInfoRecord"/> class.
@@ -53,12 +52,12 @@ namespace DnsClient.Protocol
             : base(info)
         {
             Cpu = cpu;
-            OS = os;
+            Os = os;
         }
 
         private protected override string RecordToString()
         {
-            return $"\"{Cpu}\" \"{OS}\"";
+            return $"\"{Cpu}\" \"{Os}\"";
         }
     }
 }

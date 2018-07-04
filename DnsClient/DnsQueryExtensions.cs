@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading.Tasks;
-using DnsClient.Protocol;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Threading.Tasks;
+    using Protocol;
+
     /// <summary>
     /// Extension methods for the <see cref="IDnsQuery"/> contract.
     /// <para>
@@ -21,7 +21,7 @@ namespace DnsClient
         /// In case <paramref name="hostNameOrAddress"/> is an <see cref="IPAddress"/>, <c>GetHostEntry</c> does a reverse lookup on that first to determine the hostname.
         /// <para>
         /// IP addresses found are returned in <see cref="IPHostEntry.AddressList"/>.
-        /// <see cref="ResourceRecordType.CNAME"/> records are used to populate the <see cref="IPHostEntry.Aliases"/>.<br/>
+        /// <see cref="ResourceRecordType.Cname"/> records are used to populate the <see cref="IPHostEntry.Aliases"/>.<br/>
         /// The <see cref="IPHostEntry.HostName"/> property will be set to the resolved hostname or <paramref name="hostNameOrAddress"/>.
         /// </para>
         /// </summary>
@@ -51,7 +51,7 @@ namespace DnsClient
         /// <list type="bullet">
         /// <item>
         /// <term>
-        /// In case of sub-domain queries or similar, there might be multiple <see cref="ResourceRecordType.CNAME"/> records for one <see cref="IPAddress"/>,
+        /// In case of sub-domain queries or similar, there might be multiple <see cref="ResourceRecordType.Cname"/> records for one <see cref="IPAddress"/>,
         /// </term>
         /// </item><item>
         /// <term>
@@ -84,7 +84,7 @@ namespace DnsClient
                 throw new ArgumentNullException(nameof(hostNameOrAddress));
             }
 
-            if (IPAddress.TryParse(hostNameOrAddress, out IPAddress address))
+            if (IPAddress.TryParse(hostNameOrAddress, out var address))
             {
                 return query.GetHostEntry(address);
             }
@@ -97,7 +97,7 @@ namespace DnsClient
         /// In case <paramref name="hostNameOrAddress"/> is an <see cref="IPAddress"/>, <c>GetHostEntry</c> does a reverse lookup on that first to determine the hostname.
         /// <para>
         /// IP addresses found are returned in <see cref="IPHostEntry.AddressList"/>.
-        /// <see cref="ResourceRecordType.CNAME"/> records are used to populate the <see cref="IPHostEntry.Aliases"/>.<br/>
+        /// <see cref="ResourceRecordType.Cname"/> records are used to populate the <see cref="IPHostEntry.Aliases"/>.<br/>
         /// The <see cref="IPHostEntry.HostName"/> property will be set to the resolved hostname or <paramref name="hostNameOrAddress"/>.
         /// </para>
         /// </summary>
@@ -127,7 +127,7 @@ namespace DnsClient
         /// <list type="bullet">
         /// <item>
         /// <term>
-        /// In case of sub-domain queries or similar, there might be multiple <see cref="ResourceRecordType.CNAME"/> records for one <see cref="IPAddress"/>,
+        /// In case of sub-domain queries or similar, there might be multiple <see cref="ResourceRecordType.Cname"/> records for one <see cref="IPAddress"/>,
         /// </term>
         /// </item><item>
         /// <term>
@@ -160,7 +160,7 @@ namespace DnsClient
                 throw new ArgumentNullException(nameof(hostNameOrAddress));
             }
 
-            if (IPAddress.TryParse(hostNameOrAddress, out IPAddress address))
+            if (IPAddress.TryParse(hostNameOrAddress, out var address))
             {
                 return query.GetHostEntryAsync(address);
             }
@@ -173,7 +173,7 @@ namespace DnsClient
         /// and queries a DNS server for the IP addresses and aliases associated with the resolved hostname.
         /// <para>
         /// IP addresses found are returned in <see cref="IPHostEntry.AddressList"/>.
-        /// <see cref="ResourceRecordType.CNAME"/> records are used to populate the <see cref="IPHostEntry.Aliases"/>.<br/>
+        /// <see cref="ResourceRecordType.Cname"/> records are used to populate the <see cref="IPHostEntry.Aliases"/>.<br/>
         /// The <see cref="IPHostEntry.HostName"/> property will be set to the resolved hostname of the <paramref name="address"/>.
         /// </para>
         /// </summary>
@@ -203,7 +203,7 @@ namespace DnsClient
         /// <list type="bullet">
         /// <item>
         /// <term>
-        /// In case of sub-domain queries or similar, there might be multiple <see cref="ResourceRecordType.CNAME"/> records for one <see cref="IPAddress"/>,
+        /// In case of sub-domain queries or similar, there might be multiple <see cref="ResourceRecordType.Cname"/> records for one <see cref="IPAddress"/>,
         /// </term>
         /// </item><item>
         /// <term>
@@ -250,7 +250,7 @@ namespace DnsClient
         /// and queries a DNS server for the IP addresses and aliases associated with the resolved hostname.
         /// <para>
         /// IP addresses found are returned in <see cref="IPHostEntry.AddressList"/>.
-        /// <see cref="ResourceRecordType.CNAME"/> records are used to populate the <see cref="IPHostEntry.Aliases"/>.<br/>
+        /// <see cref="ResourceRecordType.Cname"/> records are used to populate the <see cref="IPHostEntry.Aliases"/>.<br/>
         /// The <see cref="IPHostEntry.HostName"/> property will be set to the resolved hostname of the <paramref name="address"/>.
         /// </para>
         /// </summary>
@@ -280,7 +280,7 @@ namespace DnsClient
         /// <list type="bullet">
         /// <item>
         /// <term>
-        /// In case of sub-domain queries or similar, there might be multiple <see cref="ResourceRecordType.CNAME"/> records for one <see cref="IPAddress"/>,
+        /// In case of sub-domain queries or similar, there might be multiple <see cref="ResourceRecordType.Cname"/> records for one <see cref="IPAddress"/>,
         /// </term>
         /// </item><item>
         /// <term>
@@ -331,7 +331,7 @@ namespace DnsClient
 
             var hostString = DnsString.FromResponseQueryString(hostName);
             var ipv4Result = query.Query(hostString, QueryType.A);
-            var ipv6Result = query.Query(hostString, QueryType.AAAA);
+            var ipv6Result = query.Query(hostString, QueryType.Aaaa);
 
             var allRecords = ipv4Result
                 .Answers.Concat(ipv6Result.Answers)
@@ -349,7 +349,7 @@ namespace DnsClient
 
             var hostString = DnsString.FromResponseQueryString(hostName);
             var ipv4Result = query.QueryAsync(hostString, QueryType.A);
-            var ipv6Result = query.QueryAsync(hostString, QueryType.AAAA);
+            var ipv6Result = query.QueryAsync(hostString, QueryType.Aaaa);
 
             await Task.WhenAll(ipv4Result, ipv6Result).ConfigureAwait(false);
 
@@ -366,12 +366,12 @@ namespace DnsClient
                             .OfType<AddressRecord>()
                             .Select(p => new
                             {
-                                Address = p.Address,
+                                p.Address,
                                 Alias = DnsString.FromResponseQueryString(p.DomainName)
                             })
                             .ToArray();
 
-            var hostEntry = new IPHostEntry()
+            var hostEntry = new IPHostEntry
             {
                 Aliases = new string[0],
                 AddressList = addressRecords
@@ -477,11 +477,11 @@ namespace DnsClient
         }
 
         /// <summary>
-        /// The <c>ResolveService</c> method does a <see cref="QueryType.SRV"/> lookup for <c>_{<paramref name="serviceName"/>}[._{<paramref name="protocol"/>}].{<paramref name="baseDomain"/>}</c>
+        /// The <c>ResolveService</c> method does a <see cref="QueryType.Srv"/> lookup for <c>_{<paramref name="serviceName"/>}[._{<paramref name="protocol"/>}].{<paramref name="baseDomain"/>}</c>
         /// and aggregates the result (hostname, port and list of <see cref="IPAddress"/>s) to a <see cref="ServiceHostEntry"/>.
         /// <para>
         /// This method expects matching A or AAAA records to populate the <see cref="IPHostEntry.AddressList"/>,
-        /// and/or a <see cref="ResourceRecordType.CNAME"/> record to populate the <see cref="IPHostEntry.HostName"/> property of the result.
+        /// and/or a <see cref="ResourceRecordType.Cname"/> record to populate the <see cref="IPHostEntry.HostName"/> property of the result.
         /// </para>
         /// </summary>
         /// <remarks>
@@ -501,18 +501,18 @@ namespace DnsClient
         {
             if (protocol == ProtocolType.Unspecified || protocol == ProtocolType.Unknown)
             {
-                return ResolveService(query, baseDomain, serviceName, null);
+                return ResolveService(query, baseDomain, serviceName);
             }
 
             return ResolveService(query, baseDomain, serviceName, protocol.ToString());
         }
 
         /// <summary>
-        /// The <c>ResolveServiceAsync</c> method does  a <see cref="QueryType.SRV"/> lookup for <c>_{<paramref name="serviceName"/>}[._{<paramref name="protocol"/>}].{<paramref name="baseDomain"/>}</c>
+        /// The <c>ResolveServiceAsync</c> method does  a <see cref="QueryType.Srv"/> lookup for <c>_{<paramref name="serviceName"/>}[._{<paramref name="protocol"/>}].{<paramref name="baseDomain"/>}</c>
         /// and aggregates the result (hostname, port and list of <see cref="IPAddress"/>s) to a <see cref="ServiceHostEntry"/>.
         /// <para>
         /// This method expects matching A or AAAA records to populate the <see cref="IPHostEntry.AddressList"/>,
-        /// and/or a <see cref="ResourceRecordType.CNAME"/> record to populate the <see cref="IPHostEntry.HostName"/> property of the result.
+        /// and/or a <see cref="ResourceRecordType.Cname"/> record to populate the <see cref="IPHostEntry.HostName"/> property of the result.
         /// </para>
         /// </summary>
         /// <remarks>
@@ -532,18 +532,18 @@ namespace DnsClient
         {
             if (protocol == ProtocolType.Unspecified || protocol == ProtocolType.Unknown)
             {
-                return ResolveServiceAsync(query, baseDomain, serviceName, null);
+                return ResolveServiceAsync(query, baseDomain, serviceName);
             }
 
             return ResolveServiceAsync(query, baseDomain, serviceName, protocol.ToString());
         }
 
         /// <summary>
-        /// The <c>ResolveService</c> method does a <see cref="QueryType.SRV"/> lookup for <c>_{<paramref name="serviceName"/>}[._{<paramref name="tag"/>}].{<paramref name="baseDomain"/>}</c>
+        /// The <c>ResolveService</c> method does a <see cref="QueryType.Srv"/> lookup for <c>_{<paramref name="serviceName"/>}[._{<paramref name="tag"/>}].{<paramref name="baseDomain"/>}</c>
         /// and aggregates the result (hostname, port and list of <see cref="IPAddress"/>s) to a <see cref="ServiceHostEntry"/>.
         /// <para>
         /// This method expects matching A or AAAA records to populate the <see cref="IPHostEntry.AddressList"/>,
-        /// and/or a <see cref="ResourceRecordType.CNAME"/> record to populate the <see cref="IPHostEntry.HostName"/> property of the result.
+        /// and/or a <see cref="ResourceRecordType.Cname"/> record to populate the <see cref="IPHostEntry.HostName"/> property of the result.
         /// </para>
         /// </summary>
         /// <remarks>
@@ -573,17 +573,17 @@ namespace DnsClient
 
             var queryString = ConcatResolveServiceName(baseDomain, serviceName, tag);
 
-            var result = query.Query(queryString, QueryType.SRV);
+            var result = query.Query(queryString, QueryType.Srv);
 
             return ResolveServiceProcessResult(result);
         }
 
         /// <summary>
-        /// The <c>ResolveServiceAsync</c> method does a <see cref="QueryType.SRV"/> lookup for <c>_{<paramref name="serviceName"/>}[._{<paramref name="tag"/>}].{<paramref name="baseDomain"/>}</c>
+        /// The <c>ResolveServiceAsync</c> method does a <see cref="QueryType.Srv"/> lookup for <c>_{<paramref name="serviceName"/>}[._{<paramref name="tag"/>}].{<paramref name="baseDomain"/>}</c>
         /// and aggregates the result (hostname, port and list of <see cref="IPAddress"/>s) to a <see cref="ServiceHostEntry"/>.
         /// <para>
         /// This method expects matching A or AAAA records to populate the <see cref="IPHostEntry.AddressList"/>,
-        /// and/or a <see cref="ResourceRecordType.CNAME"/> record to populate the <see cref="IPHostEntry.HostName"/> property of the result.
+        /// and/or a <see cref="ResourceRecordType.Cname"/> record to populate the <see cref="IPHostEntry.HostName"/> property of the result.
         /// </para>
         /// </summary>
         /// <remarks>
@@ -613,7 +613,7 @@ namespace DnsClient
 
             var queryString = ConcatResolveServiceName(baseDomain, serviceName, tag);
 
-            var result = await query.QueryAsync(queryString, QueryType.SRV).ConfigureAwait(false);
+            var result = await query.QueryAsync(queryString, QueryType.Srv).ConfigureAwait(false);
 
             return ResolveServiceProcessResult(result);
         }
@@ -645,7 +645,7 @@ namespace DnsClient
                     .Where(p => p.DomainName.Equals(entry.Target))
                     .Select(p => p.CanonicalName).FirstOrDefault();
 
-                hosts.Add(new ServiceHostEntry()
+                hosts.Add(new ServiceHostEntry
                 {
                     AddressList = addresses.ToArray(),
                     HostName = hostName,

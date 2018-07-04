@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Net;
+    using System.Text;
+
     internal class DnsDatagramReader
     {
-        public const int IPv6Length = 16;
-        public const int IPv4Length = 4;
+        public const int Pv6Length = 16;
+        public const int Pv4Length = 4;
         private const byte ReferenceByte = 0xc0;
-        private const string ACEPrefix = "xn--";
+        private const string AcePrefix = "xn--";
 
         private readonly ArraySegment<byte> _data;
         private int _index;
 
         public int Index
         {
-            get
-            {
-                return _index;
-            }
+            get => _index;
             set
             {
                 if (value < 0 || value > _data.Count)
@@ -43,6 +40,7 @@ namespace DnsClient
         {
             var length = ReadByte();
 
+            Debug.Assert(_data.Array != null);
             var result = Encoding.ASCII.GetString(_data.Array, _data.Offset + _index, length);
             _index += length;
             return result;
@@ -50,6 +48,7 @@ namespace DnsClient
 
         public string ReadString(int length)
         {
+            Debug.Assert(_data.Array != null);
             var result = Encoding.ASCII.GetString(_data.Array, _data.Offset + _index, length);
             _index += length;
             return result;
@@ -60,7 +59,7 @@ namespace DnsClient
         /// </summary>
         public static string ParseString(ArraySegment<byte> data)
         {
-            var result = ParseString(new DnsDatagramReader(data, 0), data.Count);
+            var result = ParseString(new DnsDatagramReader(data), data.Count);
             return result;
         }
 
@@ -69,8 +68,8 @@ namespace DnsClient
             var builder = new StringBuilder();
             for (var i = 0; i < length; i++)
             {
-                byte b = reader.ReadByte();
-                char c = (char)b;
+                var b = reader.ReadByte();
+                var c = (char)b;
 
                 if (b < 32 || b > 126)
                 {
@@ -97,8 +96,9 @@ namespace DnsClient
             return builder.ToString();
         }
 
-        public static string ReadUTF8String(ArraySegment<byte> data)
+        public static string ReadUtf8String(ArraySegment<byte> data)
         {
+            Debug.Assert(data.Array != null);
             return Encoding.UTF8.GetString(data.Array, data.Offset, data.Count);
         }
 
@@ -108,10 +108,9 @@ namespace DnsClient
             {
                 throw new IndexOutOfRangeException($"Cannot read byte {_index + 1}, out of range.");
             }
-            else
-            {
-                return _data.Array[_data.Offset + _index++];
-            }
+
+            Debug.Assert(_data.Array != null);
+            return _data.Array[_data.Offset + _index++];
         }
 
         public ArraySegment<byte> ReadBytes(int length)
@@ -121,6 +120,7 @@ namespace DnsClient
                 throw new IndexOutOfRangeException($"Cannot read that many bytes: '{length}'.");
             }
 
+            Debug.Assert(_data.Array != null);
             var result = new ArraySegment<byte>(_data.Array, _data.Offset + _index, length);
             _index += length;
             return result;
@@ -130,6 +130,7 @@ namespace DnsClient
         private byte[] ReadByteArray(int length)
         {
             var result = new byte[length];
+            Debug.Assert(_data.Array != null);
             Buffer.BlockCopy(_data.Array, _data.Offset + Index, result, 0, length);
             _index += length;
             return result;
@@ -140,11 +141,11 @@ namespace DnsClient
         /// </summary>
         /// <returns>The <see cref="IPAddress"/>.</returns>
         /// <exception cref="IndexOutOfRangeException">If there are no 4 bytes to read.</exception>
-        public IPAddress ReadIPAddress()
+        public IPAddress ReadIpAddress()
         {
-            if (_data.Count < _index + IPv4Length)
+            if (_data.Count < _index + Pv4Length)
             {
-                throw new IndexOutOfRangeException($"Reading IPv4 address, expected {IPv4Length} bytes.");
+                throw new IndexOutOfRangeException($"Reading IPv4 address, expected {Pv4Length} bytes.");
             }
 
             return new IPAddress(ReadByteArray(4));
@@ -152,12 +153,12 @@ namespace DnsClient
 
         public IPAddress ReadIPv6Address()
         {
-            if (_data.Count < _index + IPv6Length)
+            if (_data.Count < _index + Pv6Length)
             {
-                throw new IndexOutOfRangeException($"Reading IPv6 address, expected {IPv6Length} bytes.");
+                throw new IndexOutOfRangeException($"Reading IPv6 address, expected {Pv6Length} bytes.");
             }
 
-            return new IPAddress(ReadByteArray(IPv6Length));
+            return new IPAddress(ReadByteArray(Pv6Length));
         }
 
         public DnsString ReadDnsName()
@@ -168,7 +169,7 @@ namespace DnsClient
             {
                 foreach (var b in labelArray)
                 {
-                    char c = (char)b;
+                    var c = (char)b;
 
                     if (b < 32 || b > 126)
                     {
@@ -194,12 +195,13 @@ namespace DnsClient
 
                 builder.Append(".");
 
+                Debug.Assert(labelArray.Array != null);
                 var label = Encoding.UTF8.GetString(labelArray.Array, labelArray.Offset, labelArray.Count);
-                if (label.Contains(ACEPrefix))
+                if (label.Contains(AcePrefix))
                 {
                     try
                     {
-                        label = DnsString.IDN.GetUnicode(label);
+                        label = DnsString.Idn.GetUnicode(label);
                     }
                     catch { /* just do nothing in case the IDN is invalid, better to return something at least */ }
                 }
@@ -229,12 +231,13 @@ namespace DnsClient
             var result = new StringBuilder();
             foreach (var labelArray in ReadLabels())
             {
+                Debug.Assert(labelArray.Array != null);
                 var label = Encoding.UTF8.GetString(labelArray.Array, labelArray.Offset, labelArray.Count);
                 result.Append(label);
                 result.Append(".");
             }
 
-            string value = result.ToString();
+            var value = result.ToString();
             return DnsString.FromResponseQueryString(value);
         }
 
@@ -251,7 +254,8 @@ namespace DnsClient
                 // the reader will advance only for the 2 bytes read.
                 if ((length & ReferenceByte) != 0)
                 {
-                    int subIndex = (length & 0x3f) << 8 | ReadByte();
+                    var subIndex = (length & 0x3f) << 8 | ReadByte();
+                    Debug.Assert(_data.Array != null);
                     if (subIndex >= _data.Array.Length - 1)
                     {
                         // invalid length pointer, seems to be actual length of a label which exceeds 63 chars...
@@ -292,6 +296,7 @@ namespace DnsClient
                 throw new IndexOutOfRangeException("Cannot read more data.");
             }
 
+            Debug.Assert(_data.Array != null);
             var result = BitConverter.ToUInt16(_data.Array, _data.Offset + _index);
             _index += 2;
             return result;
@@ -304,8 +309,9 @@ namespace DnsClient
                 throw new IndexOutOfRangeException("Cannot read more data.");
             }
 
-            byte a = _data.Array[_data.Offset + _index++];
-            byte b = _data.Array[_data.Offset + _index++];
+            Debug.Assert(_data.Array != null);
+            var a = _data.Array[_data.Offset + _index++];
+            var b = _data.Array[_data.Offset + _index++];
             return (ushort)(a << 8 | b);
         }
 
@@ -319,11 +325,13 @@ namespace DnsClient
     {
         public static ArraySegment<T> SubArray<T>(this ArraySegment<T> array, int startIndex, int length)
         {
+            Debug.Assert(array.Array != null);
             return new ArraySegment<T>(array.Array, array.Offset + startIndex, length);
         }
 
         public static ArraySegment<T> SubArrayFromOriginal<T>(this ArraySegment<T> array, int startIndex)
         {
+            Debug.Assert(array.Array != null);
             return new ArraySegment<T>(array.Array, startIndex, array.Array.Length - startIndex);
         }
     }

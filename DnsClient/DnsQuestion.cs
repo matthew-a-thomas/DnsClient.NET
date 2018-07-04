@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     /// The <see cref="DnsQuestion"/> class transports information of the lookup query performed by <see cref="IDnsQuery"/>.
     /// <para>
@@ -71,7 +72,8 @@ namespace DnsClient
         /// </summary>
         /// <param name="offset">The optional offset which can be used for pretty printing.</param>
         /// <returns>The string representation of this instance.</returns>
-        public string ToString(int offset = -32)
+        [SuppressMessage("ReSharper", "FormatStringProblem")]
+        public string ToString(int offset)
         {
             return string.Format("{0," + offset + "} \t{1} \t{2}", QueryName.Original, QuestionClass, QuestionType);
         }

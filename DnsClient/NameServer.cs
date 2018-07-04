@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Runtime.InteropServices;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Net.NetworkInformation;
+    using System.Net.Sockets;
+
     /// <summary>
     /// Represents a name server instance used by <see cref="ILookupClient"/>.
     /// Also, comes with some static methods to resolve name servers from the local network configuration.
@@ -118,7 +117,7 @@ namespace DnsClient
         /// </returns>
         public static ICollection<IPEndPoint> ResolveNameServers(bool skipIPv6SiteLocal = true, bool fallbackToGooglePublicDns = true)
         {
-            ICollection<IPEndPoint> endpoints = new IPEndPoint[0];
+            ICollection<IPEndPoint> endpoints;
 
             try
             {
@@ -136,59 +135,24 @@ namespace DnsClient
                     GooglePublicDnsIPv6,
                     GooglePublicDns2IPv6,
                     GooglePublicDns,
-                    GooglePublicDns2,
+                    GooglePublicDns2
                 };
             }
 
             return endpoints;
         }
 
-#if PORTABLE
-
-        /// <summary>
-        /// Using my custom native implementation to support UWP apps and such until <see cref="NetworkInterface.GetAllNetworkInterfaces"/>
-        /// gets an implementation in netstandard2.1.
-        /// <para>
-        /// DnsClient has been changed in version 1.1.0.
-        /// It will not invoke this when resolving default DNS servers. It is up to the user to decide what to do based on what platform the code is running on.
-        /// </para>
-        /// <para>
-        /// Also, this method might get removed in later versions.
-        /// </para>
-        /// </summary>
-        /// <returns>
-        /// The list of name servers.
-        /// </returns>
-        public static ICollection<IPEndPoint> ResolveNameServersNative()
-        {
-            IPAddress[] addresses = null;
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                var fixedInfo = Windows.IpHlpApi.FixedNetworkInformation.GetFixedInformation();
-
-                addresses = fixedInfo.DnsAddresses.ToArray();
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                addresses = Linux.StringParsingHelpers.ParseDnsAddressesFromResolvConfFile(EtcResolvConfFile).ToArray();
-            }
-
-            return addresses?.Select(p => new IPEndPoint(p, DefaultPort)).ToArray();
-        }
-
-#endif
-
         private static IPEndPoint[] QueryNetworkInterfaces(bool skipIPv6SiteLocal)
         {
             var result = new HashSet<IPEndPoint>();
 
             var adapters = NetworkInterface.GetAllNetworkInterfaces();
-            foreach (NetworkInterface networkInterface in
+            foreach (var networkInterface in
                 adapters
                     .Where(p => p.OperationalStatus == OperationalStatus.Up
                     && p.NetworkInterfaceType != NetworkInterfaceType.Loopback))
             {
-                foreach (IPAddress dnsAddress in networkInterface
+                foreach (var dnsAddress in networkInterface
                     .GetIPProperties()
                     .DnsAddresses
                     .Where(i =>

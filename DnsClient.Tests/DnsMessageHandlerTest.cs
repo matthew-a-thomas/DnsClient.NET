@@ -1,10 +1,11 @@
-﻿using System.Linq;
-using System.Net;
-using DnsClient.Protocol;
-using Xunit;
-
-namespace DnsClient.Tests
+﻿namespace DnsClient.Tests
 {
+    using System;
+    using System.Linq;
+    using System.Net;
+    using Protocol;
+    using Xunit;
+
     public class DnsMessageHandlerTest
     {
         [Fact]
@@ -16,7 +17,7 @@ namespace DnsClient.Tests
                 Audit = new LookupClientAudit()
             };
 
-            var info = new ResourceRecordInfo(DnsString.Parse("query"), ResourceRecordType.A, QueryClass.IN, 100, 4);
+            var info = new ResourceRecordInfo(DnsString.Parse("query"), ResourceRecordType.A, QueryClass.In, 100, 4);
             var ip = IPAddress.Parse("123.45.67.9");
             var answer = new ARecord(info, ip);
             responseMessage.AddAnswer(answer);
@@ -27,21 +28,21 @@ namespace DnsClient.Tests
             var raw = GetResponseBytes(response, answerBytes);
 
             var handle = new DnsUdpMessageHandler(true);
-            var result = handle.GetResponseMessage(new System.ArraySegment<byte>(raw)).AsQueryResponse(new NameServer(ip));
+            var result = handle.GetResponseMessage(new ArraySegment<byte>(raw)).AsQueryResponse(new NameServer(ip));
 
             Assert.Equal(1, result.Answers.Count);
             var resultAnswer = result.Answers.OfType<ARecord>().First();
             Assert.Equal(resultAnswer.Address.ToString(), ip.ToString());
             Assert.Equal("query.", resultAnswer.DomainName.Value);
             Assert.Equal(4, resultAnswer.RawDataLength);
-            Assert.Equal(QueryClass.IN, resultAnswer.RecordClass);
+            Assert.Equal(QueryClass.In, resultAnswer.RecordClass);
             Assert.Equal(ResourceRecordType.A, resultAnswer.RecordType);
             Assert.True(resultAnswer.TimeToLive == 100);
             Assert.True(result.Header.Id == 42);
             Assert.True(result.Header.AnswerCount == 1);
         }
 
-        private static byte[] GetResponseBytes(DnsQueryResponse message, byte[] answerData)
+        private static byte[] GetResponseBytes(IDnsQueryResponse message, byte[] answerData)
         {
             using (var writer = new DnsDatagramWriter())
             {

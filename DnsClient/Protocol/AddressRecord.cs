@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+    using System.Net;
+
     /// <summary>
     /// Base class for <see cref="DnsResourceRecord"/>s transporting an <see cref="IPAddress"/>.
     /// </summary>

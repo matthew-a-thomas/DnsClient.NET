@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+
     /* RFC 2782 (https://tools.ietf.org/html/rfc2782)
 
     The format of the SRV RR

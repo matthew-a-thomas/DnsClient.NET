@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-
-namespace System.Net
+﻿namespace DnsClient
 {
+    using System;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Text;
+
     /// <summary>
     /// Extension methods for <see cref="IPAddress"/>.
     /// </summary>
@@ -17,7 +18,7 @@ namespace System.Net
         /// <param name="ip">The address to translate.</param>
         /// <returns>The arpa representation of the address.</returns>
         /// <seealso cref="DnsClient.IDnsQuery.QueryReverse(IPAddress)"/>
-        /// <seealso cref="DnsClient.IDnsQuery.QueryReverseAsync(IPAddress, Threading.CancellationToken)"/>
+        /// <seealso cref="IDnsQuery.QueryReverseAsync"/>
         /// <seealso href="https://en.wikipedia.org/wiki/.arpa"/>
         public static string GetArpaName(this IPAddress ip)
         {
@@ -34,7 +35,8 @@ namespace System.Net
 
                 return newBytes;
             }
-            else if (ip.AddressFamily == AddressFamily.InterNetwork)
+
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
             {
                 // else IP4
                 return string.Join(".", bytes) + ".in-addr.arpa.";

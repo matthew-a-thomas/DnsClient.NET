@@ -1,15 +1,14 @@
-﻿using System;
-using System.Linq;
-using Xunit;
-
-namespace DnsClient.Tests
+﻿namespace DnsClient.Tests
 {
+    using System;
+    using Xunit;
+
     public class DnsStringTest
     {
         [Fact]
         public void DnsString_SimpleValid()
         {
-            DnsString query = DnsString.Parse("www.google.com");
+            var query = DnsString.Parse("www.google.com");
 
             Assert.Equal("www.google.com.", query.Value);
             Assert.Equal("www.google.com", query.Original);
@@ -37,7 +36,7 @@ namespace DnsClient.Tests
         public void DnsString_AcceptsPuny()
         {
             var val = "xn--4gbrim.xn----ymcbaaajlc6dj7bxne2c.xn--wgbh1c";
-            DnsString name = DnsString.Parse(val);
+            var name = DnsString.Parse(val);
 
             Assert.Equal(name.ToString(), val + ".");
         }
@@ -48,7 +47,7 @@ namespace DnsClient.Tests
             // IDNA new would be: "xn--fuball-cta.example"
             var expected = "fussball.example.";
             var val = "fußball.example";
-            DnsString result = DnsString.Parse(val);
+            var result = DnsString.Parse(val);
             Assert.Equal(expected, result.Value);
         }
 
@@ -56,7 +55,7 @@ namespace DnsClient.Tests
         public void QDnsString_ParsePuny()
         {
             var domain = "müsli.de";
-            DnsString name = DnsString.Parse(domain);
+            var name = DnsString.Parse(domain);
             Assert.Equal("xn--msli-0ra.de.", name.Value);
         }
 
@@ -71,7 +70,7 @@ namespace DnsClient.Tests
         [Fact]
         public void DnsString_EmptyToRoot()
         {
-            DnsString query = DnsString.Parse("");
+            var query = DnsString.Parse("");
 
             Assert.Equal(".", query.Value);
         }
@@ -99,7 +98,7 @@ namespace DnsClient.Tests
         {
             Action act = () => DnsString.Parse("abc.zy\\.z.com");
 
-            var ex = Record.Exception(act);
+            var ex = Record.Exception(act) ?? throw new Exception();
             Assert.Contains("not a valid hostname", ex.Message);
         }
 
@@ -116,8 +115,8 @@ namespace DnsClient.Tests
         public void DnsString_Hashcode()
         {
             var val = "Aäb.bÜlöb.cscöälüpqläö.d.com.";
-            DnsString name = DnsString.Parse(val);
-            DnsString name2 = DnsString.Parse(val);
+            var name = DnsString.Parse(val);
+            var name2 = DnsString.Parse(val);
 
             Assert.True(name.GetHashCode().Equals(name2.GetHashCode()));
         }
@@ -126,8 +125,8 @@ namespace DnsClient.Tests
         public void DnsString_HashcodeNot()
         {
             var val = "Aäb.bÜlöb.cscöälüpqläö.d.com.";
-            DnsString name = DnsString.Parse(val);
-            DnsString name2 = DnsString.Parse("asdasd");
+            var name = DnsString.Parse(val);
+            var name2 = DnsString.Parse("asdasd");
             Assert.False(name.GetHashCode().Equals(name2.GetHashCode()));
         }
 
@@ -135,8 +134,8 @@ namespace DnsClient.Tests
         public void DnsString_Equals()
         {
             var val = "Aäb.bÜlöb.cscöälüpqläö.d.com.";
-            DnsString name = DnsString.Parse(val);
-            DnsString name2 = DnsString.Parse(val);
+            var name = DnsString.Parse(val);
+            var name2 = DnsString.Parse(val);
 
             Assert.True(name.Equals(name2));
         }
@@ -145,17 +144,17 @@ namespace DnsClient.Tests
         public void DnsString_EqualsString()
         {
             var val = "abc.";
-            DnsString name = DnsString.Parse(val);
-            string name2 = val;
+            var name = DnsString.Parse(val);
+            var name2 = val;
 
-            Assert.True(name.Equals(name2));
+            Assert.True(name.ToString().Equals(name2));
         }
 
         [Fact]
         public void DnsString_NotEquals()
         {
-            DnsString name = DnsString.Parse("abc");
-            DnsString name2 = DnsString.Parse("abc2");
+            var name = DnsString.Parse("abc");
+            var name2 = DnsString.Parse("abc2");
 
             Assert.False(name.Equals(name2));
         }
@@ -163,17 +162,18 @@ namespace DnsClient.Tests
         [Fact]
         public void DnsString_NotEqualsNull()
         {
-            DnsString name = DnsString.Parse("abc");
+            var name = DnsString.Parse("abc");
             DnsString name2 = null;
 
+            // ReSharper disable once ExpressionIsAlwaysNull
             Assert.False(name.Equals(name2));
         }
 
         [Fact]
         public void DnsString_NotEqualsNotName()
         {
-            DnsString name = DnsString.Parse("abc");
-            object name2 = new object();
+            var name = DnsString.Parse("abc");
+            var name2 = new object();
 
             Assert.False(name.Equals(name2));
         }

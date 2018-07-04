@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using DnsClient.Protocol;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System.Collections.Generic;
+    using Protocol;
+
     /// <summary>
     /// Contract defining the result of a query performed by <see cref="IDnsQuery"/>.
     /// </summary>

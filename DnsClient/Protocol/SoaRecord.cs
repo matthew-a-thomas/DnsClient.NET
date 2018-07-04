@@ -1,8 +1,8 @@
-﻿using System;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
-    /*
+	using System;
+
+	/*
     3.3.13. SOA RDATA format
 
 	    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+

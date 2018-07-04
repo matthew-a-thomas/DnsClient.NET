@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+
     /// <summary>
     /// The <see cref="DnsString"/> type is used to normalize and validate domain names and labels.
     /// </summary>
@@ -13,7 +13,7 @@ namespace DnsClient
         /// <summary>
         /// The ACE prefix indicates that the domain name label contains not normally supported characters and that the label has been endoded.
         /// </summary>
-        public const string ACEPrefix = "xn--";
+        public const string AcePrefix = "xn--";
 
         /// <summary>
         /// The maximum lenght in bytes for one label.
@@ -31,7 +31,7 @@ namespace DnsClient
         /// </summary>
         public static readonly DnsString RootLabel = new DnsString(".", ".");
 
-        internal static readonly IdnMapping IDN = new IdnMapping() { UseStd3AsciiRules = true };
+        internal static readonly IdnMapping Idn = new IdnMapping { UseStd3AsciiRules = true };
         private const char Dot = '.';
         private const string DotStr = ".";
 
@@ -110,21 +110,21 @@ namespace DnsClient
                 throw new ArgumentNullException(nameof(query));
             }
 
-            int charCount = 0;
-            int labelCharCount = 0;
-            int labelsCount = 0;
+            var charCount = 0;
+            var labelCharCount = 0;
+            var labelsCount = 0;
 
             if (query.Length > 1 && query[0] == Dot)
             {
                 throw new ArgumentException($"'{query}' is not a legal name, found leading root label.", nameof(query));
             }
 
-            if (query.Length == 0 || (query.Length == 1 && query.Equals(DotStr)))
+            if (query.Length == 0 || query.Length == 1 && query.Equals(DotStr))
             {
                 return RootLabel;
             }
 
-            for (int index = 0; index < query.Length; index++)
+            for (var index = 0; index < query.Length; index++)
             {
                 var c = query[index];
                 if (c == Dot)
@@ -148,7 +148,7 @@ namespace DnsClient
                     {
                         try
                         {
-                            var result = IDN.GetAscii(query);
+                            var result = Idn.GetAscii(query);
                             if (result[result.Length - 1] != Dot)
                             {
                                 result += Dot;
@@ -191,11 +191,11 @@ namespace DnsClient
         }
 
         /// <summary>
-        /// Transforms names with the <see cref="ACEPrefix"/> to the unicode variant and adds a trailing '.' at the end if not present.
+        /// Transforms names with the <see cref="AcePrefix"/> to the unicode variant and adds a trailing '.' at the end if not present.
         /// The original value will be kept in this instance in case it is needed.
         /// </summary>
         /// <remarks>
-        /// The method does not parse the domain name unless it contains a <see cref="ACEPrefix"/>.
+        /// The method does not parse the domain name unless it contains a <see cref="AcePrefix"/>.
         /// </remarks>
         /// <param name="query">The value to check.</param>
         /// <returns>The <see cref="DnsString"/> representation.</returns>
@@ -206,9 +206,9 @@ namespace DnsClient
                 query += DotStr;
             }
 
-            if (query.Contains(ACEPrefix))
+            if (query.Contains(AcePrefix))
             {
-                var unicode = IDN.GetUnicode(query);
+                var unicode = Idn.GetUnicode(query);
                 return new DnsString(unicode, query);
             }
 

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using DnsClient.Protocol;
-using Moq;
-using Xunit;
-
-namespace DnsClient.Tests
+﻿namespace DnsClient.Tests
 {
+    using System.Linq;
+    using System.Net;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Moq;
+    using Protocol;
+    using Xunit;
+
     public class MockExampleTest
     {
         [Fact]
@@ -16,7 +16,7 @@ namespace DnsClient.Tests
             // arrange
             var lookupMock = new Mock<IDnsQuery>();
 
-            var aRecord = new ARecord(new ResourceRecordInfo("query", ResourceRecordType.A, QueryClass.IN, 0, 0), IPAddress.Any);
+            var aRecord = new ARecord(new ResourceRecordInfo("query", ResourceRecordType.A, QueryClass.In, 0, 0), IPAddress.Any);
 
             var responseMsg = new DnsResponseMessage(new DnsResponseHeader(123, 256, 1, 1, 0, 1), 123);
             responseMsg.Answers.Add(aRecord);
@@ -28,8 +28,8 @@ namespace DnsClient.Tests
             //    .Setup(p => p.Answers)
             //        .Returns(new DnsResourceRecord[] { aRecord });
 
-            Task<IDnsQueryResponse> response = Task.FromResult(dnsResponse);
-            lookupMock.Setup(f => f.QueryAsync(It.IsAny<string>(), QueryType.A, QueryClass.IN, new System.Threading.CancellationToken())).Returns(response);
+            var response = Task.FromResult(dnsResponse);
+            lookupMock.Setup(f => f.QueryAsync(It.IsAny<string>(), QueryType.A, QueryClass.In, new CancellationToken())).Returns(response);
             var lookup = lookupMock.Object;
 
             // act

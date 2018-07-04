@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /*
     * RFC 1464  https://tools.ietf.org/html/rfc1464
 

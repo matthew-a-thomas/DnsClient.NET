@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
-using System.Threading.Tasks;
-using DnsClient.Internal;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.IO;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Internal;
+
     internal class DnsTcpMessageHandler : DnsMessageHandler
     {
         private readonly ConcurrentDictionary<IPEndPoint, ClientPool> _pools = new ConcurrentDictionary<IPEndPoint, ClientPool>();
@@ -22,18 +21,18 @@ namespace DnsClient
 
         public override DnsResponseMessage Query(IPEndPoint endpoint, DnsRequestMessage request, TimeSpan timeout)
         {
-            if (timeout.TotalMilliseconds != Timeout.Infinite && timeout.TotalMilliseconds < int.MaxValue)
+            if (timeout != Timeout.InfiniteTimeSpan && timeout.TotalMilliseconds < int.MaxValue)
             {
                 using (var cts = new CancellationTokenSource(timeout))
                 {
                     Action onCancel = () => { };
-                    return QueryAsync(endpoint, request, cts.Token, (s) => onCancel = s)
+                    return QueryAsync(endpoint, request, cts.Token, s => onCancel = s)
                         .WithCancellation(cts.Token, onCancel)
                         .ConfigureAwait(false).GetAwaiter().GetResult();
                 }
             }
 
-            return QueryAsync(endpoint, request, CancellationToken.None, (s) => { }).ConfigureAwait(false).GetAwaiter().GetResult();
+            return QueryAsync(endpoint, request, CancellationToken.None, s => { }).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public override async Task<DnsResponseMessage> QueryAsync(
@@ -65,7 +64,8 @@ namespace DnsClient
 
                 cancellationToken.ThrowIfCancellationRequested();
 
-                response = await QueryAsyncInternal(entry.Client, entry.Client.GetStream(), request, cancellationToken)
+                response = await QueryAsyncInternal(
+                        entry.Client.GetStream(), request, cancellationToken)
                     .ConfigureAwait(false);
 
                 if (response != null)
@@ -81,7 +81,10 @@ namespace DnsClient
             return response;
         }
 
-        private async Task<DnsResponseMessage> QueryAsyncInternal(TcpClient client, NetworkStream stream, DnsRequestMessage request, CancellationToken cancellationToken)
+        private async Task<DnsResponseMessage> QueryAsyncInternal(
+            Stream stream,
+            DnsRequestMessage request,
+            CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             // use a pooled buffer to writer the data + the length of the data later into the frist two bytes
@@ -89,7 +92,7 @@ namespace DnsClient
             using (var writer = new DnsDatagramWriter(new ArraySegment<byte>(memory.Buffer, 2, memory.Buffer.Length - 2)))
             {
                 GetRequestData(request, writer);
-                int dataLength = writer.Index;
+                var dataLength = writer.Index;
                 memory.Buffer[0] = (byte)((dataLength >> 8) & 0xff);
                 memory.Buffer[1] = (byte)(dataLength & 0xff);
 
@@ -105,7 +108,7 @@ namespace DnsClient
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            int length = 0;
+            int length;
             try
             {
                 length = stream.ReadByte() << 8 | stream.ReadByte();
@@ -123,8 +126,8 @@ namespace DnsClient
 
             using (var memory = new PooledBytes(length))
             {
-                int bytesReceived = 0;
-                int readSize = length > 4096 ? 4096 : length;
+                var bytesReceived = 0;
+                var readSize = length > 4096 ? 4096 : length;
 
                 while ((bytesReceived += await stream.ReadAsync(memory.Buffer, bytesReceived, readSize).ConfigureAwait(false)) < length)
                 {
@@ -144,7 +147,7 @@ namespace DnsClient
                     }
                 }
 
-                DnsResponseMessage response = GetResponseMessage(new ArraySegment<byte>(memory.Buffer, 0, bytesReceived));
+                var response = GetResponseMessage(new ArraySegment<byte>(memory.Buffer, 0, bytesReceived));
                 if (request.Header.Id != response.Header.Id)
                 {
                     throw new DnsResponseException("Header id mismatch.");
@@ -156,7 +159,7 @@ namespace DnsClient
 
         private class ClientPool : IDisposable
         {
-            private bool disposedValue = false;
+            private bool _disposedValue;
             private readonly bool _enablePool;
             private ConcurrentQueue<ClientEntry> _clients = new ConcurrentQueue<ClientEntry>();
             private readonly IPEndPoint _endpoint;
@@ -169,7 +172,7 @@ namespace DnsClient
 
             public async Task<ClientEntry> GetNexClient()
             {
-                if (disposedValue) throw new ObjectDisposedException(nameof(ClientPool));
+                if (_disposedValue) throw new ObjectDisposedException(nameof(ClientPool));
 
                 ClientEntry entry = null;
                 if (_enablePool)
@@ -177,14 +180,14 @@ namespace DnsClient
                     while (entry == null && !TryDequeue(out entry))
                     {
                         ////Interlocked.Increment(ref StaticLog.CreatedClients);
-                        entry = new ClientEntry(new TcpClient(_endpoint.AddressFamily) { LingerState = new LingerOption(true, 0) }, _endpoint);
+                        entry = new ClientEntry(new TcpClient(_endpoint.AddressFamily) { LingerState = new LingerOption(true, 0) });
                         await entry.Client.ConnectAsync(_endpoint.Address, _endpoint.Port).ConfigureAwait(false);
                     }
                 }
                 else
                 {
                     ////Interlocked.Increment(ref StaticLog.CreatedClients);
-                    entry = new ClientEntry(new TcpClient(_endpoint.AddressFamily), _endpoint);
+                    entry = new ClientEntry(new TcpClient(_endpoint.AddressFamily));
                     await entry.Client.ConnectAsync(_endpoint.Address, _endpoint.Port).ConfigureAwait(false);
                 }
 
@@ -193,7 +196,7 @@ namespace DnsClient
 
             public void Enqueue(ClientEntry entry)
             {
-                if (disposedValue) throw new ObjectDisposedException(nameof(ClientPool));
+                if (_disposedValue) throw new ObjectDisposedException(nameof(ClientPool));
                 if (entry == null) throw new ArgumentNullException(nameof(entry));
                 if (!entry.Client.Client.RemoteEndPoint.Equals(_endpoint)) throw new ArgumentException("Invalid endpoint.");
 
@@ -209,11 +212,12 @@ namespace DnsClient
                 }
             }
 
-            public bool TryDequeue(out ClientEntry entry)
+            private bool TryDequeue(out ClientEntry entry)
             {
-                if (disposedValue) throw new ObjectDisposedException(nameof(ClientPool));
+                if (_disposedValue) throw new ObjectDisposedException(nameof(ClientPool));
 
                 bool result;
+                // ReSharper disable once AssignmentInConditionalExpression
                 while (result = _clients.TryDequeue(out entry))
                 {
                     // validate the client before returning it
@@ -221,10 +225,8 @@ namespace DnsClient
                     {
                         break;
                     }
-                    else
-                    {
-                        entry.DisposeClient();
-                    }
+
+                    entry.DisposeClient();
                 }
 
                 return result;
@@ -232,7 +234,7 @@ namespace DnsClient
 
             protected virtual void Dispose(bool disposing)
             {
-                if (!disposedValue)
+                if (!_disposedValue)
                 {
                     if (disposing)
                     {
@@ -244,7 +246,7 @@ namespace DnsClient
                         _clients = new ConcurrentQueue<ClientEntry>();
                     }
 
-                    disposedValue = true;
+                    _disposedValue = true;
                 }
             }
 
@@ -255,32 +257,28 @@ namespace DnsClient
 
             public class ClientEntry
             {
-                public ClientEntry(TcpClient client, IPEndPoint endpoint)
+                public ClientEntry(TcpClient client)
                 {
                     Client = client;
-                    Endpoint = endpoint;
                 }
 
                 public void DisposeClient()
                 {
                     try
                     {
-#if PORTABLE
-                        Client.Dispose();
-#else
                         Client.Close();
-#endif
                     }
-                    catch { }
+                    catch
+                    {
+                        // ignored
+                    }
                 }
 
                 public TcpClient Client { get; }
 
-                public IPEndPoint Endpoint { get; }
+                public int StartMillis { get; } = Environment.TickCount & int.MaxValue;
 
-                public int StartMillis { get; set; } = Environment.TickCount & int.MaxValue;
-
-                public int MaxLiveTime { get; set; } = 5000;
+                public int MaxLiveTime { get; } = 5000;
             }
         }
     }

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+
     /*
      *
      * Reference: [RFC6895][RFC1035]
@@ -31,7 +31,7 @@ namespace DnsClient
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3425">RFC 3425</seealso>
         [Obsolete]
-        IQuery,
+        InverseQuery,
 
         /// <summary>
         /// A server status request.
@@ -104,6 +104,6 @@ namespace DnsClient
         /// <summary>
         /// Unassigned value
         /// </summary>
-        Unassinged15,
+        Unassinged15
     }
 }

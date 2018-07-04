@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace DnsClient.Tests
+﻿namespace DnsClient.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Xunit;
+
     public class LookupClientRetryTest
     {
         [Fact]
@@ -37,7 +36,7 @@ namespace DnsClient.Tests
             {
                 var request = new DnsRequestMessage(
                    new DnsRequestHeader(i, DnsOpCode.Query),
-                   new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                   new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
                 var result = lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false);
                 Assert.False(result.HasError);
@@ -76,7 +75,7 @@ namespace DnsClient.Tests
             {
                 var request = new DnsRequestMessage(
                    new DnsRequestHeader(i, DnsOpCode.Query),
-                   new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                   new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
                 var result = await lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false);
                 Assert.False(result.HasError);
@@ -116,7 +115,7 @@ namespace DnsClient.Tests
             {
                 var request = new DnsRequestMessage(
                    new DnsRequestHeader(i, DnsOpCode.Query),
-                   new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                   new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
                 var result = lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false);
                 Assert.False(result.HasError);
@@ -159,7 +158,7 @@ namespace DnsClient.Tests
             {
                 var request = new DnsRequestMessage(
                    new DnsRequestHeader(i, DnsOpCode.Query),
-                   new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                   new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
                 var result = await lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false);
                 Assert.False(result.HasError);
@@ -201,7 +200,7 @@ namespace DnsClient.Tests
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
             var result = lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false);
 
@@ -240,7 +239,7 @@ namespace DnsClient.Tests
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
             var result = await lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false);
 
@@ -285,7 +284,7 @@ namespace DnsClient.Tests
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
             // all three servers have been called and we get the last exception thrown
             var result = Assert.ThrowsAny<DnsResponseException>(() => lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false));
@@ -330,7 +329,7 @@ namespace DnsClient.Tests
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
             // all three servers have been called and we get the last exception thrown
             var result = await Assert.ThrowsAnyAsync<DnsResponseException>(() => lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false));
@@ -365,7 +364,7 @@ namespace DnsClient.Tests
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
             var result = lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false);
 
@@ -399,7 +398,7 @@ namespace DnsClient.Tests
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
             var result = await lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false);
 
@@ -435,7 +434,7 @@ namespace DnsClient.Tests
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
             var result = Assert.ThrowsAny<DnsResponseException>(() => lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false));
 
@@ -468,7 +467,7 @@ namespace DnsClient.Tests
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.IN));
+                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
 
             var result = await Assert.ThrowsAnyAsync<DnsResponseException>(() => lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false));
 

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Linq;
-using DnsClient.Protocol;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Linq;
+
     /// <summary>
     /// The header section of a <see cref="IDnsQueryResponse"/>.
     /// </summary>
     public class DnsResponseHeader
     {
-        private readonly ushort _flags = 0;
+        private readonly ushort _flags;
 
         /// <summary>
         /// Gets the number of additional records in the <see cref="IDnsQueryResponse"/>.
@@ -91,7 +90,7 @@ namespace DnsClient
         /// <value>
         /// The query kind.
         /// </value>
-        public DnsOpCode OPCode => (DnsOpCode)((DnsHeader.OPCodeMask & _flags) >> DnsHeader.OPCodeShift);
+        public DnsOpCode OpCode => (DnsOpCode)((DnsHeader.OpCodeMask & _flags) >> DnsHeader.OpCodeShift);
 
         /// <summary>
         /// Gets the number of questions of the <see cref="IDnsQueryResponse"/>.
@@ -163,8 +162,8 @@ namespace DnsClient
         /// </returns>
         public override string ToString()
         {
-            var head = $";; ->>HEADER<<- opcode: {OPCode}, status: {DnsResponseCodeText.GetErrorText(ResponseCode)}, id: {Id}";
-            var flags = new string[] {
+            var head = $";; ->>HEADER<<- opcode: {OpCode}, status: {DnsResponseCodeText.GetErrorText(ResponseCode)}, id: {Id}";
+            var flags = new[] {
                         HasQuery ? "qr" : "",
                         HasAuthorityAnswer ? "aa" : "",
                         RecursionDesired ? "rd" : "",

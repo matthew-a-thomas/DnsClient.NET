@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+
     /*
     * RFC 7553  https://tools.ietf.org/html/rfc7553
 

@@ -1,8 +1,7 @@
-﻿using System;
-using Xunit;
-
-namespace DnsClient.Tests
+﻿namespace DnsClient.Tests
 {
+    using Xunit;
+
     public class DnsRequestHeaderTest
     {
         [Fact]

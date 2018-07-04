@@ -1,8 +1,7 @@
-﻿using System;
-using System.Net;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System.Net;
+
     /*
     3.4.1. A RDATA format
 

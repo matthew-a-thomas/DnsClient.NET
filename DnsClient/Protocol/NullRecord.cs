@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+    using System.Text;
+
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.10:
     3.3.10. NULL RDATA format (EXPERIMENTAL)

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.11:
     NS RDATA format
@@ -40,7 +40,7 @@ namespace DnsClient.Protocol
         /// <value>
         /// The domain name.
         /// </value>
-        public DnsString NSDName { get; }
+        public DnsString NsdName { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NsRecord"/> class.
@@ -51,12 +51,12 @@ namespace DnsClient.Protocol
         public NsRecord(ResourceRecordInfo info, DnsString name)
             : base(info)
         {
-            NSDName = name ?? throw new ArgumentNullException(nameof(name));
+            NsdName = name ?? throw new ArgumentNullException(nameof(name));
         }
 
         private protected override string RecordToString()
         {
-            return NSDName.Value;
+            return NsdName.Value;
         }
     }
 }

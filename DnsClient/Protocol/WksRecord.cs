@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Sockets;
+
     /*
     https://tools.ietf.org/html/rfc1035#section-3.4.2:
     3.4.2. WKS RDATA format
@@ -127,23 +126,23 @@ namespace DnsClient.Protocol
             return $"{Address} {Protocol} {string.Join(" ", Ports)}";
         }
 
-        private static int[] GetPorts(byte[] data)
+        private static int[] GetPorts(IReadOnlyList<byte> data)
         {
-            int pos = 0, len = data.Length;
+            int pos = 0, len = data.Count;
 
             var result = new List<int>();
-            if (data.Length == 0)
+            if (data.Count == 0)
             {
                 return result.ToArray();
             }
 
             while (pos < len)
             {
-                byte b = data[pos++];
+                var b = data[pos++];
 
                 if (b != 0)
                 {
-                    for (int bit = 7; bit >= 0; bit--)
+                    for (var bit = 7; bit >= 0; bit--)
                     {
                         if ((b & (1 << bit)) != 0)
                         {

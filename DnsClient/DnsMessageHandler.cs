@@ -1,11 +1,11 @@
-﻿using System;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-using DnsClient.Protocol.Options;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Net;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Protocol.Options;
+
     internal abstract class DnsMessageHandler
     {
         public abstract DnsResponseMessage Query(IPEndPoint endpoint, DnsRequestMessage request, TimeSpan timeout);
@@ -86,27 +86,27 @@ namespace DnsClient
             var header = new DnsResponseHeader(id, flags, questionCount, answerCount, additionalCount, nameServerCount);
             var response = new DnsResponseMessage(header, responseData.Count);
 
-            for (int questionIndex = 0; questionIndex < questionCount; questionIndex++)
+            for (var questionIndex = 0; questionIndex < questionCount; questionIndex++)
             {
                 var question = new DnsQuestion(reader.ReadQuestionQueryString(), (QueryType)reader.ReadUInt16NetworkOrder(), (QueryClass)reader.ReadUInt16NetworkOrder());
                 response.AddQuestion(question);
             }
 
-            for (int answerIndex = 0; answerIndex < answerCount; answerIndex++)
+            for (var answerIndex = 0; answerIndex < answerCount; answerIndex++)
             {
                 var info = factory.ReadRecordInfo();
                 var record = factory.GetRecord(info);
                 response.AddAnswer(record);
             }
 
-            for (int serverIndex = 0; serverIndex < nameServerCount; serverIndex++)
+            for (var serverIndex = 0; serverIndex < nameServerCount; serverIndex++)
             {
                 var info = factory.ReadRecordInfo();
                 var record = factory.GetRecord(info);
                 response.AddAuthority(record);
             }
 
-            for (int additionalIndex = 0; additionalIndex < additionalCount; additionalIndex++)
+            for (var additionalIndex = 0; additionalIndex < additionalCount; additionalIndex++)
             {
                 var info = factory.ReadRecordInfo();
                 var record = factory.GetRecord(info);

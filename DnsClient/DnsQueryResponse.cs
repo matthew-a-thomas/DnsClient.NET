@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DnsClient.Protocol;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using Protocol;
+
     /// <summary>
     /// The response returned by any query performed by <see cref="IDnsQuery"/> with all answer sections, header and message information.
     /// </summary>
@@ -30,13 +31,7 @@ namespace DnsClient
         /// <summary>
         /// Gets a list of all answers, addtional and authority records.
         /// </summary>
-        public IEnumerable<DnsResourceRecord> AllRecords
-        {
-            get
-            {
-                return Answers.Concat(Additionals).Concat(Authorities);
-            }
-        }
+        public IEnumerable<DnsResourceRecord> AllRecords => Answers.Concat(Additionals).Concat(Authorities);
 
         /// <summary>
         /// Gets the audit trail if <see cref="ILookupClient.EnableAuditTrail"/>. as set to <c>true</c>, <c>null</c> otherwise.
@@ -120,11 +115,12 @@ namespace DnsClient
         }
 
         /// <inheritdoc />
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
         public override int GetHashCode()
         {
             if (!_hashCode.HasValue)
             {
-                _hashCode = (Header.ToString() + string.Join("", Questions) + string.Join("", AllRecords)).GetHashCode();
+                _hashCode = (Header + string.Join("", Questions) + string.Join("", AllRecords)).GetHashCode();
             }
 
             return _hashCode.Value;

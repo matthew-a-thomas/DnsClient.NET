@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-namespace DnsClient
+﻿namespace DnsClient
 {
     /* RFC 1035 (https://tools.ietf.org/html/rfc1035#section-3.2.4)
 	 * 3.2.4. CLASS values
@@ -27,21 +25,21 @@ namespace DnsClient
         /// <summary>
         /// The Internet.
         /// </summary>
-        IN = 1,
+        In = 1,
 
         /// <summary>
         /// The CSNET class (Obsolete - used only for examples in some obsolete RFCs).
         /// </summary>
-        CS = 2,
+        Cs = 2,
 
         /// <summary>
         /// The CHAOS class.
         /// </summary>
-        CH = 3,
+        Ch = 3,
 
         /// <summary>
         /// Hesiod [Dyer 87].
         /// </summary>
-        HS = 4
+        Hs = 4
     }
 }

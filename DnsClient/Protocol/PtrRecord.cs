@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+
     /* RFC 1035 (https://tools.ietf.org/html/rfc1035#section-3.3.12)
     3.3.12. PTR RDATA format
 

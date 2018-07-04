@@ -1,12 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
-using DnsClient.Internal;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Diagnostics;
+    using System.Net;
+    using System.Text;
+    using Internal;
+
     internal class DnsDatagramWriter : IDisposable
     {
         // queries can only be 255 octets + some header bytes, so that size is pretty safe...
@@ -16,12 +15,13 @@ namespace DnsClient
 
         private readonly PooledBytes _pooledBytes;
 
-        private ArraySegment<byte> _buffer;
+        private readonly ArraySegment<byte> _buffer;
 
         public ArraySegment<byte> Data
         {
             get
             {
+                Debug.Assert(_buffer.Array != null);
                 return new ArraySegment<byte>(_buffer.Array, 0, Index);
             }
         }
@@ -44,7 +44,7 @@ namespace DnsClient
         public void WriteHostName(string queryName)
         {
             var bytes = Encoding.UTF8.GetBytes(queryName);
-            int lastOctet = 0;
+            var lastOctet = 0;
             var index = 0;
             if (bytes.Length <= 1)
             {
@@ -68,6 +68,7 @@ namespace DnsClient
 
         public void WriteByte(byte b)
         {
+            Debug.Assert(_buffer.Array != null);
             _buffer.Array[_buffer.Offset + Index++] = b;
         }
 
@@ -75,6 +76,7 @@ namespace DnsClient
 
         public void WriteBytes(byte[] data, int dataOffset, int length)
         {
+            Debug.Assert(_buffer.Array != null);
             Buffer.BlockCopy(data, dataOffset, _buffer.Array, _buffer.Offset + Index, length);
 
             Index += length;

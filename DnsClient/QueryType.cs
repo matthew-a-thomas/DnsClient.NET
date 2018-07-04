@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
-using DnsClient.Protocol;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using Protocol;
+
     /*
      * RFC 1035 (https://tools.ietf.org/html/rfc1035#section-3.2.3)
      * */
@@ -26,77 +25,77 @@ namespace DnsClient
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
         /// <seealso cref="NsRecord"/>
-        NS = ResourceRecordType.NS,
+        Ns = ResourceRecordType.Ns,
 
         /// <summary>
         /// A mail destination (OBSOLETE - use MX).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035">RFC 1035</seealso>
         [Obsolete("Use MX")]
-        MD = ResourceRecordType.MD,
+        Md = ResourceRecordType.Md,
 
         /// <summary>
         /// A mail forwarder (OBSOLETE - use MX).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035">RFC 1035</seealso>
         [Obsolete("Use MX")]
-        MF = ResourceRecordType.MF,
+        Mf = ResourceRecordType.Mf,
 
         /// <summary>
         /// The canonical name for an alias.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.1">RFC 1035</seealso>
         /// <seealso cref="CNameRecord"/>
-        CNAME = ResourceRecordType.CNAME,
+        Cname = ResourceRecordType.Cname,
 
         /// <summary>
         /// Marks the start of a zone of authority.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.13">RFC 1035</seealso>
         /// <seealso cref="SoaRecord"/>
-        SOA = ResourceRecordType.SOA,
+        Soa = ResourceRecordType.Soa,
 
         /// <summary>
         /// A mailbox domain name (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.3">RFC 1035</seealso>
         /// <seealso cref="MbRecord"/>
-        MB = ResourceRecordType.MB,
+        Mb = ResourceRecordType.Mb,
 
         /// <summary>
         /// A mail group member (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.6">RFC 1035</seealso>
         /// <seealso cref="MgRecord"/>
-        MG = ResourceRecordType.MG,
+        Mg = ResourceRecordType.Mg,
 
         /// <summary>
         /// A mailbox rename domain name (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.8">RFC 1035</seealso>
         /// <seealso cref="MrRecord"/>
-        MR = ResourceRecordType.MR,
+        Mr = ResourceRecordType.Mr,
 
         /// <summary>
         /// A Null resource record (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.8">RFC 1035</seealso>
         /// <seealso cref="NullRecord"/>
-        NULL = ResourceRecordType.NULL,
+        Null = ResourceRecordType.Null,
 
         /// <summary>
         /// A well known service description.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3232">RFC 3232</seealso>
         /// <seealso cref="WksRecord"/>
-        WKS = ResourceRecordType.WKS,
+        Wks = ResourceRecordType.Wks,
 
         /// <summary>
         /// A domain name pointer.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.12">RFC 1035</seealso>
         /// <seealso cref="PtrRecord"/>
-        PTR = ResourceRecordType.PTR,
+        Ptr = ResourceRecordType.Ptr,
 
         /// <summary>
         /// Host information.
@@ -104,14 +103,14 @@ namespace DnsClient
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc1010">RFC 1010</seealso>
         /// <seealso cref="HInfoRecord"/>
-        HINFO = ResourceRecordType.HINFO,
+        Hinfo = ResourceRecordType.Hinfo,
 
         /// <summary>
         /// Mailbox or mail list information.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
         /// <seealso cref="MInfoRecord"/>
-        MINFO = ResourceRecordType.MINFO,
+        Minfo = ResourceRecordType.Minfo,
 
         /// <summary>
         /// Mail exchange.
@@ -119,7 +118,7 @@ namespace DnsClient
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.9">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc974">RFC 974</seealso>
         /// <seealso cref="MxRecord"/>
-        MX = ResourceRecordType.MX,
+        Mx = ResourceRecordType.Mx,
 
         /// <summary>
         /// Text resources.
@@ -127,14 +126,14 @@ namespace DnsClient
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc1464">RFC 1464</seealso>
         /// <seealso cref="TxtRecord"/>
-        TXT = ResourceRecordType.TXT,
+        Txt = ResourceRecordType.Txt,
 
         /// <summary>
         /// Responsible Person.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1183">RFC 1183</seealso>
         /// <seealso cref="RpRecord"/>
-        RP = ResourceRecordType.RP,
+        Rp = ResourceRecordType.Rp,
 
         /// <summary>
         /// AFS Data Base location.
@@ -142,27 +141,27 @@ namespace DnsClient
         /// <seealso href="https://tools.ietf.org/html/rfc1183#section-1">RFC 1183</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc5864">RFC 5864</seealso>
         /// <seealso cref="AfsDbRecord"/>
-        AFSDB = ResourceRecordType.AFSDB,
+        Afsdb = ResourceRecordType.Afsdb,
 
         /// <summary>
         /// An IPv6 host address.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3596#section-2.2">RFC 3596</seealso>
         /// <seealso cref="AaaaRecord"/>
-        AAAA = ResourceRecordType.AAAA,
+        Aaaa = ResourceRecordType.Aaaa,
 
         /// <summary>
         /// A resource record which specifies the location of the server(s) for a specific protocol and domain.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc2782">RFC 2782</seealso>
         /// <seealso cref="SrvRecord"/>
-        SRV = ResourceRecordType.SRV,
+        Srv = ResourceRecordType.Srv,
 
         /// <summary>
         /// RRSIG rfc3755.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3755">RFC 3755</seealso>
-        RRSIG = ResourceRecordType.RRSIG,
+        Rrsig = ResourceRecordType.Rrsig,
 
         /// <summary>
         /// DNS zone transfer request.
@@ -171,25 +170,25 @@ namespace DnsClient
         /// The DNS Server might only return results for the request if the client connection/IP is allowed to do so.
         /// </para>
         /// </summary>
-        AXFR = 252,
+        Axfr = 252,
 
         /// <summary>
         /// Generic any query *.
         /// </summary>
-        ANY = 255,
+        Any = 255,
 
         /// <summary>
         /// A Uniform Resource Identifier (URI) resource record.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc7553">RFC 7553</seealso>
         /// <seealso cref="UriRecord"/>
-        URI = ResourceRecordType.URI,
+        Uri = ResourceRecordType.Uri,
 
         /// <summary>
         /// A certification authority authorization.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc6844">RFC 6844</seealso>
         /// <seealso cref="CaaRecord"/>
-        CAA = ResourceRecordType.CAA,
+        Caa = ResourceRecordType.Caa
     }
 }

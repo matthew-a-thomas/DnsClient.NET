@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
-using System.Threading.Tasks;
-using DnsClient.Internal;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Diagnostics;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Internal;
+
     internal class DnsUdpMessageHandler : DnsMessageHandler
     {
         private const int MaxSize = 4096;
-        private static ConcurrentQueue<UdpClient> _clients = new ConcurrentQueue<UdpClient>();
-        private static ConcurrentQueue<UdpClient> _clientsIPv6 = new ConcurrentQueue<UdpClient>();
+        private static readonly ConcurrentQueue<UdpClient> Clients = new ConcurrentQueue<UdpClient>();
+        private static readonly ConcurrentQueue<UdpClient> ClientsIPv6 = new ConcurrentQueue<UdpClient>();
         private readonly bool _enableClientQueue;
 
         public DnsUdpMessageHandler(bool enableClientQueue)
@@ -32,19 +32,20 @@ namespace DnsClient
             DnsRequestMessage request,
             TimeSpan timeout)
         {
-            UdpClient udpClient = GetNextUdpClient(server.AddressFamily);
+            var udpClient = GetNextUdpClient(server.AddressFamily);
 
             // -1 indicates infinite
-            int timeoutInMillis = timeout.TotalMilliseconds >= int.MaxValue ? -1 : (int)timeout.TotalMilliseconds;
+            var timeoutInMillis = timeout.TotalMilliseconds >= int.MaxValue ? -1 : (int)timeout.TotalMilliseconds;
             udpClient.Client.ReceiveTimeout = timeoutInMillis;
             udpClient.Client.SendTimeout = timeoutInMillis;
 
-            bool mustDispose = false;
+            var mustDispose = false;
             try
             {
                 using (var writer = new DnsDatagramWriter())
                 {
                     GetRequestData(request, writer);
+                    Debug.Assert(writer.Data.Array != null);
                     udpClient.Client.SendTo(writer.Data.Array, writer.Data.Offset, writer.Data.Count, SocketFlags.None, server);
                 }
 
@@ -76,13 +77,12 @@ namespace DnsClient
                 {
                     try
                     {
-#if PORTABLE
-                        udpClient.Dispose();
-#else
                         udpClient.Close();
-#endif
                     }
-                    catch { }
+                    catch
+                    {
+                        // ignored
+                    }
                 }
             }
         }
@@ -95,19 +95,15 @@ namespace DnsClient
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            UdpClient udpClient = GetNextUdpClient(server.AddressFamily);
+            var udpClient = GetNextUdpClient(server.AddressFamily);
 
-            bool mustDispose = false;
+            var mustDispose = false;
             try
             {
                 // setup timeout cancelation, dispose socket (the only way to acutally cancel the request in async...
                 cancelationCallback(() =>
                 {
-#if PORTABLE
-                    udpClient.Dispose();
-#else
                     udpClient.Close();
-#endif
                 });
 
                 using (var writer = new DnsDatagramWriter())
@@ -116,29 +112,18 @@ namespace DnsClient
                     await udpClient.SendAsync(writer.Data.Array, writer.Data.Count, server).ConfigureAwait(false);
                 }
 
-                var readSize = udpClient.Available > MaxSize ? udpClient.Available : MaxSize;
+                var result = await udpClient.ReceiveAsync().ConfigureAwait(false);
 
-                using (var memory = new PooledBytes(readSize))
+                var response = GetResponseMessage(new ArraySegment<byte>(result.Buffer, 0, result.Buffer.Length));
+                
+                if (request.Header.Id != response.Header.Id)
                 {
-#if PORTABLE
-                    int received = await udpClient.Client.ReceiveAsync(new ArraySegment<byte>(memory.Buffer), SocketFlags.None).ConfigureAwait(false);
-
-                    var response = GetResponseMessage(new ArraySegment<byte>(memory.Buffer, 0, received));
-
-#else
-                    var result = await udpClient.ReceiveAsync().ConfigureAwait(false);
-
-                    var response = GetResponseMessage(new ArraySegment<byte>(result.Buffer, 0, result.Buffer.Length));
-#endif
-                    if (request.Header.Id != response.Header.Id)
-                    {
-                        throw new DnsResponseException("Header id mismatch.");
-                    }
-
-                    Enqueue(server.AddressFamily, udpClient);
-
-                    return response;
+                    throw new DnsResponseException("Header id mismatch.");
                 }
+
+                Enqueue(server.AddressFamily, udpClient);
+
+                return response;
             }
             catch (ObjectDisposedException)
             {
@@ -157,13 +142,12 @@ namespace DnsClient
                 {
                     try
                     {
-#if PORTABLE
-                        udpClient.Dispose();
-#else
                         udpClient.Close();
-#endif
                     }
-                    catch { }
+                    catch
+                    {
+                        // ignored
+                    }
                 }
             }
         }
@@ -194,11 +178,11 @@ namespace DnsClient
             {
                 if (family == AddressFamily.InterNetwork)
                 {
-                    _clients.Enqueue(client);
+                    Clients.Enqueue(client);
                 }
                 else
                 {
-                    _clientsIPv6.Enqueue(client);
+                    ClientsIPv6.Enqueue(client);
                 }
             }
         }
@@ -207,10 +191,10 @@ namespace DnsClient
         {
             if (family == AddressFamily.InterNetwork)
             {
-                return _clients.TryDequeue(out client);
+                return Clients.TryDequeue(out client);
             }
 
-            return _clientsIPv6.TryDequeue(out client);
+            return ClientsIPv6.TryDequeue(out client);
         }
     }
 }

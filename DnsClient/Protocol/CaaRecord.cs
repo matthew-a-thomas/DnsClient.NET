@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+
     /* RFC 6844 (https://tools.ietf.org/html/rfc6844#section-5.1)
     A CAA RR contains a single property entry consisting of a tag-value
     pair.  Each tag represents a property of the CAA record.  The value

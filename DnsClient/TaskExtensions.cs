@@ -1,5 +1,9 @@
-﻿namespace System.Threading.Tasks
+﻿namespace DnsClient
 {
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     internal static class TaskExtensions
     {
         public static async Task<T> WithCancellation<T>(this Task<T> task, CancellationToken cancellationToken, Action onCancel)
@@ -14,7 +18,11 @@
                     {
                         onCancel();
                     }
-                    catch { }
+                    catch
+                    {
+                        // ignored
+                    }
+
                     throw new OperationCanceledException(cancellationToken);
                 }
             }

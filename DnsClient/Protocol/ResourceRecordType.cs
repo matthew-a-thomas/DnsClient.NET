@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+
     /*
      * RFC 1035 (https://tools.ietf.org/html/rfc1035#section-3.2.2)
      * */
@@ -29,77 +29,77 @@ namespace DnsClient.Protocol
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
         /// <seealso cref="NsRecord"/>
-        NS = 2,
+        Ns = 2,
 
         /// <summary>
         /// A mail destination (OBSOLETE - use MX).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035">RFC 1035</seealso>
         [Obsolete("Use MX")]
-        MD = 3,
+        Md = 3,
 
         /// <summary>
         /// A mail forwarder (OBSOLETE - use MX).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035">RFC 1035</seealso>
         [Obsolete("Use MX")]
-        MF = 4,
+        Mf = 4,
 
         /// <summary>
         /// The canonical name for an alias.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.1">RFC 1035</seealso>
         /// <seealso cref="CNameRecord"/>
-        CNAME = 5,
+        Cname = 5,
 
         /// <summary>
         /// Marks the start of a zone of authority.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.13">RFC 1035</seealso>
         /// <seealso cref="SoaRecord"/>
-        SOA = 6,
+        Soa = 6,
 
         /// <summary>
         /// A mailbox domain name (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.3">RFC 1035</seealso>
         /// <seealso cref="MbRecord"/>
-        MB = 7,
+        Mb = 7,
 
         /// <summary>
         /// A mail group member (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.6">RFC 1035</seealso>
         /// <seealso cref="MgRecord"/>
-        MG = 8,
+        Mg = 8,
 
         /// <summary>
         /// A mailbox rename domain name (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.8">RFC 1035</seealso>
         /// <seealso cref="MrRecord"/>
-        MR = 9,
+        Mr = 9,
 
         /// <summary>
         /// A Null resource record (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.8">RFC 1035</seealso>
         /// <seealso cref="NullRecord"/>
-        NULL = 10,
+        Null = 10,
 
         /// <summary>
         /// A well known service description.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3232">RFC 3232</seealso>
         /// <seealso cref="WksRecord"/>
-        WKS = 11,
+        Wks = 11,
 
         /// <summary>
         /// A domain name pointer.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.12">RFC 1035</seealso>
         /// <seealso cref="PtrRecord"/>
-        PTR = 12,
+        Ptr = 12,
 
         /// <summary>
         /// Host information.
@@ -107,14 +107,14 @@ namespace DnsClient.Protocol
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc1010">RFC 1010</seealso>
         /// <seealso cref="HInfoRecord"/>
-        HINFO = 13,
+        Hinfo = 13,
 
         /// <summary>
         /// Mailbox or mail list information.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
         /// <seealso cref="MInfoRecord"/>
-        MINFO = 14,
+        Minfo = 14,
 
         /// <summary>
         /// Mail exchange.
@@ -122,7 +122,7 @@ namespace DnsClient.Protocol
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.9">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc974">RFC 974</seealso>
         /// <seealso cref="MxRecord"/>
-        MX = 15,
+        Mx = 15,
 
         /// <summary>
         /// Text resources.
@@ -130,14 +130,14 @@ namespace DnsClient.Protocol
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc1464">RFC 1464</seealso>
         /// <seealso cref="TxtRecord"/>
-        TXT = 16,
+        Txt = 16,
 
         /// <summary>
         /// Responsible Person.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1183">RFC 1183</seealso>
         /// <seealso cref="RpRecord"/>
-        RP = 17,
+        Rp = 17,
 
         /// <summary>
         /// AFS Data Base location.
@@ -145,47 +145,47 @@ namespace DnsClient.Protocol
         /// <seealso href="https://tools.ietf.org/html/rfc1183#section-1">RFC 1183</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc5864">RFC 5864</seealso>
         /// <seealso cref="AfsDbRecord"/>
-        AFSDB = 18,
+        Afsdb = 18,
 
         /// <summary>
         /// An IPv6 host address.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3596#section-2.2">RFC 3596</seealso>
         /// <seealso cref="AaaaRecord"/>
-        AAAA = 28,
+        Aaaa = 28,
 
         /// <summary>
         /// A resource record which specifies the location of the server(s) for a specific protocol and domain.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc2782">RFC 2782</seealso>
         /// <seealso cref="SrvRecord"/>
-        SRV = 33,
+        Srv = 33,
 
         /// <summary>
         /// Option record.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc6891">RFC 6891</seealso>
         ///// <seealso cref="DnsClient.Protocol.Options.OptRecord"/>
-        OPT = 41,
+        Opt = 41,
 
         /// <summary>
         /// RRSIG rfc3755.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3755">RFC 3755</seealso>
-        RRSIG = 46,
+        Rrsig = 46,
 
         /// <summary>
         /// A Uniform Resource Identifier (URI) resource record.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc7553">RFC 7553</seealso>
         /// <seealso cref="UriRecord"/>
-        URI = 256,
+        Uri = 256,
 
         /// <summary>
         /// A certification authority authorization.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc6844">RFC 6844</seealso>
         /// <seealso cref="CaaRecord"/>
-        CAA = 257,
+        Caa = 257
     }
 }

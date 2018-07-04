@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net;
-
-namespace DnsClient.Protocol.Options
+﻿namespace DnsClient.Protocol.Options
 {
     /* https://tools.ietf.org/html/rfc6891#section-4.3
     6.1.2.  Wire Format
@@ -74,10 +71,7 @@ namespace DnsClient.Protocol.Options
 
         public DnsResponseCode ResponseCodeEx
         {
-            get
-            {
-                return (DnsResponseCode)((TimeToLive & ResponseCodeMask) >> ResponseCodeShift);
-            }
+            get => (DnsResponseCode)((TimeToLive & ResponseCodeMask) >> ResponseCodeShift);
             set
             {
                 TimeToLive &= (int)~ResponseCodeMask;
@@ -85,17 +79,11 @@ namespace DnsClient.Protocol.Options
             }
         }
 
-        public short UdpSize
-        {
-            get { return (short)RecordClass; }
-        }
+        public short UdpSize => (short)RecordClass;
 
         public byte Version
         {
-            get
-            {
-                return (byte)((TimeToLive & VersionMask) >> VersionShift);
-            }
+            get => (byte)((TimeToLive & VersionMask) >> VersionShift);
             set
             {
                 TimeToLive = (int)((uint)TimeToLive & ~VersionMask);
@@ -105,7 +93,7 @@ namespace DnsClient.Protocol.Options
 
         public bool IsDnsSecOk
         {
-            get { return (TimeToLive & 0x8000) != 0; }
+            get => (TimeToLive & 0x8000) != 0;
             set
             {
                 if (value)
@@ -120,7 +108,7 @@ namespace DnsClient.Protocol.Options
         }
 
         public OptRecord(int size = 4096, int version = 0, int length = 0)
-            : base(new ResourceRecordInfo(DnsString.RootLabel, ResourceRecordType.OPT, (QueryClass)size, version, length))
+            : base(new ResourceRecordInfo(DnsString.RootLabel, ResourceRecordType.Opt, (QueryClass)size, version, length))
         {
         }
 

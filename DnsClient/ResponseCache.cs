@@ -1,37 +1,37 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     internal class ResponseCache
     {
-        private static readonly TimeSpan s_infiniteTimeout = Timeout.InfiniteTimeSpan;
+        private static readonly TimeSpan SInfiniteTimeout = Timeout.InfiniteTimeSpan;
 
         // max is 24 days
-        private static readonly TimeSpan s_maxTimeout = TimeSpan.FromMilliseconds(int.MaxValue);
+        private static readonly TimeSpan SMaxTimeout = TimeSpan.FromMilliseconds(int.MaxValue);
 
-        private static readonly int s_cleanupInterval = (int)TimeSpan.FromMinutes(10).TotalMilliseconds;
+        private static readonly int SCleanupInterval = (int)TimeSpan.FromMinutes(10).TotalMilliseconds;
         private readonly ConcurrentDictionary<string, ResponseEntry> _cache = new ConcurrentDictionary<string, ResponseEntry>();
         private readonly object _cleanupLock = new object();
-        private bool _cleanupRunning = false;
-        private int _lastCleanup = 0;
+        private bool _cleanupRunning;
+        private int _lastCleanup;
         private TimeSpan? _minimumTimeout;
 
         public int Count => _cache.Count;
 
-        public bool Enabled { get; set; } = true;
+        public bool Enabled { get; set; }
 
         public TimeSpan? MinimumTimout
         {
-            get { return _minimumTimeout; }
+            get => _minimumTimeout;
             set
             {
                 if (value.HasValue &&
-                    (value < TimeSpan.Zero || value > s_maxTimeout) && value != s_infiniteTimeout)
+                    (value < TimeSpan.Zero || value > SMaxTimeout) && value != SInfiniteTimeout)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
@@ -62,7 +62,7 @@ namespace DnsClient
 
         public IDnsQueryResponse Get(string key)
         {
-            return Get(key, out double? effectiveTtl);
+            return Get(key, out _);
         }
 
         public IDnsQueryResponse Get(string key, out double? effectiveTtl)
@@ -71,9 +71,9 @@ namespace DnsClient
             if (key == null) throw new ArgumentNullException(key);
             if (!Enabled) return null;
 
-            if (_cache.TryGetValue(key, out ResponseEntry entry))
+            if (_cache.TryGetValue(key, out var entry))
             {
-                effectiveTtl = entry.TTL;
+                effectiveTtl = entry.Ttl;
                 if (entry.IsExpiredFor(DateTimeOffset.UtcNow))
                 {
                     _cache.TryRemove(key, out entry);
@@ -93,15 +93,15 @@ namespace DnsClient
             if (key == null) throw new ArgumentNullException(key);
             if (Enabled && response != null && !response.HasError)
             {
-                var all = response.AllRecords;
+                var all = response.AllRecords.ToList();
                 if (all.Any())
                 {
                     // in millis
-                    double minTtl = all.Min(p => p.TimeToLive) * 1000d;
+                    var minTtl = all.Min(p => p.TimeToLive) * 1000d;
 
                     if (MinimumTimout == Timeout.InfiniteTimeSpan)
                     {
-                        minTtl = s_maxTimeout.TotalMilliseconds;
+                        minTtl = SMaxTimeout.TotalMilliseconds;
                     }
                     else if (MinimumTimout.HasValue && minTtl < MinimumTimout.Value.TotalMilliseconds)
                     {
@@ -133,7 +133,7 @@ namespace DnsClient
             {
                 if (entry.Value.IsExpiredFor(now))
                 {
-                    cache._cache.TryRemove(entry.Key, out ResponseEntry o);
+                    cache._cache.TryRemove(entry.Key, out _);
                 }
             }
 
@@ -149,12 +149,12 @@ namespace DnsClient
 
             // TickCount jump every 25days to int.MinValue, adjusting...
             var currentTicks = Environment.TickCount & int.MaxValue;
-            if (_lastCleanup + s_cleanupInterval < 0 || currentTicks + s_cleanupInterval < 0) _lastCleanup = 0;
-            if (!_cleanupRunning && _lastCleanup + s_cleanupInterval < currentTicks)
+            if (_lastCleanup + SCleanupInterval < 0 || currentTicks + SCleanupInterval < 0) _lastCleanup = 0;
+            if (!_cleanupRunning && _lastCleanup + SCleanupInterval < currentTicks)
             {
                 lock (_cleanupLock)
                 {
-                    if (!_cleanupRunning && _lastCleanup + s_cleanupInterval < currentTicks)
+                    if (!_cleanupRunning && _lastCleanup + SCleanupInterval < currentTicks)
                     {
                         _lastCleanup = currentTicks;
 
@@ -175,14 +175,14 @@ namespace DnsClient
 
             public bool IsExpiredFor(DateTimeOffset forDate) => forDate >= ExpiresAt;
 
-            public DateTimeOffset ExpiresAt { get; }
+            private DateTimeOffset ExpiresAt { get; }
 
-            public DateTimeOffset Created { get; }
+            private DateTimeOffset Created { get; }
 
-            public double TTL { get; set; }
+            public double Ttl { get; }
 
             // returns in seconds, not MS!
-            public int Elapsed(DateTimeOffset? since = null)
+            private int Elapsed(DateTimeOffset? since = null)
             {
                 if (since == null)
                 {
@@ -242,15 +242,15 @@ namespace DnsClient
                 return qr;
             }
 
-            public ResponseEntry(IDnsQueryResponse response, double ttlInMS)
+            public ResponseEntry(IDnsQueryResponse response, double ttlInMs)
             {
                 Debug.Assert(response != null);
-                Debug.Assert(ttlInMS >= 0);
+                Debug.Assert(ttlInMs >= 0);
 
                 _response = response;
-                TTL = ttlInMS;
+                Ttl = ttlInMs;
                 Created = DateTimeOffset.UtcNow;
-                ExpiresAt = Created.AddMilliseconds(TTL);
+                ExpiresAt = Created.AddMilliseconds(Ttl);
             }
         }
     }

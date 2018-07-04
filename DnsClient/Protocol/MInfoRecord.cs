@@ -1,6 +1,7 @@
-﻿using System;
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.11:
     3.3.7. MINFO RDATA format (EXPERIMENTAL)

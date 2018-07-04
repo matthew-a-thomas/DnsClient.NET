@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using DnsClient.Protocol;
-
-namespace System.Linq
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Protocol;
+
     /// <summary>
     /// Extension methods for <see cref="IEnumerable{T}"/> where <c>T</c> is <see cref="DnsResourceRecord"/>.
     /// </summary>

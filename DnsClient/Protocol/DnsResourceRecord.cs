@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace DnsClient.Protocol
+﻿namespace DnsClient.Protocol
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     /// Base class for all resource records.
     /// </summary>
@@ -16,10 +17,10 @@ namespace DnsClient.Protocol
         public DnsResourceRecord(ResourceRecordInfo info)
             : base(
                   info?.DomainName ?? throw new ArgumentNullException(nameof(info)),
-                  info?.RecordType ?? throw new ArgumentNullException(nameof(info)),
-                  info?.RecordClass ?? throw new ArgumentNullException(nameof(info)),
-                  info?.TimeToLive ?? throw new ArgumentNullException(nameof(info)),
-                  info?.RawDataLength ?? throw new ArgumentNullException(nameof(info)))
+                  info.RecordType,
+                  info.RecordClass,
+                  info.TimeToLive,
+                  info.RawDataLength)
         {
         }
 
@@ -36,7 +37,9 @@ namespace DnsClient.Protocol
         /// </summary>
         /// <param name="offset">The offset.</param>
         /// <returns>A string representing this instance.</returns>
-        public virtual string ToString(int offset = 0)
+        [SuppressMessage("ReSharper",
+            "FormatStringProblem")]
+        public string ToString(int offset)
         {
             return string.Format("{0," + offset + "}{1} \t{2} \t{3} \t{4}",
                 DomainName,
@@ -46,7 +49,9 @@ namespace DnsClient.Protocol
                 RecordToString());
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Clones this <see cref="DnsResourceRecord"/>.
+        /// </summary>
         public DnsResourceRecord Clone()
         {
             return (DnsResourceRecord)MemberwiseClone();

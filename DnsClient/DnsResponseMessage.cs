@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DnsClient.Protocol;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Generic;
+    using Protocol;
+
     internal class DnsResponseMessage
     {
         public DnsResponseMessage(DnsResponseHeader header, int messageSize)

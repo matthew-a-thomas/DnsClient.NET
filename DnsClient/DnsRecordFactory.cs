@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DnsClient.Protocol;
-using DnsClient.Protocol.Options;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Protocol;
+    using Protocol.Options;
+
     internal class DnsRecordFactory
     {
         private readonly DnsDatagramReader _reader;
@@ -60,86 +60,86 @@ namespace DnsClient
             switch (info.RecordType)
             {
                 case ResourceRecordType.A:
-                    result = new ARecord(info, _reader.ReadIPAddress());
+                    result = new ARecord(info, _reader.ReadIpAddress());
                     break;
 
-                case ResourceRecordType.NS:
+                case ResourceRecordType.Ns:
                     result = new NsRecord(info, _reader.ReadDnsName());
                     break;
 
-                case ResourceRecordType.CNAME:
+                case ResourceRecordType.Cname:
                     result = new CNameRecord(info, _reader.ReadDnsName());
                     break;
 
-                case ResourceRecordType.SOA:
+                case ResourceRecordType.Soa:
                     result = ResolveSoaRecord(info);
                     break;
 
-                case ResourceRecordType.MB:
+                case ResourceRecordType.Mb:
                     result = new MbRecord(info, _reader.ReadDnsName());
                     break;
 
-                case ResourceRecordType.MG:
+                case ResourceRecordType.Mg:
                     result = new MgRecord(info, _reader.ReadDnsName());
                     break;
 
-                case ResourceRecordType.MR:
+                case ResourceRecordType.Mr:
                     result = new MrRecord(info, _reader.ReadDnsName());
                     break;
 
-                case ResourceRecordType.NULL:
+                case ResourceRecordType.Null:
                     result = new NullRecord(info, _reader.ReadBytes(info.RawDataLength).ToArray());
                     break;
 
-                case ResourceRecordType.WKS:
+                case ResourceRecordType.Wks:
                     result = ResolveWksRecord(info);
                     break;
 
-                case ResourceRecordType.PTR:
+                case ResourceRecordType.Ptr:
                     result = new PtrRecord(info, _reader.ReadDnsName());
                     break;
 
-                case ResourceRecordType.HINFO:
+                case ResourceRecordType.Hinfo:
                     result = new HInfoRecord(info, _reader.ReadString(), _reader.ReadString());
                     break;
 
-                case ResourceRecordType.MINFO:
+                case ResourceRecordType.Minfo:
                     result = new MInfoRecord(info, _reader.ReadDnsName(), _reader.ReadDnsName());
                     break;
 
-                case ResourceRecordType.MX:
-                    result = ResolveMXRecord(info);
+                case ResourceRecordType.Mx:
+                    result = ResolveMxRecord(info);
                     break;
 
-                case ResourceRecordType.TXT:
-                    result = ResolveTXTRecord(info);
+                case ResourceRecordType.Txt:
+                    result = ResolveTxtRecord(info);
                     break;
 
-                case ResourceRecordType.RP:
+                case ResourceRecordType.Rp:
                     result = new RpRecord(info, _reader.ReadDnsName(), _reader.ReadDnsName());
                     break;
 
-                case ResourceRecordType.AFSDB:
+                case ResourceRecordType.Afsdb:
                     result = new AfsDbRecord(info, (AfsType)_reader.ReadUInt16NetworkOrder(), _reader.ReadDnsName());
                     break;
 
-                case ResourceRecordType.AAAA:
+                case ResourceRecordType.Aaaa:
                     result = new AaaaRecord(info, _reader.ReadIPv6Address());
                     break;
 
-                case ResourceRecordType.SRV:
+                case ResourceRecordType.Srv:
                     result = ResolveSrvRecord(info);
                     break;
 
-                case ResourceRecordType.OPT:
+                case ResourceRecordType.Opt:
                     result = ResolveOptRecord(info);
                     break;
 
-                case ResourceRecordType.URI:
+                case ResourceRecordType.Uri:
                     result = ResolveUriRecord(info);
                     break;
 
-                case ResourceRecordType.CAA:
+                case ResourceRecordType.Caa:
                     result = ResolveCaaRecord(info);
                     break;
 
@@ -174,14 +174,14 @@ namespace DnsClient
 
         private DnsResourceRecord ResolveWksRecord(ResourceRecordInfo info)
         {
-            var address = _reader.ReadIPAddress();
+            var address = _reader.ReadIpAddress();
             var protocol = _reader.ReadByte();
             var bitmap = _reader.ReadBytes(info.RawDataLength - 5);
 
             return new WksRecord(info, address, protocol, bitmap.ToArray());
         }
 
-        private DnsResourceRecord ResolveMXRecord(ResourceRecordInfo info)
+        private DnsResourceRecord ResolveMxRecord(ResourceRecordInfo info)
         {
             var preference = _reader.ReadUInt16NetworkOrder();
             var domain = _reader.ReadDnsName();
@@ -212,19 +212,18 @@ namespace DnsClient
             return new SrvRecord(info, priority, weight, port, target);
         }
 
-        private DnsResourceRecord ResolveTXTRecord(ResourceRecordInfo info)
+        private DnsResourceRecord ResolveTxtRecord(ResourceRecordInfo info)
         {
-            int pos = _reader.Index;
+            var pos = _reader.Index;
 
             var values = new List<string>();
             var utf8Values = new List<string>();
-            while ((_reader.Index - pos) < info.RawDataLength)
+            while (_reader.Index - pos < info.RawDataLength)
             {
                 var length = _reader.ReadByte();
                 var bytes = _reader.ReadBytes(length);
-                var array = new ArraySegment<byte>(bytes.Array, bytes.Offset, length);
                 var escaped = DnsDatagramReader.ParseString(bytes);
-                var utf = DnsDatagramReader.ReadUTF8String(bytes);
+                var utf = DnsDatagramReader.ReadUtf8String(bytes);
                 values.Add(escaped);
                 utf8Values.Add(utf);
             }

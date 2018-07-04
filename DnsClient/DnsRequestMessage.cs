@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
-
-namespace DnsClient
+﻿namespace DnsClient
 {
+    using System;
+
     /// <summary>
     /// Represents a simple request message which can be send through <see cref="DnsMessageHandler"/>.
     /// </summary>
