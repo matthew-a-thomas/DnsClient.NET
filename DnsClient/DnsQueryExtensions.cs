@@ -9,6 +9,7 @@
     using Core;
     using Core.Protocol;
     using Protocol;
+    using ResourceRecords.CName;
 
     /// <summary>
     /// Extension methods for the <see cref="IDnsQuery"/> contract.

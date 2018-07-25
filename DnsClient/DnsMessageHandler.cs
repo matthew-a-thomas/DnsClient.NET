@@ -5,7 +5,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
-    using Protocol.Options;
+    using ResourceRecords.Opt;
 
     internal abstract class DnsMessageHandler
     {

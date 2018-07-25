@@ -6,7 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
-    using Protocol;
+    using ResourceRecords.A;
     using Xunit;
 
     public class LookupTest

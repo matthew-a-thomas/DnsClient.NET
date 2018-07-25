@@ -5,7 +5,7 @@
     using System.Net;
     using Core;
     using Core.Protocol;
-    using Protocol;
+    using ResourceRecords.A;
     using Xunit;
 
     public class DnsMessageHandlerTest

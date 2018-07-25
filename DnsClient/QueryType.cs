@@ -3,7 +3,27 @@
     using System;
     using System.Diagnostics.CodeAnalysis;
     using Core.Protocol;
-    using Protocol;
+    using ResourceRecords.A;
+    using ResourceRecords.Aaaa;
+    using ResourceRecords.AfsDb;
+    using ResourceRecords.Caa;
+    using ResourceRecords.CName;
+    using ResourceRecords.HInfo;
+    using ResourceRecords.Mb;
+    using ResourceRecords.Mg;
+    using ResourceRecords.MInfo;
+    using ResourceRecords.Mr;
+    using ResourceRecords.Mx;
+    using ResourceRecords.Ns;
+    using ResourceRecords.Null;
+    using ResourceRecords.Ptr;
+    using ResourceRecords.Rp;
+    using ResourceRecords.Soa;
+    using ResourceRecords.Srv;
+    using ResourceRecords.Sshfp;
+    using ResourceRecords.Txt;
+    using ResourceRecords.Uri;
+    using ResourceRecords.Wks;
 
     /*
      * RFC 1035 (https://tools.ietf.org/html/rfc1035#section-3.2.3)
@@ -145,7 +165,7 @@
         /// <seealso href="https://tools.ietf.org/html/rfc1183#section-1">RFC 1183</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc5864">RFC 5864</seealso>
         /// <seealso cref="AfsDbRecord"/>
-        Afsdb = ResourceRecordType.Afsdb,
+        Afsdb = ResourceRecordType.AfsDb,
 
         /// <summary>
         /// An IPv6 host address.

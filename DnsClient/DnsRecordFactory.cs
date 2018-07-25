@@ -2,15 +2,61 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Core;
     using Core.Protocol;
-    using Protocol;
-    using Protocol.Options;
+    using ResourceRecords;
+    using ResourceRecords.A;
+    using ResourceRecords.Aaaa;
+    using ResourceRecords.AfsDb;
+    using ResourceRecords.Caa;
+    using ResourceRecords.CName;
+    using ResourceRecords.HInfo;
+    using ResourceRecords.Mb;
+    using ResourceRecords.Mg;
+    using ResourceRecords.MInfo;
+    using ResourceRecords.Mr;
+    using ResourceRecords.Mx;
+    using ResourceRecords.Ns;
+    using ResourceRecords.Null;
+    using ResourceRecords.Opt;
+    using ResourceRecords.Ptr;
+    using ResourceRecords.Rp;
+    using ResourceRecords.Soa;
+    using ResourceRecords.Srv;
+    using ResourceRecords.Sshfp;
+    using ResourceRecords.Txt;
+    using ResourceRecords.Uri;
+    using ResourceRecords.Wks;
 
     internal class DnsRecordFactory
     {
         private readonly DnsDatagramReader _reader;
+        private readonly IReadOnlyDictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>>
+            _recordReaders = new Dictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>>
+            {
+                { ResourceRecordType.A, new AReader() },
+                { ResourceRecordType.Aaaa, new AaaaReader() },
+                { ResourceRecordType.AfsDb, new AfsDbReader() },
+                { ResourceRecordType.Caa, new CaaReader() },
+                { ResourceRecordType.Cname, new CNameReader() },
+                { ResourceRecordType.Hinfo, new HInfoReader() },
+                { ResourceRecordType.Mb, new MbReader() },
+                { ResourceRecordType.Mg, new MgReader() },
+                { ResourceRecordType.Minfo, new MInfoReader() },
+                { ResourceRecordType.Mr, new MrReader() },
+                { ResourceRecordType.Mx, new MxReader() },
+                { ResourceRecordType.Ns, new NsReader() },
+                { ResourceRecordType.Null, new NullReader() },
+                { ResourceRecordType.Opt, new OptReader() },
+                { ResourceRecordType.Ptr, new PtrReader() },
+                { ResourceRecordType.Rp, new RpReader() },
+                { ResourceRecordType.Soa, new SoaReader() },
+                { ResourceRecordType.Srv, new SrvReader() },
+                { ResourceRecordType.Sshfp, new SshfpReader() },
+                { ResourceRecordType.Txt, new TxtReader() },
+                { ResourceRecordType.Uri, new UriReader() },
+                { ResourceRecordType.Wks, new WksReader() }
+            };
 
         public DnsRecordFactory(DnsDatagramReader reader)
         {
@@ -49,101 +95,15 @@
             var oldIndex = _reader.Index;
             DnsResourceRecord result;
 
-            switch (info.RecordType)
+            if (_recordReaders.TryGetValue(info.RecordType, out var recordReader))
             {
-                case ResourceRecordType.A:
-                    result = new ARecord(info, _reader.ReadIpAddress());
-                    break;
-
-                case ResourceRecordType.Ns:
-                    result = new NsRecord(info, _reader.ReadDnsName());
-                    break;
-
-                case ResourceRecordType.Cname:
-                    result = new CNameRecord(info, _reader.ReadDnsName());
-                    break;
-
-                case ResourceRecordType.Soa:
-                    result = ResolveSoaRecord(info);
-                    break;
-
-                case ResourceRecordType.Mb:
-                    result = new MbRecord(info, _reader.ReadDnsName());
-                    break;
-
-                case ResourceRecordType.Mg:
-                    result = new MgRecord(info, _reader.ReadDnsName());
-                    break;
-
-                case ResourceRecordType.Mr:
-                    result = new MrRecord(info, _reader.ReadDnsName());
-                    break;
-
-                case ResourceRecordType.Null:
-                    result = new NullRecord(info, _reader.ReadBytes(info.RawDataLength).ToArray());
-                    break;
-
-                case ResourceRecordType.Wks:
-                    result = ResolveWksRecord(info);
-                    break;
-
-                case ResourceRecordType.Ptr:
-                    result = new PtrRecord(info, _reader.ReadDnsName());
-                    break;
-
-                case ResourceRecordType.Hinfo:
-                    result = new HInfoRecord(info, _reader.ReadString(), _reader.ReadString());
-                    break;
-
-                case ResourceRecordType.Minfo:
-                    result = new MInfoRecord(info, _reader.ReadDnsName(), _reader.ReadDnsName());
-                    break;
-
-                case ResourceRecordType.Mx:
-                    result = ResolveMxRecord(info);
-                    break;
-
-                case ResourceRecordType.Txt:
-                    result = ResolveTxtRecord(info);
-                    break;
-
-                case ResourceRecordType.Rp:
-                    result = new RpRecord(info, _reader.ReadDnsName(), _reader.ReadDnsName());
-                    break;
-
-                case ResourceRecordType.Afsdb:
-                    result = new AfsDbRecord(info, (AfsType)_reader.ReadUInt16NetworkOrder(), _reader.ReadDnsName());
-                    break;
-
-                case ResourceRecordType.Aaaa:
-                    result = new AaaaRecord(info, _reader.ReadIPv6Address());
-                    break;
-
-                case ResourceRecordType.Srv:
-                    result = ResolveSrvRecord(info);
-                    break;
-
-                case ResourceRecordType.Opt:
-                    result = ResolveOptRecord(info);
-                    break;
-
-                case ResourceRecordType.Uri:
-                    result = ResolveUriRecord(info);
-                    break;
-
-                case ResourceRecordType.Caa:
-                    result = ResolveCaaRecord(info);
-                    break;
-
-                case ResourceRecordType.Sshfp:
-                    result = ResolveSshfpRecord(info);
-                    break;
-
-                default:
-                    // update reader index because we don't read full data for the empty record
-                    _reader.Index += info.RawDataLength;
-                    result = new EmptyRecord(info);
-                    break;
+                result = recordReader.ReadResourceRecord(info, _reader);
+            }
+            else
+            {
+                // update reader index because we don't read full data for the empty record
+                _reader.Index += info.RawDataLength;
+                result = new EmptyRecord(info);
             }
 
             // sanity check
@@ -153,95 +113,6 @@
             }
 
             return result;
-        }
-
-        private DnsResourceRecord ResolveUriRecord(ResourceRecordInfo info)
-        {
-            var prio = _reader.ReadUInt16NetworkOrder();
-            var weight = _reader.ReadUInt16NetworkOrder();
-            var target = _reader.ReadString(info.RawDataLength - 4);
-            return new UriRecord(info, prio, weight, target);
-        }
-
-        private DnsResourceRecord ResolveOptRecord(ResourceRecordInfo info)
-        {
-            return new OptRecord((int)info.RecordClass, info.TimeToLive, info.RawDataLength);
-        }
-
-        private DnsResourceRecord ResolveWksRecord(ResourceRecordInfo info)
-        {
-            var address = _reader.ReadIpAddress();
-            var protocol = _reader.ReadByte();
-            var bitmap = _reader.ReadBytes(info.RawDataLength - 5);
-
-            return new WksRecord(info, address, protocol, bitmap.ToArray());
-        }
-
-        private DnsResourceRecord ResolveMxRecord(ResourceRecordInfo info)
-        {
-            var preference = _reader.ReadUInt16NetworkOrder();
-            var domain = _reader.ReadDnsName();
-
-            return new MxRecord(info, preference, domain);
-        }
-
-        private DnsResourceRecord ResolveSoaRecord(ResourceRecordInfo info)
-        {
-            var mName = _reader.ReadDnsName();
-            var rName = _reader.ReadDnsName();
-            var serial = _reader.ReadUInt32NetworkOrder();
-            var refresh = _reader.ReadUInt32NetworkOrder();
-            var retry = _reader.ReadUInt32NetworkOrder();
-            var expire = _reader.ReadUInt32NetworkOrder();
-            var minimum = _reader.ReadUInt32NetworkOrder();
-
-            return new SoaRecord(info, mName, rName, serial, refresh, retry, expire, minimum);
-        }
-
-        private DnsResourceRecord ResolveSrvRecord(ResourceRecordInfo info)
-        {
-            var priority = _reader.ReadUInt16NetworkOrder();
-            var weight = _reader.ReadUInt16NetworkOrder();
-            var port = _reader.ReadUInt16NetworkOrder();
-            var target = _reader.ReadDnsName();
-
-            return new SrvRecord(info, priority, weight, port, target);
-        }
-
-        private DnsResourceRecord ResolveTxtRecord(ResourceRecordInfo info)
-        {
-            var pos = _reader.Index;
-
-            var values = new List<string>();
-            var utf8Values = new List<string>();
-            while (_reader.Index - pos < info.RawDataLength)
-            {
-                var length = _reader.ReadByte();
-                var bytes = _reader.ReadBytes(length);
-                var escaped = DnsDatagramReader.ParseString(bytes);
-                var utf = DnsDatagramReader.ReadUtf8String(bytes);
-                values.Add(escaped);
-                utf8Values.Add(utf);
-            }
-
-            return new TxtRecord(info, values.ToArray(), utf8Values.ToArray());
-        }
-
-        private DnsResourceRecord ResolveSshfpRecord(ResourceRecordInfo info)
-        {
-            var algorithm = (SshfpAlgorithm)_reader.ReadByte();
-            var fingerprintType = (SshfpFingerprintType)_reader.ReadByte();
-            var fingerprint = _reader.ReadBytes(info.RawDataLength - 2).ToArray();
-            var fingerprintHexString = string.Join(string.Empty, fingerprint.Select(b => b.ToString("X2")));
-            return new SshfpRecord(info, algorithm, fingerprintType, fingerprintHexString);
-        }
-
-        private DnsResourceRecord ResolveCaaRecord(ResourceRecordInfo info)
-        {
-            var flag = _reader.ReadByte();
-            var tag = _reader.ReadString();
-            var stringValue = DnsDatagramReader.ParseString(_reader, info.RawDataLength - 2 - tag.Length);
-            return new CaaRecord(info, flag, tag, stringValue);
         }
     }
 }

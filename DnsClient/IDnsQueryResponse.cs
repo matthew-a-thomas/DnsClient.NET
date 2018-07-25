@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using Core.Protocol;
-    using Protocol;
 
     /// <summary>
     /// Contract defining the result of a query performed by <see cref="IDnsQuery"/>.

@@ -4,7 +4,25 @@
     using System.Collections.Generic;
     using System.Linq;
     using Core.Protocol;
-    using Protocol;
+    using ResourceRecords.A;
+    using ResourceRecords.Aaaa;
+    using ResourceRecords.AfsDb;
+    using ResourceRecords.Caa;
+    using ResourceRecords.CName;
+    using ResourceRecords.HInfo;
+    using ResourceRecords.Mb;
+    using ResourceRecords.Mg;
+    using ResourceRecords.Mr;
+    using ResourceRecords.Mx;
+    using ResourceRecords.Ns;
+    using ResourceRecords.Null;
+    using ResourceRecords.Ptr;
+    using ResourceRecords.Rp;
+    using ResourceRecords.Soa;
+    using ResourceRecords.Srv;
+    using ResourceRecords.Txt;
+    using ResourceRecords.Uri;
+    using ResourceRecords.Wks;
 
     /// <summary>
     /// Extension methods for <see cref="IEnumerable{T}"/> where <c>T</c> is <see cref="DnsResourceRecord"/>.

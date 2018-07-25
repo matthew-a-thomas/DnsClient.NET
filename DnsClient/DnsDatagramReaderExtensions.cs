@@ -2,7 +2,6 @@
 {
     using Core;
     using Core.Protocol;
-    using Protocol;
 
     /// <summary>
     /// Extensions for <see cref="DnsDatagramReader"/>.

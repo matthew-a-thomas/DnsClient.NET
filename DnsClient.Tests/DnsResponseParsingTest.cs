@@ -8,7 +8,24 @@
     using System.Threading.Tasks;
     using Core;
     using Core.Protocol;
-    using Protocol;
+    using ResourceRecords.Aaaa;
+    using ResourceRecords.AfsDb;
+    using ResourceRecords.Caa;
+    using ResourceRecords.CName;
+    using ResourceRecords.HInfo;
+    using ResourceRecords.Mb;
+    using ResourceRecords.Mg;
+    using ResourceRecords.MInfo;
+    using ResourceRecords.Mr;
+    using ResourceRecords.Mx;
+    using ResourceRecords.Ns;
+    using ResourceRecords.Ptr;
+    using ResourceRecords.Rp;
+    using ResourceRecords.Soa;
+    using ResourceRecords.Srv;
+    using ResourceRecords.Txt;
+    using ResourceRecords.Uri;
+    using ResourceRecords.Wks;
     using Xunit;
 
     public class DnsResponseParsingTest

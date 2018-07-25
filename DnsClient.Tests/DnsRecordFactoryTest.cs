@@ -8,7 +8,16 @@
     using System.Text;
     using Core;
     using Core.Protocol;
-    using Protocol;
+    using ResourceRecords.A;
+    using ResourceRecords.Aaaa;
+    using ResourceRecords.Mb;
+    using ResourceRecords.Mx;
+    using ResourceRecords.Ns;
+    using ResourceRecords.Ptr;
+    using ResourceRecords.Soa;
+    using ResourceRecords.Srv;
+    using ResourceRecords.Sshfp;
+    using ResourceRecords.Txt;
     using Xunit;
 
     [SuppressMessage("ReSharper",

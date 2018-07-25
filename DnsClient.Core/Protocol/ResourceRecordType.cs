@@ -145,7 +145,7 @@
         /// <seealso href="https://tools.ietf.org/html/rfc1183#section-1">RFC 1183</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc5864">RFC 5864</seealso>
         /// <seealso cref="AfsDbRecord"/>
-        Afsdb = 18,
+        AfsDb = 18,
 
         /// <summary>
         /// An IPv6 host address.
