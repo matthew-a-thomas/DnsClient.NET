@@ -2,7 +2,6 @@
 {
     using System.Net;
     using Core.Protocol;
-    using Protocol;
 
     /*
     3.4.1. A RDATA format

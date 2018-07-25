@@ -8,7 +8,7 @@
     using System.Threading.Tasks;
     using Core;
     using Core.Protocol;
-    using Protocol;
+    using ResourceRecords;
     using ResourceRecords.CName;
 
     /// <summary>

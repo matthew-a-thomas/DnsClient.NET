@@ -1,4 +1,4 @@
-﻿namespace DnsClient
+﻿namespace DnsClient.Core
 {
     /*
      * Reference RFC6895#section-2.3

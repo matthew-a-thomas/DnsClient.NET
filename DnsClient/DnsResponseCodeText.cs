@@ -1,6 +1,7 @@
 ﻿namespace DnsClient
 {
     using System.Collections.Generic;
+    using Core;
 
     internal static class DnsResponseCodeText
     {

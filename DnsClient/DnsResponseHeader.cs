@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Core;
 
     /// <summary>
     /// The header section of a <see cref="IDnsQueryResponse"/>.

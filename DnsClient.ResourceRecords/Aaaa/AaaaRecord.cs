@@ -2,7 +2,6 @@
 {
     using System.Net;
     using Core.Protocol;
-    using Protocol;
 
     /// <summary>
     /// A <see cref="DnsResourceRecord"/> represending an IPv6 <see cref="IPAddress"/>.

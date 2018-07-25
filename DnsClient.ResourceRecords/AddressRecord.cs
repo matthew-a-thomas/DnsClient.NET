@@ -1,10 +1,10 @@
-﻿namespace DnsClient.Protocol
+﻿namespace DnsClient.ResourceRecords
 {
     using System;
     using System.Net;
+    using A;
+    using Aaaa;
     using Core.Protocol;
-    using ResourceRecords.A;
-    using ResourceRecords.Aaaa;
 
     /// <summary>
     /// Base class for <see cref="DnsResourceRecord"/>s transporting an <see cref="IPAddress"/>.

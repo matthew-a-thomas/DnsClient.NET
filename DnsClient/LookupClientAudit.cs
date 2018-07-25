@@ -4,6 +4,7 @@
     using System.Diagnostics;
     using System.Globalization;
     using System.Text;
+    using Core;
 
     internal class LookupClientAudit
     {

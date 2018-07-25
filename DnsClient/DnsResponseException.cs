@@ -1,6 +1,7 @@
 ﻿namespace DnsClient
 {
     using System;
+    using Core;
 
     /// <summary>
     /// A DnsClient specific exception transporting additional information about the query causing this exception.

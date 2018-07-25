@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Core;
 
     /// <summary>
     /// The contract for the LookupClient including all the options.
