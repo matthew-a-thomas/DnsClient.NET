@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
     using System.Diagnostics.CodeAnalysis;
+    using Core.Protocol;
 
     /// <summary>
     /// A <see cref="DnsResourceRecord"/> represending an SSH fingerprint
@@ -43,7 +44,7 @@
         /// </summary>
         public string Fingerprint { get; }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return $"{(int)Algorithm} {(int)FingerprintType} {Fingerprint}";
         }

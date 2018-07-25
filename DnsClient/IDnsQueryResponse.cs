@@ -1,6 +1,7 @@
 ﻿namespace DnsClient
 {
     using System.Collections.Generic;
+    using Core.Protocol;
     using Protocol;
 
     /// <summary>

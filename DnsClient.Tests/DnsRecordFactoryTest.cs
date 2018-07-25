@@ -7,6 +7,7 @@
     using System.Net;
     using System.Text;
     using Core;
+    using Core.Protocol;
     using Protocol;
     using Xunit;
 

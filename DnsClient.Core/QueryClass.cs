@@ -1,4 +1,4 @@
-﻿namespace DnsClient
+﻿namespace DnsClient.Core
 {
     /* RFC 1035 (https://tools.ietf.org/html/rfc1035#section-3.2.4)
 	 * 3.2.4. CLASS values

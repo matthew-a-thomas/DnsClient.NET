@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
     using System.Net;
+    using Core.Protocol;
 
     /// <summary>
     /// A <see cref="DnsResourceRecord"/> represending an IPv6 <see cref="IPAddress"/>.

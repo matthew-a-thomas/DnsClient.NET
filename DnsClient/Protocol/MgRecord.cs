@@ -2,6 +2,7 @@
 {
     using System;
     using Core;
+    using Core.Protocol;
 
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.6:
@@ -47,7 +48,7 @@
             MgName = domainName ?? throw new ArgumentNullException(nameof(domainName));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return MgName.Value;
         }

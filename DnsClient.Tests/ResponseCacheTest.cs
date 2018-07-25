@@ -5,6 +5,8 @@
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
+    using Core;
+    using Core.Protocol;
     using Protocol;
     using Xunit;
 

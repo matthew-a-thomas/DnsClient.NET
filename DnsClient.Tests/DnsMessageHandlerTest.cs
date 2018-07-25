@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Net;
     using Core;
+    using Core.Protocol;
     using Protocol;
     using Xunit;
 

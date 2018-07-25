@@ -5,6 +5,7 @@
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
+    using Core;
     using Xunit;
 
     public class LookupClientRetryTest

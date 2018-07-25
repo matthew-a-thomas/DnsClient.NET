@@ -2,6 +2,7 @@
 {
     using System;
     using Core;
+    using Core.Protocol;
 
     /* https://tools.ietf.org/html/rfc1035#section-3.3.9
     3.3.9. MX RDATA format
@@ -61,7 +62,7 @@
             Exchange = domainName ?? throw new ArgumentNullException(nameof(domainName));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return string.Format("{0} {1}", Preference, Exchange);
         }

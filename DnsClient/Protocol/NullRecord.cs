@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text;
+    using Core.Protocol;
 
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.10:
@@ -55,7 +56,7 @@
             }
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return $"\\# {Anything.Length} {AsString}";
         }

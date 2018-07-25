@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
     using System.Net;
+    using Core.Protocol;
 
     /*
     3.4.1. A RDATA format

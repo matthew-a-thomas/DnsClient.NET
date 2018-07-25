@@ -2,6 +2,7 @@
 {
     using System;
     using Core;
+    using Core.Protocol;
 
     /* https://tools.ietf.org/html/rfc1183#section-1, https://tools.ietf.org/html/rfc5864
     1. AFS Data Base location
@@ -61,7 +62,7 @@
             Hostname = name ?? throw new ArgumentNullException(nameof(name));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return $"{(int)SubType} {Hostname}";
         }

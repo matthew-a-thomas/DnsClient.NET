@@ -2,6 +2,7 @@
 {
 	using System;
 	using Core;
+	using Core.Protocol;
 
 	/*
     3.3.13. SOA RDATA format
@@ -163,7 +164,7 @@
             Minimum = minimum;
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return string.Format(
                 "{0} {1} {2} {3} {4} {5} {6}",

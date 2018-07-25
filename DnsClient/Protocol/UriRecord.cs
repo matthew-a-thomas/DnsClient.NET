@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
     using System;
+    using Core.Protocol;
 
     /*
     * RFC 7553  https://tools.ietf.org/html/rfc7553
@@ -76,7 +77,7 @@
             Weigth = weight;
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return $"{Priority} {Weigth} \"{Target}\"";
         }

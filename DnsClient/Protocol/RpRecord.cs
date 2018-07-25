@@ -2,6 +2,7 @@
 {
     using System;
     using Core;
+    using Core.Protocol;
 
     /*
     https://tools.ietf.org/html/rfc1183#section-2.2:
@@ -101,7 +102,7 @@
             TextDomainName = textName ?? throw new ArgumentNullException(nameof(textName));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return $"{MailboxDomainName} {TextDomainName}";
         }

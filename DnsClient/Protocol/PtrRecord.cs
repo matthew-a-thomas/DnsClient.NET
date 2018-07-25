@@ -2,6 +2,7 @@
 {
     using System;
     using Core;
+    using Core.Protocol;
 
     /* RFC 1035 (https://tools.ietf.org/html/rfc1035#section-3.3.12)
     3.3.12. PTR RDATA format
@@ -26,7 +27,7 @@
     /// A <see cref="DnsResourceRecord"/> represending a pointer. These RRs are used
     /// in special domains to point to some other location in the domain space.
     /// </summary>
-    /// <seealso cref="DnsClient.Protocol.DnsResourceRecord" />
+    /// <seealso cref="DnsResourceRecord" />
     /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.12">RFC 1035</seealso>
     public class PtrRecord : DnsResourceRecord
     {
@@ -50,7 +51,7 @@
             PtrDomainName = ptrDomainName ?? throw new ArgumentNullException(nameof(ptrDomainName));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return PtrDomainName.Value;
         }

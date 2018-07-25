@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol.Options
 {
     using Core;
+    using Core.Protocol;
 
     /* https://tools.ietf.org/html/rfc6891#section-4.3
     6.1.2.  Wire Format
@@ -114,7 +115,7 @@
         {
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return $"OPT {RecordClass}.";
         }

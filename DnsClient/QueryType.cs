@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using Core.Protocol;
     using Protocol;
 
     /*
@@ -10,7 +11,7 @@
 
     /// <summary>
     /// The query type field appear in the question part of a query.
-    /// Query types are a superset of <see cref="Protocol.ResourceRecordType"/>.
+    /// Query types are a superset of <see cref="ResourceRecordType"/>.
     /// </summary>
     [SuppressMessage("ReSharper",
         "UnusedMember.Global")]

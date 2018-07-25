@@ -1,5 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
+    using Core.Protocol;
+
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.11:
     3.3.2. HINFO RDATA format
@@ -55,7 +57,7 @@
             Os = os;
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return $"\"{Cpu}\" \"{Os}\"";
         }

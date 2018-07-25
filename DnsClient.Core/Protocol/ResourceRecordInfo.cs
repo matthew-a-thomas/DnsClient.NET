@@ -1,4 +1,4 @@
-﻿namespace DnsClient.Protocol
+﻿namespace DnsClient.Core.Protocol
 {
     using System;
     using Core;
@@ -26,7 +26,7 @@
         /// <summary>
         /// The TTL value for the record set by the server.
         /// </summary>
-        public int TimeToLive { get; internal set; }
+        public int TimeToLive { get; set; }
 
         /// <summary>
         /// Gets the number of bytes for this resource record stored in RDATA

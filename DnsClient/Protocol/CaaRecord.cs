@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
     using System;
+    using Core.Protocol;
 
     /* RFC 6844 (https://tools.ietf.org/html/rfc6844#section-5.1)
     A CAA RR contains a single property entry consisting of a tag-value
@@ -123,7 +124,7 @@
             Value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return $"{Flags} {Tag} \"{Value}\"";
         }

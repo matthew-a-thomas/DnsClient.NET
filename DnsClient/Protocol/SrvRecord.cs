@@ -2,6 +2,7 @@
 {
     using System;
     using Core;
+    using Core.Protocol;
 
     /* RFC 2782 (https://tools.ietf.org/html/rfc2782)
 
@@ -162,7 +163,7 @@
             Target = target ?? throw new ArgumentNullException(nameof(target));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return string.Format(
                 "{0} {1} {2} {3}",

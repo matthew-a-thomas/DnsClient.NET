@@ -2,6 +2,7 @@
 {
     using System;
     using Core;
+    using Core.Protocol;
 
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.8:
@@ -48,7 +49,7 @@
             NewName = name ?? throw new ArgumentNullException(nameof(name));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return NewName.Value;
         }

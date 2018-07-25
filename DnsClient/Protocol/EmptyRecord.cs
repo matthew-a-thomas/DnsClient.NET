@@ -1,10 +1,12 @@
 ﻿namespace DnsClient.Protocol
 {
+    using Core.Protocol;
+
     /// <summary>
     /// A <see cref="DnsResourceRecord"/> not representing any specifc resource record.
     /// Used if unsupported <see cref="ResourceRecordType"/>s are found in the result.
     /// </summary>
-    /// <seealso cref="DnsClient.Protocol.DnsResourceRecord" />
+    /// <seealso cref="DnsResourceRecord" />
     public class EmptyRecord : DnsResourceRecord
     {
         /// <summary>
@@ -16,7 +18,7 @@
         {
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return string.Empty;
         }

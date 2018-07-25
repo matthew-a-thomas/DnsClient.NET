@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Sockets;
+    using Core.Protocol;
 
     /*
     https://tools.ietf.org/html/rfc1035#section-3.4.2:
@@ -121,7 +122,7 @@
             Ports = GetPorts(bitmap);
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return $"{Address} {Protocol} {string.Join(" ", Ports)}";
         }

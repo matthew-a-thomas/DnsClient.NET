@@ -2,6 +2,7 @@
 {
     using System;
     using Core;
+    using Core.Protocol;
 
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.1:
@@ -49,7 +50,7 @@
             CanonicalName = canonicalName ?? throw new ArgumentNullException(nameof(canonicalName));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return CanonicalName.Value;
         }

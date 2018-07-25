@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net;
+    using Core.Protocol;
 
     /// <summary>
     /// Base class for <see cref="DnsResourceRecord"/>s transporting an <see cref="IPAddress"/>.
@@ -31,7 +32,7 @@
             Address = address ?? throw new ArgumentNullException(nameof(address));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return Address.ToString();
         }

@@ -1,4 +1,4 @@
-﻿namespace DnsClient.Protocol
+﻿namespace DnsClient.Core.Protocol
 {
     using System;
 

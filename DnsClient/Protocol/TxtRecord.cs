@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Core.Protocol;
 
     /*
     * RFC 1464  https://tools.ietf.org/html/rfc1464
@@ -68,7 +69,7 @@
             Text = utf8Values ?? throw new ArgumentNullException(nameof(utf8Values));
         }
 
-        private protected override string RecordToString()
+        protected override string RecordToString()
         {
             return string.Join(" ", EscapedText.Select(p => "\"" + p + "\"")).Trim();
         }

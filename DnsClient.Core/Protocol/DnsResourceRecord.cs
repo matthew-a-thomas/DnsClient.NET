@@ -1,4 +1,4 @@
-﻿namespace DnsClient.Protocol
+﻿namespace DnsClient.Core.Protocol
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
@@ -6,7 +6,7 @@
     /// <summary>
     /// Base class for all resource records.
     /// </summary>
-    /// <seealso cref="DnsClient.Protocol.ResourceRecordInfo" />
+    /// <seealso cref="ResourceRecordInfo" />
     public abstract class DnsResourceRecord : ResourceRecordInfo
     {
         /// <summary>
@@ -62,6 +62,6 @@
         /// <see cref="ToString(int)"/> uses this to compose the full string value of this instance.
         /// </summary>
         /// <returns>A string representing this record.</returns>
-        private protected abstract string RecordToString();
+        protected abstract string RecordToString();
     }
 }

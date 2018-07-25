@@ -1,6 +1,7 @@
 ﻿namespace DnsClient
 {
     using Core;
+    using Core.Protocol;
     using Protocol;
 
     /// <summary>
