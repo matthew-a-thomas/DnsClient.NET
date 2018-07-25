@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
     using System;
+    using Core;
 
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.11:

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using Core;
 
     /// <summary>
     /// The <see cref="DnsQuestion"/> class transports information of the lookup query performed by <see cref="IDnsQuery"/>.

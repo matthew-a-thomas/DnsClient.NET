@@ -1,4 +1,4 @@
-﻿namespace DnsClient
+﻿namespace DnsClient.Core
 {
     using System;
     using System.Diagnostics;

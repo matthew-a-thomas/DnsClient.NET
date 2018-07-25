@@ -1,12 +1,11 @@
-﻿namespace DnsClient
+﻿namespace DnsClient.Core
 {
     using System;
     using System.Diagnostics;
     using System.Net;
     using System.Text;
-    using Internal;
 
-    internal class DnsDatagramWriter : IDisposable
+    public sealed class DnsDatagramWriter : IDisposable
     {
         // queries can only be 255 octets + some header bytes, so that size is pretty safe...
         public const int BufferSize = 1024;
@@ -37,7 +36,7 @@
         public DnsDatagramWriter(ArraySegment<byte> useBuffer)
         {
             Debug.Assert(useBuffer.Count >= BufferSize);
-            
+
             _buffer = useBuffer;
         }
 
@@ -98,7 +97,7 @@
 
         public void WriteUInt32NetworkOrder(uint value) => WriteInt32NetworkOrder((int)value);
 
-        protected virtual void Dispose(bool disposing)
+        public void Dispose(bool disposing)
         {
             if (disposing)
             {

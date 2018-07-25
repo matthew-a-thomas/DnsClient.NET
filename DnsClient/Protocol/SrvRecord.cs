@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
     using System;
+    using Core;
 
     /* RFC 2782 (https://tools.ietf.org/html/rfc2782)
 

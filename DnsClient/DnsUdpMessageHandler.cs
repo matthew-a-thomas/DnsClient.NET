@@ -7,7 +7,7 @@
     using System.Net.Sockets;
     using System.Threading;
     using System.Threading.Tasks;
-    using Internal;
+    using Core;
 
     internal class DnsUdpMessageHandler : DnsMessageHandler
     {
@@ -115,7 +115,7 @@
                 var result = await udpClient.ReceiveAsync().ConfigureAwait(false);
 
                 var response = GetResponseMessage(new ArraySegment<byte>(result.Buffer, 0, result.Buffer.Length));
-                
+
                 if (request.Header.Id != response.Header.Id)
                 {
                     throw new DnsResponseException("Header id mismatch.");

@@ -7,7 +7,7 @@
     using System.Net.Sockets;
     using System.Threading;
     using System.Threading.Tasks;
-    using Internal;
+    using Core;
 
     internal class DnsTcpMessageHandler : DnsMessageHandler
     {

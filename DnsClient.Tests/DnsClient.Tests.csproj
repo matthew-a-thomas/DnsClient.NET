@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <AssemblyName>DnsClient.Tests</AssemblyName>
     <SignAssembly>true</SignAssembly>
@@ -12,13 +11,11 @@
     <LangVersion>7.2</LangVersion>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <None Update="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
@@ -29,8 +26,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
   </ItemGroup>
-
   <ItemGroup>
+    <ProjectReference Include="..\DnsClient.Core\DnsClient.Core.csproj" />
     <ProjectReference Include="..\DnsClient\DnsClient.csproj" />
   </ItemGroup>
   <ItemGroup>

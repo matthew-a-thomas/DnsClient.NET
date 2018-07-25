@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
     using System;
+    using Core;
 
     /// <summary>
     /// The type represents a <see cref="DnsResourceRecord"/>.

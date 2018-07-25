@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Tests
 {
     using System;
+    using Core;
     using Xunit;
 
     public class DnsStringTest

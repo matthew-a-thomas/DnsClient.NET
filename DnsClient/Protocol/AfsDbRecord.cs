@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
     using System;
+    using Core;
 
     /* https://tools.ietf.org/html/rfc1183#section-1, https://tools.ietf.org/html/rfc5864
     1. AFS Data Base location

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Buffers;
-
-namespace DnsClient.Internal
+﻿namespace DnsClient.Core
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    using System;
+    using System.Buffers;
 
     public sealed class PooledBytes : IDisposable
     {
@@ -52,5 +50,4 @@ namespace DnsClient.Internal
             }
         }
     }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

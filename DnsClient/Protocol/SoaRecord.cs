@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Protocol
 {
 	using System;
+	using Core;
 
 	/*
     3.3.13. SOA RDATA format

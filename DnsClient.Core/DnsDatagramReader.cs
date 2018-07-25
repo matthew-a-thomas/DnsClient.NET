@@ -1,4 +1,4 @@
-﻿namespace DnsClient
+﻿namespace DnsClient.Core
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@
     using System.Net;
     using System.Text;
 
-    internal class DnsDatagramReader
+    public sealed class DnsDatagramReader
     {
         public const int Pv6Length = 16;
         public const int Pv4Length = 4;
