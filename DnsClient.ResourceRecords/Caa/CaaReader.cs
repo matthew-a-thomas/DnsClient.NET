@@ -1,7 +1,8 @@
 ﻿namespace DnsClient.ResourceRecords.Caa
 {
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
+
     public sealed class CaaReader : IResourceRecordReader<CaaRecord>
     {
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Caa;

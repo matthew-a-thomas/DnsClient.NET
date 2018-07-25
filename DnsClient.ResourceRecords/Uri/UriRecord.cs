@@ -1,7 +1,7 @@
 ﻿namespace DnsClient.ResourceRecords.Uri
 {
     using System;
-    using Core.Protocol;
+    using Core.ResourceRecords;
 
     /*
     * RFC 7553  https://tools.ietf.org/html/rfc7553

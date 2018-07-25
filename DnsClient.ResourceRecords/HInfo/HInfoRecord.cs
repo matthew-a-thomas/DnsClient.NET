@@ -1,6 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.HInfo
 {
-    using Core.Protocol;
+    using Core.ResourceRecords;
 
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.11:

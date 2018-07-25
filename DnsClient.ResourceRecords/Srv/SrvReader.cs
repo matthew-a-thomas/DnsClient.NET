@@ -1,7 +1,8 @@
 ﻿namespace DnsClient.ResourceRecords.Srv
 {
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
+
     public sealed class SrvReader : IResourceRecordReader<SrvRecord>
     {
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Srv;

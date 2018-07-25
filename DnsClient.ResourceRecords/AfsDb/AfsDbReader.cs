@@ -1,7 +1,8 @@
 ﻿namespace DnsClient.ResourceRecords.AfsDb
 {
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
+
     public sealed class AfsDbReader : IResourceRecordReader<AfsDbRecord>
     {
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.AfsDb;

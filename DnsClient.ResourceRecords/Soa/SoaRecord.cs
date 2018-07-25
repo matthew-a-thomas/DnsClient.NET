@@ -2,7 +2,7 @@
 {
 	using System;
 	using Core;
-	using Core.Protocol;
+	using Core.ResourceRecords;
 
 	/*
     3.3.13. SOA RDATA format

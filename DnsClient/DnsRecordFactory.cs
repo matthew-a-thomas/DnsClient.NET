@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
     using ResourceRecords;
     using ResourceRecords.A;
     using ResourceRecords.Aaaa;

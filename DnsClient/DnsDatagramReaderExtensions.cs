@@ -1,7 +1,7 @@
 ﻿namespace DnsClient
 {
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
 
     /// <summary>
     /// Extensions for <see cref="DnsDatagramReader"/>.

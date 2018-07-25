@@ -1,7 +1,8 @@
 ﻿namespace DnsClient.ResourceRecords.Ns
 {
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
+
     public sealed class NsReader : IResourceRecordReader<NsRecord>
     {
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Ns;

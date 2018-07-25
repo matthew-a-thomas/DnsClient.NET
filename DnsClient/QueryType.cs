@@ -2,7 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Core.Protocol;
+    using Core.ResourceRecords;
     using ResourceRecords.A;
     using ResourceRecords.Aaaa;
     using ResourceRecords.AfsDb;

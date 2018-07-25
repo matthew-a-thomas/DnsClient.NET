@@ -1,7 +1,8 @@
 ﻿namespace DnsClient.ResourceRecords.Mg
 {
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
+
     public sealed class MgReader : IResourceRecordReader<MgRecord>
     {
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Mg;

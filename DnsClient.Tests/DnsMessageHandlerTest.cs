@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Net;
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
     using ResourceRecords.A;
     using Xunit;
 

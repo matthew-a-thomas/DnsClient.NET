@@ -1,4 +1,4 @@
-﻿namespace DnsClient.Core.Protocol
+﻿namespace DnsClient.Core.ResourceRecords
 {
     /// <summary>
     /// Something which knows how to get a <see cref="DnsResourceRecord"/> from a <see cref="DnsDatagramReader"/>.

@@ -1,7 +1,8 @@
 ﻿namespace DnsClient.ResourceRecords.CName
 {
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
+
     public sealed class CNameReader : IResourceRecordReader<CNameRecord>
     {
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Cname;

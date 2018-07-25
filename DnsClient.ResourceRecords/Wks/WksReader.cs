@@ -2,7 +2,8 @@
 {
     using System.Linq;
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
+
     public sealed class WksReader : IResourceRecordReader<WksRecord>
     {
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Wks;

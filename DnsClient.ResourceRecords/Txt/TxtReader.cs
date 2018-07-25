@@ -2,7 +2,8 @@
 {
     using System.Collections.Generic;
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
+
     public sealed class TxtReader : IResourceRecordReader<TxtRecord>
     {
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Txt;

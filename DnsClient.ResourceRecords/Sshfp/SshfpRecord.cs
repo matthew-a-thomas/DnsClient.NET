@@ -1,7 +1,7 @@
 ﻿namespace DnsClient.ResourceRecords.Sshfp
 {
     using System.Diagnostics.CodeAnalysis;
-    using Core.Protocol;
+    using Core.ResourceRecords;
 
     /// <summary>
     /// A <see cref="DnsResourceRecord"/> represending an SSH fingerprint

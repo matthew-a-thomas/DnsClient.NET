@@ -2,7 +2,7 @@
 {
     using System;
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
 
     /* RFC 1035 (https://tools.ietf.org/html/rfc1035#section-3.3.12)
     3.3.12. PTR RDATA format

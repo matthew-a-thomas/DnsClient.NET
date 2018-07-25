@@ -5,7 +5,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
     using Moq;
     using ResourceRecords.A;
     using Xunit;

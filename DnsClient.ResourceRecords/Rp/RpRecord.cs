@@ -2,7 +2,7 @@
 {
     using System;
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
 
     /*
     https://tools.ietf.org/html/rfc1183#section-2.2:

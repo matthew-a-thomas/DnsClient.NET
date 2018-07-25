@@ -1,6 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords
 {
-    using Core.Protocol;
+    using Core.ResourceRecords;
 
     /// <summary>
     /// A <see cref="DnsResourceRecord"/> not representing any specifc resource record.

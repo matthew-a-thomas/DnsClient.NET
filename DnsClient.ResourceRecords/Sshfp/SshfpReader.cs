@@ -2,7 +2,8 @@
 {
     using System.Linq;
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
+
     public sealed class SshfpReader : IResourceRecordReader<SshfpRecord>
     {
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Sshfp;

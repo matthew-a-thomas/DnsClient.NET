@@ -1,7 +1,7 @@
 ﻿namespace DnsClient.ResourceRecords.Opt
 {
     using Core;
-    using Core.Protocol;
+    using Core.ResourceRecords;
 
     /* https://tools.ietf.org/html/rfc6891#section-4.3
     6.1.2.  Wire Format

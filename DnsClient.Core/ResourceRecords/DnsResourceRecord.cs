@@ -1,4 +1,4 @@
-﻿namespace DnsClient.Core.Protocol
+﻿namespace DnsClient.Core.ResourceRecords
 {
     using System;
     using System.Diagnostics.CodeAnalysis;

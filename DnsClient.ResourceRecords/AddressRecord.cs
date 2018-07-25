@@ -4,7 +4,7 @@
     using System.Net;
     using A;
     using Aaaa;
-    using Core.Protocol;
+    using Core.ResourceRecords;
 
     /// <summary>
     /// Base class for <see cref="DnsResourceRecord"/>s transporting an <see cref="IPAddress"/>.
