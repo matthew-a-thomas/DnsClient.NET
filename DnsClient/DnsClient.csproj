@@ -3,33 +3,25 @@
     <VersionPrefix>1.1.1</VersionPrefix>
     <VersionSuffix Condition="'$(VersionSuffix)'!='' AND '$(BuildNumber)' != ''">$(VersionSuffix)-$(BuildNumber)</VersionSuffix>
     <DebugType>full</DebugType>
-
     <Product>DnsClient.NET</Product>
     <Description>DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups</Description>
-
     <Copyright>Copyright (c) 2017 MichaConrad</Copyright>
     <Authors>MichaCo</Authors>
     <AssemblyName>DnsClient</AssemblyName>
-
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition="'$(OS)' != 'Windows_NT'">true</PublicSign>
-
     <PackageId>DnsClient</PackageId>
     <PackageTags>DNS;Name Server;CSharp;.NET;.NET Core</PackageTags>
-
     <PackageIconUrl>http://dnsclient.michaco.net/favicon-196x196.png</PackageIconUrl>
     <PackageProjectUrl>http://dnsclient.michaco.net</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MichaCo/DnsClient.NET/blob/master/LICENSE</PackageLicenseUrl>
     <WebPage>http://dnsclient.michaco.net</WebPage>
-
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/MichaCo/DnsClient.NET</RepositoryUrl>
-
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>7.2</LangVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Buffers" Version="4.5.0" />
     <PackageReference Include="System.Collections" Version="4.3.0" />

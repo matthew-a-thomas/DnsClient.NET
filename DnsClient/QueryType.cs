@@ -1,6 +1,7 @@
 ﻿namespace DnsClient
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Protocol;
 
     /*
@@ -11,6 +12,8 @@
     /// The query type field appear in the question part of a query.
     /// Query types are a superset of <see cref="Protocol.ResourceRecordType"/>.
     /// </summary>
+    [SuppressMessage("ReSharper",
+        "UnusedMember.Global")]
     public enum QueryType : short
     {
         /// <summary>
@@ -189,6 +192,13 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc6844">RFC 6844</seealso>
         /// <seealso cref="CaaRecord"/>
-        Caa = ResourceRecordType.Caa
+        Caa = ResourceRecordType.Caa,
+
+        /// <summary>
+        /// A SSH Fingerprint resource record.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc4255">RFC 4255</seealso>
+        /// <seealso cref="SshfpRecord"/>
+        Sshfp = ResourceRecordType.Sshfp
     }
 }
