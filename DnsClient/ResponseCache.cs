@@ -14,8 +14,12 @@
         // max is 24 days
         private static readonly TimeSpan SMaxTimeout = TimeSpan.FromMilliseconds(int.MaxValue);
 
-        private static readonly int SCleanupInterval = (int)TimeSpan.FromMinutes(10).TotalMilliseconds;
-        private readonly ConcurrentDictionary<string, ResponseEntry> _cache = new ConcurrentDictionary<string, ResponseEntry>();
+        private static readonly int SCleanupInterval = (int) TimeSpan.FromMinutes(10)
+            .TotalMilliseconds;
+
+        private readonly ConcurrentDictionary<string, ResponseEntry> _cache =
+            new ConcurrentDictionary<string, ResponseEntry>();
+
         private readonly object _cleanupLock = new object();
         private bool _cleanupRunning;
         private int _lastCleanup;
@@ -40,43 +44,66 @@
             }
         }
 
-        public ResponseCache(bool enabled = true, TimeSpan? minimumTimout = null)
+        public ResponseCache(
+            bool enabled = true,
+            TimeSpan? minimumTimout = null)
         {
             Enabled = enabled;
             MinimumTimout = minimumTimout;
         }
 
-        public static string GetCacheKey(DnsQuestion question, NameServer server)
+        public static string GetCacheKey(
+            DnsQuestion question,
+            NameServer server)
         {
             if (question == null)
             {
                 throw new ArgumentNullException(nameof(question));
             }
+
             if (server == null)
             {
                 throw new ArgumentNullException(nameof(server));
             }
 
-            return string.Concat(server.Endpoint.Address.ToString(), "#", server.Endpoint.Port.ToString(), "_", question.QueryName.Value, ":", (short)question.QuestionClass, ":", (short)question.QuestionType);
+            return string.Concat(
+                server.Endpoint.Address.ToString(),
+                "#",
+                server.Endpoint.Port.ToString(),
+                "_",
+                question.QueryName.Value,
+                ":",
+                (short) question.QuestionClass,
+                ":",
+                (short) question.QuestionType);
         }
 
-        public IDnsQueryResponse Get(string key)
+        public IDnsQueryResponse Get(
+            string key)
         {
-            return Get(key, out _);
+            return Get(
+                key,
+                out _);
         }
 
-        public IDnsQueryResponse Get(string key, out double? effectiveTtl)
+        public IDnsQueryResponse Get(
+            string key,
+            out double? effectiveTtl)
         {
             effectiveTtl = null;
             if (key == null) throw new ArgumentNullException(key);
             if (!Enabled) return null;
 
-            if (_cache.TryGetValue(key, out var entry))
+            if (_cache.TryGetValue(
+                key,
+                out var entry))
             {
                 effectiveTtl = entry.Ttl;
                 if (entry.IsExpiredFor(DateTimeOffset.UtcNow))
                 {
-                    _cache.TryRemove(key, out entry);
+                    _cache.TryRemove(
+                        key,
+                        out entry);
                 }
                 else
                 {
@@ -88,7 +115,9 @@
             return null;
         }
 
-        public bool Add(string key, IDnsQueryResponse response)
+        public bool Add(
+            string key,
+            IDnsQueryResponse response)
         {
             if (key == null) throw new ArgumentNullException(key);
             if (Enabled && response != null && !response.HasError)
@@ -105,7 +134,7 @@
                     }
                     else if (MinimumTimout.HasValue && minTtl < MinimumTimout.Value.TotalMilliseconds)
                     {
-                        minTtl = (long)MinimumTimout.Value.TotalMilliseconds;
+                        minTtl = (long) MinimumTimout.Value.TotalMilliseconds;
                     }
 
                     if (minTtl < 1d)
@@ -113,10 +142,14 @@
                         return false;
                     }
 
-                    var newEntry = new ResponseEntry(response, minTtl);
+                    var newEntry = new ResponseEntry(
+                        response,
+                        minTtl);
 
                     StartCleanup();
-                    return _cache.TryAdd(key, newEntry);
+                    return _cache.TryAdd(
+                        key,
+                        newEntry);
                 }
             }
 
@@ -124,7 +157,8 @@
             return false;
         }
 
-        private static void DoCleanup(ResponseCache cache)
+        private static void DoCleanup(
+            ResponseCache cache)
         {
             cache._cleanupRunning = true;
 
@@ -133,7 +167,9 @@
             {
                 if (entry.Value.IsExpiredFor(now))
                 {
-                    cache._cache.TryRemove(entry.Key, out _);
+                    cache._cache.TryRemove(
+                        entry.Key,
+                        out _);
                 }
             }
 
@@ -159,7 +195,7 @@
                         _lastCleanup = currentTicks;
 
                         Task.Factory.StartNew(
-                            state => DoCleanup((ResponseCache)state),
+                            state => DoCleanup((ResponseCache) state),
                             this,
                             CancellationToken.None,
                             TaskCreationOptions.DenyChildAttach,
@@ -173,7 +209,8 @@
         {
             private readonly IDnsQueryResponse _response;
 
-            public bool IsExpiredFor(DateTimeOffset forDate) => forDate >= ExpiresAt;
+            public bool IsExpiredFor(
+                DateTimeOffset forDate) => forDate >= ExpiresAt;
 
             private DateTimeOffset ExpiresAt { get; }
 
@@ -182,14 +219,15 @@
             public double Ttl { get; }
 
             // returns in seconds, not MS!
-            private int Elapsed(DateTimeOffset? since = null)
+            private int Elapsed(
+                DateTimeOffset? since = null)
             {
                 if (since == null)
                 {
                     since = DateTimeOffset.UtcNow;
                 }
 
-                var elapsedMillis = (int)(since.Value - Created).TotalMilliseconds;
+                var elapsedMillis = (int) (since.Value - Created).TotalMilliseconds;
                 if (elapsedMillis < 0)
                 {
                     return 0;
@@ -206,7 +244,9 @@
                     return _response;
                 }
 
-                var response = new DnsResponseMessage(_response.Header, _response.MessageSize)
+                var response = new DnsResponseMessage(
+                    _response.Header,
+                    _response.MessageSize)
                 {
                     Audit = (_response as DnsQueryResponse)?.Audit ?? new LookupClientAudit()
                 };
@@ -242,7 +282,9 @@
                 return qr;
             }
 
-            public ResponseEntry(IDnsQueryResponse response, double ttlInMs)
+            public ResponseEntry(
+                IDnsQueryResponse response,
+                double ttlInMs)
             {
                 Debug.Assert(response != null);
                 Debug.Assert(ttlInMs >= 0);
