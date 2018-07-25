@@ -38,16 +38,6 @@
         +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
          * */
 
-        public ResourceRecordInfo ReadRecordInfo()
-        {
-            return new ResourceRecordInfo(
-                _reader.ReadQuestionQueryString(),                      // name
-                (ResourceRecordType)_reader.ReadUInt16NetworkOrder(),   // type
-                (QueryClass)_reader.ReadUInt16NetworkOrder(),           // class
-                (int)_reader.ReadUInt32NetworkOrder(),                  // ttl - 32bit!!
-                _reader.ReadUInt16NetworkOrder());                      // RDLength
-        }
-
         public DnsResourceRecord GetRecord(ResourceRecordInfo info)
         {
             if (info == null)

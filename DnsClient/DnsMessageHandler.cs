@@ -16,7 +16,7 @@
 
         public abstract bool IsTransientException<T>(T exception) where T : Exception;
 
-        public virtual void GetRequestData(DnsRequestMessage request, DnsDatagramWriter writer)
+        protected static void GetRequestData(DnsRequestMessage request, DnsDatagramWriter writer)
         {
             var question = request.Question;
 
@@ -72,7 +72,7 @@
             writer.WriteUInt16NetworkOrder(0);
         }
 
-        public virtual DnsResponseMessage GetResponseMessage(ArraySegment<byte> responseData)
+        public DnsResponseMessage GetResponseMessage(ArraySegment<byte> responseData)
         {
             var reader = new DnsDatagramReader(responseData);
             var factory = new DnsRecordFactory(reader);
@@ -95,21 +95,21 @@
 
             for (var answerIndex = 0; answerIndex < answerCount; answerIndex++)
             {
-                var info = factory.ReadRecordInfo();
+                var info = reader.ReadRecordInfo();
                 var record = factory.GetRecord(info);
                 response.AddAnswer(record);
             }
 
             for (var serverIndex = 0; serverIndex < nameServerCount; serverIndex++)
             {
-                var info = factory.ReadRecordInfo();
+                var info = reader.ReadRecordInfo();
                 var record = factory.GetRecord(info);
                 response.AddAuthority(record);
             }
 
             for (var additionalIndex = 0; additionalIndex < additionalCount; additionalIndex++)
             {
-                var info = factory.ReadRecordInfo();
+                var info = reader.ReadRecordInfo();
                 var record = factory.GetRecord(info);
                 response.AddAdditional(record);
             }
