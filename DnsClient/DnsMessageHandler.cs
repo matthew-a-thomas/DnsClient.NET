@@ -75,7 +75,7 @@
         public DnsResponseMessage GetResponseMessage(ArraySegment<byte> responseData)
         {
             var reader = new DnsDatagramReader(responseData);
-            var factory = new DnsRecordFactory(reader);
+            var factory = new StandardDnsRecordFactoryFactory().Create();
 
             var id = reader.ReadUInt16NetworkOrder();
             var flags = reader.ReadUInt16NetworkOrder();
@@ -96,21 +96,21 @@
             for (var answerIndex = 0; answerIndex < answerCount; answerIndex++)
             {
                 var info = reader.ReadRecordInfo();
-                var record = factory.GetRecord(info);
+                var record = factory.GetRecord(info, reader);
                 response.AddAnswer(record);
             }
 
             for (var serverIndex = 0; serverIndex < nameServerCount; serverIndex++)
             {
                 var info = reader.ReadRecordInfo();
-                var record = factory.GetRecord(info);
+                var record = factory.GetRecord(info, reader);
                 response.AddAuthority(record);
             }
 
             for (var additionalIndex = 0; additionalIndex < additionalCount; additionalIndex++)
             {
                 var info = reader.ReadRecordInfo();
-                var record = factory.GetRecord(info);
+                var record = factory.GetRecord(info, reader);
                 response.AddAdditional(record);
             }
 

@@ -24,19 +24,20 @@
         "ConvertToLocalFunction")]
     public class DnsRecordFactoryTest
     {
-        private static DnsRecordFactory GetFactory(byte[] data)
+        private static DnsRecordFactory GetFactory(byte[] data, out DnsDatagramReader reader)
         {
-            return new DnsRecordFactory(new DnsDatagramReader(new ArraySegment<byte>(data)));
+            reader = new DnsDatagramReader(new ArraySegment<byte>(data));
+            return new StandardDnsRecordFactoryFactory().Create();
         }
 
         [Fact]
         public void DnsRecordFactory_PTRRecordNotEnoughData()
         {
             var data = new byte[0];
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ptr, QueryClass.In, 0, data.Length);
 
-            Action act = () => factory.GetRecord(info);
+            Action act = () => factory.GetRecord(info, reader);
 
             Assert.ThrowsAny<IndexOutOfRangeException>(act);
         }
@@ -45,10 +46,10 @@
         public void DnsRecordFactory_PTRRecordEmptyName()
         {
             var data = new byte[] { 0 };
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ptr, QueryClass.In, 0, data.Length);
 
-            var result = factory.GetRecord(info) as PtrRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as PtrRecord ?? throw new Exception();
 
             Assert.Equal(".", result.PtrDomainName.Value);
         }
@@ -59,10 +60,10 @@
             var name = DnsString.Parse("result.example.com");
             var writer = new DnsDatagramWriter();
             writer.WriteHostName(name.Value);
-            var factory = GetFactory(writer.Data.ToArray());
+            var factory = GetFactory(writer.Data.ToArray(), out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ptr, QueryClass.In, 0, writer.Data.Count);
 
-            var result = factory.GetRecord(info) as PtrRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as PtrRecord ?? throw new Exception();
 
             Assert.Equal(result.PtrDomainName, name);
         }
@@ -73,10 +74,10 @@
             var name = DnsString.Parse("Müsli.de");
             var writer = new DnsDatagramWriter();
             writer.WriteHostName(name.Value);
-            var factory = GetFactory(writer.Data.ToArray());
+            var factory = GetFactory(writer.Data.ToArray(), out var reader);
             var info = new ResourceRecordInfo("Müsli.de", ResourceRecordType.Mb, QueryClass.In, 0, writer.Data.Count);
 
-            var result = factory.GetRecord(info) as MbRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as MbRecord ?? throw new Exception();
 
             Assert.Equal(result.MadName, name);
             Assert.Equal("müsli.de.", result.MadName.Original);
@@ -86,10 +87,10 @@
         public void DnsRecordFactory_ARecordNotEnoughData()
         {
             var data = new byte[] { 23, 23, 23 };
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("example.com", ResourceRecordType.A, QueryClass.In, 0, data.Length);
 
-            Action act = () => factory.GetRecord(info);
+            Action act = () => factory.GetRecord(info, reader);
 
             Assert.ThrowsAny<IndexOutOfRangeException>(act);
         }
@@ -98,10 +99,10 @@
         public void DnsRecordFactory_ARecord()
         {
             var data = new byte[] { 23, 24, 25, 26 };
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("example.com", ResourceRecordType.A, QueryClass.In, 0, data.Length);
 
-            var result = factory.GetRecord(info) as ARecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as ARecord ?? throw new Exception();
 
             Assert.Equal(result.Address, IPAddress.Parse("23.24.25.26"));
         }
@@ -110,10 +111,10 @@
         public void DnsRecordFactory_AAAARecordNotEnoughData()
         {
             var data = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("example.com", ResourceRecordType.Aaaa, QueryClass.In, 0, data.Length);
 
-            Action act = () => factory.GetRecord(info);
+            Action act = () => factory.GetRecord(info, reader);
 
             Assert.ThrowsAny<IndexOutOfRangeException>(act);
         }
@@ -122,10 +123,10 @@
         public void DnsRecordFactory_AAAARecord()
         {
             var data = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("example.com", ResourceRecordType.Aaaa, QueryClass.In, 0, data.Length);
 
-            var result = factory.GetRecord(info) as AaaaRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as AaaaRecord ?? throw new Exception();
 
             Assert.Equal(result.Address, IPAddress.Parse("102:304:506:708:90a:b0c:d0e:f10"));
             Assert.Equal(result.Address.GetAddressBytes(), data);
@@ -135,10 +136,10 @@
         public void DnsRecordFactory_NSRecordNotEnoughData()
         {
             var data = new byte[0];
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ns, QueryClass.In, 0, data.Length);
 
-            Action act = () => factory.GetRecord(info);
+            Action act = () => factory.GetRecord(info, reader);
 
             Assert.ThrowsAny<IndexOutOfRangeException>(act);
         }
@@ -147,10 +148,10 @@
         public void DnsRecordFactory_NSRecordEmptyName()
         {
             var data = new byte[] { 0 };
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ns, QueryClass.In, 0, data.Length);
 
-            var result = factory.GetRecord(info) as NsRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as NsRecord ?? throw new Exception();
 
             Assert.Equal(".", result.NsdName.Value);
         }
@@ -161,10 +162,10 @@
             var writer = new DnsDatagramWriter();
             var name = DnsString.Parse("result.example.com");
             writer.WriteHostName(name.Value);
-            var factory = GetFactory(writer.Data.ToArray());
+            var factory = GetFactory(writer.Data.ToArray(), out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ns, QueryClass.In, 0, writer.Data.Count);
 
-            var result = factory.GetRecord(info) as NsRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as NsRecord ?? throw new Exception();
 
             Assert.Equal(result.NsdName, name);
         }
@@ -173,10 +174,10 @@
         public void DnsRecordFactory_MXRecordOrderMissing()
         {
             var data = new byte[0];
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Mx, QueryClass.In, 0, data.Length);
 
-            Action act = () => factory.GetRecord(info);
+            Action act = () => factory.GetRecord(info, reader);
 
             Assert.ThrowsAny<IndexOutOfRangeException>(act);
         }
@@ -185,10 +186,10 @@
         public void DnsRecordFactory_MXRecordNameMissing()
         {
             var data = new byte[] { 1, 2 };
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Mx, QueryClass.In, 0, data.Length);
 
-            Action act = () => factory.GetRecord(info);
+            Action act = () => factory.GetRecord(info, reader);
 
             Assert.ThrowsAny<IndexOutOfRangeException>(act);
         }
@@ -197,10 +198,10 @@
         public void DnsRecordFactory_MXRecordEmptyName()
         {
             var data = new byte[] { 1, 0, 0 };
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Mx, QueryClass.In, 0, data.Length);
 
-            var result = factory.GetRecord(info) as MxRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as MxRecord ?? throw new Exception();
 
             Assert.Equal(256, result.Preference);
             Assert.Equal(".", result.Exchange.Value);
@@ -215,10 +216,10 @@
             writer.WriteByte(1);
             writer.WriteHostName(name.Value);
 
-            var factory = GetFactory(writer.Data.ToArray());
+            var factory = GetFactory(writer.Data.ToArray(), out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Mx, QueryClass.In, 0, writer.Data.Count);
 
-            var result = factory.GetRecord(info) as MxRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as MxRecord ?? throw new Exception();
 
             Assert.Equal(1, result.Preference);
             Assert.Equal(result.Exchange, name);
@@ -228,10 +229,10 @@
         public void DnsRecordFactory_SOARecordEmpty()
         {
             var data = new byte[0];
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Soa, QueryClass.In, 0, data.Length);
 
-            Action act = () => factory.GetRecord(info);
+            Action act = () => factory.GetRecord(info, reader);
 
             Assert.ThrowsAny<IndexOutOfRangeException>(act);
         }
@@ -240,10 +241,10 @@
         public void DnsRecordFactory_SOARecord()
         {
             var data = new byte[] { 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 5 };
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Soa, QueryClass.In, 0, data.Length);
 
-            var result = factory.GetRecord(info) as SoaRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as SoaRecord ?? throw new Exception();
 
             Assert.Equal(".", result.MName.Value);
             Assert.Equal(".", result.RName.Value);
@@ -258,10 +259,10 @@
         public void DnsRecordFactory_SRVRecordEmpty()
         {
             var data = new byte[0];
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Srv, QueryClass.In, 0, data.Length);
 
-            Action act = () => factory.GetRecord(info);
+            Action act = () => factory.GetRecord(info, reader);
 
             Assert.ThrowsAny<IndexOutOfRangeException>(act);
         }
@@ -273,11 +274,11 @@
             var writer = new DnsDatagramWriter();
             writer.WriteBytes(new byte[] { 0, 1, 1, 0, 2, 3 }, 6);
             writer.WriteHostName(name.Value);
-            var factory = GetFactory(writer.Data.ToArray());
+            var factory = GetFactory(writer.Data.ToArray(), out var reader);
 
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Srv, QueryClass.In, 0, writer.Data.Count);
 
-            var result = factory.GetRecord(info) as SrvRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as SrvRecord ?? throw new Exception();
 
             Assert.Equal(result.Target, name);
             Assert.True(result.Priority == 1);
@@ -293,10 +294,10 @@
             var data = new List<byte> {5};
             data.AddRange(lineA);
 
-            var factory = GetFactory(data.ToArray());
+            var factory = GetFactory(data.ToArray(), out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Txt, QueryClass.In, 0, data.Count);
 
-            Action act = () => factory.GetRecord(info);
+            Action act = () => factory.GetRecord(info, reader);
 
             Assert.ThrowsAny<IndexOutOfRangeException>(act);
         }
@@ -305,10 +306,10 @@
         public void DnsRecordFactory_TXTRecordWrongTextLength()
         {
             var data = new byte[0];
-            var factory = GetFactory(data);
+            var factory = GetFactory(data, out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Txt, QueryClass.In, 0, data.Length);
 
-            var result = factory.GetRecord(info) as TxtRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as TxtRecord ?? throw new Exception();
 
             Assert.Empty(result.EscapedText);
         }
@@ -325,10 +326,10 @@
             data.Add((byte)lineB.Length);
             data.AddRange(lineB);
 
-            var factory = GetFactory(data.ToArray());
+            var factory = GetFactory(data.ToArray(), out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Txt, QueryClass.In, 0, data.Count);
 
-            var result = factory.GetRecord(info) as TxtRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as TxtRecord ?? throw new Exception();
 
             Assert.Equal(2, result.EscapedText.Count);
             Assert.Equal(result.EscapedText.ElementAt(0), textA);
@@ -350,10 +351,10 @@
             data.Add((byte)type);
             data.AddRange(fingerprintBytes);
 
-            var factory = GetFactory(data.ToArray());
+            var factory = GetFactory(data.ToArray(), out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Sshfp, QueryClass.In, 0, data.Count);
 
-            var result = factory.GetRecord(info) as SshfpRecord;
+            var result = factory.GetRecord(info, reader) as SshfpRecord;
 
             Assert.NotNull(result);
             Assert.Equal(SshfpAlgorithm.Rsa, result.Algorithm);
@@ -373,10 +374,10 @@
             data.Add((byte)lineB.Length);
             data.AddRange(lineB);
 
-            var factory = GetFactory(data.ToArray());
+            var factory = GetFactory(data.ToArray(), out var reader);
             var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Txt, QueryClass.In, 0, data.Count);
 
-            var result = factory.GetRecord(info) as TxtRecord ?? throw new Exception();
+            var result = factory.GetRecord(info, reader) as TxtRecord ?? throw new Exception();
 
             Assert.Equal(2, result.EscapedText.Count);
             Assert.Equal(result.Text.ElementAt(0), textA);
