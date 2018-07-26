@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.A
 {
     using System.Net;
-    using Core.ResourceRecords;
 
     /*
     3.4.1. A RDATA format

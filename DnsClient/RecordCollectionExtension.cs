@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Core.ResourceRecords;
+    using ResourceRecords;
     using ResourceRecords.A;
     using ResourceRecords.Aaaa;
     using ResourceRecords.AfsDb;

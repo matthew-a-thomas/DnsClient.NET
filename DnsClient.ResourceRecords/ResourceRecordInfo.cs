@@ -1,4 +1,4 @@
-﻿namespace DnsClient.Core.ResourceRecords
+﻿namespace DnsClient.ResourceRecords
 {
     using System;
     using Core;

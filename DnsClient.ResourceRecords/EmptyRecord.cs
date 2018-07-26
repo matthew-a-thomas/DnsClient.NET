@@ -1,7 +1,5 @@
 ﻿namespace DnsClient.ResourceRecords
 {
-    using Core.ResourceRecords;
-
     /// <summary>
     /// A <see cref="DnsResourceRecord"/> not representing any specifc resource record.
     /// Used if unsupported <see cref="ResourceRecordType"/>s are found in the result.

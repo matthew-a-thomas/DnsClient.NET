@@ -5,8 +5,8 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
-    using Core.ResourceRecords;
     using Moq;
+    using ResourceRecords;
     using ResourceRecords.A;
     using Xunit;
 

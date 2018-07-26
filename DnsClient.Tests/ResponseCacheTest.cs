@@ -6,7 +6,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
-    using Core.ResourceRecords;
     using ResourceRecords;
     using Xunit;
 

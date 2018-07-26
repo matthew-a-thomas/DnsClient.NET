@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.Aaaa
 {
     using Core;
-    using Core.ResourceRecords;
 
     public sealed class AaaaReader : IResourceRecordReader<AaaaRecord>
     {

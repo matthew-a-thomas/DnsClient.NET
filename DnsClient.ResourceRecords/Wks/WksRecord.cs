@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Sockets;
-    using Core.ResourceRecords;
 
     /*
     https://tools.ietf.org/html/rfc1035#section-3.4.2:

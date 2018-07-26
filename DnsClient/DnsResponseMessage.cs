@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Core.ResourceRecords;
+    using ResourceRecords;
 
     internal class DnsResponseMessage
     {

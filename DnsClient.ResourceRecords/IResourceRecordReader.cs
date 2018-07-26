@@ -1,5 +1,7 @@
-﻿namespace DnsClient.Core.ResourceRecords
+﻿namespace DnsClient.ResourceRecords
 {
+    using Core;
+
     /// <summary>
     /// Something which knows how to get a <see cref="DnsResourceRecord"/> from a <see cref="DnsDatagramReader"/>.
     /// </summary>

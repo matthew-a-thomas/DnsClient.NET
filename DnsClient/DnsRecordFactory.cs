@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Core;
-    using Core.ResourceRecords;
     using ResourceRecords;
 
     public sealed class DnsRecordFactory

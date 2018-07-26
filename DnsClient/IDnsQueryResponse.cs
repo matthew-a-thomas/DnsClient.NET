@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using Core;
-    using Core.ResourceRecords;
+    using ResourceRecords;
 
     /// <summary>
     /// Contract defining the result of a query performed by <see cref="IDnsQuery"/>.

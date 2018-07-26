@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.Ptr
 {
     using Core;
-    using Core.ResourceRecords;
 
     public sealed class PtrReader : IResourceRecordReader<PtrRecord>
     {

@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.Mb
 {
     using Core;
-    using Core.ResourceRecords;
 
     public sealed class MbReader : IResourceRecordReader<MbRecord>
     {

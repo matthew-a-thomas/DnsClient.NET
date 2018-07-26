@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.Mx
 {
     using Core;
-    using Core.ResourceRecords;
 
     public sealed class MxReader : IResourceRecordReader<MxRecord>
     {

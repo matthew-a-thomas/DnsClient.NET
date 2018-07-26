@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.AfsDb
 {
     using Core;
-    using Core.ResourceRecords;
 
     public sealed class AfsDbReader : IResourceRecordReader<AfsDbRecord>
     {

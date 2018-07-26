@@ -2,7 +2,6 @@
 {
     using System.Linq;
     using Core;
-    using Core.ResourceRecords;
 
     public sealed class NullReader : IResourceRecordReader<NullRecord>
     {

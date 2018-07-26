@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.Uri
 {
     using Core;
-    using Core.ResourceRecords;
 
     public sealed class UriReader : IResourceRecordReader<UriRecord>
     {

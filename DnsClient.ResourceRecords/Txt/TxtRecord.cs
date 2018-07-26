@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Core.ResourceRecords;
 
     /*
     * RFC 1464  https://tools.ietf.org/html/rfc1464

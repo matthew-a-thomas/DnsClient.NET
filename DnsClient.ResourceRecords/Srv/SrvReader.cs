@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.Srv
 {
     using Core;
-    using Core.ResourceRecords;
 
     public sealed class SrvReader : IResourceRecordReader<SrvRecord>
     {

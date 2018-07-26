@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.HInfo
 {
     using Core;
-    using Core.ResourceRecords;
 
     public sealed class HInfoReader : IResourceRecordReader<HInfoRecord>
     {

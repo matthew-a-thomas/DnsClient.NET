@@ -7,7 +7,6 @@
     using System.Net.Sockets;
     using System.Threading.Tasks;
     using Core;
-    using Core.ResourceRecords;
     using ResourceRecords;
     using ResourceRecords.CName;
 

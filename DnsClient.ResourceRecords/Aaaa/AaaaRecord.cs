@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.Aaaa
 {
     using System.Net;
-    using Core.ResourceRecords;
 
     /// <summary>
     /// A <see cref="DnsResourceRecord"/> represending an IPv6 <see cref="IPAddress"/>.

@@ -1,7 +1,5 @@
 ﻿namespace DnsClient.ResourceRecords.HInfo
 {
-    using Core.ResourceRecords;
-
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.11:
     3.3.2. HINFO RDATA format

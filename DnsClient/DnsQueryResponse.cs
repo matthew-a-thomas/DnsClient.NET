@@ -5,7 +5,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Core;
-    using Core.ResourceRecords;
+    using ResourceRecords;
 
     /// <summary>
     /// The response returned by any query performed by <see cref="IDnsQuery"/> with all answer sections, header and message information.

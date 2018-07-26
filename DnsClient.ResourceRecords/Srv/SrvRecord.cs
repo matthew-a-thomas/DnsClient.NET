@@ -2,7 +2,6 @@
 {
     using System;
     using Core;
-    using Core.ResourceRecords;
 
     /* RFC 2782 (https://tools.ietf.org/html/rfc2782)
 

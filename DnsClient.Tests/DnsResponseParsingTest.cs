@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
-    using Core.ResourceRecords;
+    using ResourceRecords;
     using ResourceRecords.Aaaa;
     using ResourceRecords.AfsDb;
     using ResourceRecords.Caa;

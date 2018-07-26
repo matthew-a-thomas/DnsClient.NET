@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.Caa
 {
     using System;
-    using Core.ResourceRecords;
 
     /* RFC 6844 (https://tools.ietf.org/html/rfc6844#section-5.1)
     A CAA RR contains a single property entry consisting of a tag-value

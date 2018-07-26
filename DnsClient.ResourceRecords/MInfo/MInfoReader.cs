@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.ResourceRecords.MInfo
 {
     using Core;
-    using Core.ResourceRecords;
 
     public sealed class MInfoReader : IResourceRecordReader<MInfoRecord>
     {

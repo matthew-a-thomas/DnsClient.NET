@@ -2,7 +2,6 @@
 {
     using System;
     using Core;
-    using Core.ResourceRecords;
 
     /*
     https://tools.ietf.org/html/rfc1035#section-3.3.1:
