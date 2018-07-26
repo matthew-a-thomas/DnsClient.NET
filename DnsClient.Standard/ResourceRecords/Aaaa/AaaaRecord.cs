@@ -17,7 +17,7 @@
         /// Initializes a new instance of the <see cref="AaaaRecord"/> class.
         /// </summary>
         /// <inheritdoc />
-        public AaaaRecord(ResourceRecordInfo info, IPAddress address) : base(info, address)
+        public AaaaRecord(ResourceRecord info, IPAddress address) : base(info, address)
         {
         }
     }

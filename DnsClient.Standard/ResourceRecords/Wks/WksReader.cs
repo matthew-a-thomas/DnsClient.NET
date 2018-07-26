@@ -9,7 +9,7 @@
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Wks;
 
         public WksRecord ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader)
         {
             var address = reader.ReadIpAddress();

@@ -9,11 +9,11 @@
     public static class DnsDatagramReaderExtensions
     {
         /// <summary>
-        /// Reads a <see cref="ResourceRecordInfo"/> from this <see cref="DnsDatagramReader"/>.
+        /// Reads a <see cref="ResourceRecord"/> from this <see cref="DnsDatagramReader"/>.
         /// </summary>
-        public static ResourceRecordInfo ReadRecordInfo(this DnsDatagramReader reader)
+        public static ResourceRecord ReadRecordInfo(this DnsDatagramReader reader)
         {
-            return new ResourceRecordInfo(
+            return new ResourceRecord(
                 reader.ReadQuestionQueryString(),                      // name
                 (ResourceRecordType)reader.ReadUInt16NetworkOrder(),   // type
                 (QueryClass)reader.ReadUInt16NetworkOrder(),           // class

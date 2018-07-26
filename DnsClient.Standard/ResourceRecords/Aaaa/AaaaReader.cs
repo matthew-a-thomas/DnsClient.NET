@@ -8,7 +8,7 @@
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Aaaa;
 
         public AaaaRecord ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader) => new AaaaRecord(info, reader.ReadIPv6Address());
     }
 }

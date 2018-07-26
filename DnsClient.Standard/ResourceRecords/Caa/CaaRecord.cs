@@ -117,7 +117,7 @@
         /// <param name="tag">The tag.</param>
         /// <param name="value">The value.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="info"/> or <paramref name="tag"/> or <paramref name="value"/> is null.</exception>
-        public CaaRecord(ResourceRecordInfo info, byte flags, string tag, string value) : base(info)
+        public CaaRecord(ResourceRecord info, byte flags, string tag, string value) : base(info)
         {
             Flags = flags;
             Tag = tag ?? throw new ArgumentNullException(nameof(tag));

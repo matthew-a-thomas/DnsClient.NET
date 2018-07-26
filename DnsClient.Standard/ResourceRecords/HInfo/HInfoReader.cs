@@ -8,7 +8,7 @@
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Hinfo;
 
         public HInfoRecord ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader) => new HInfoRecord(info, reader.ReadString(), reader.ReadString());
     }
 }

@@ -9,7 +9,7 @@
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Sshfp;
 
         public SshfpRecord ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader)
         {
             var algorithm = (SshfpAlgorithm)reader.ReadByte();

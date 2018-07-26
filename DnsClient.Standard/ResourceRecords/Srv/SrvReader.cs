@@ -8,7 +8,7 @@
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Srv;
 
         public SrvRecord ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader)
         {
             var priority = reader.ReadUInt16NetworkOrder();

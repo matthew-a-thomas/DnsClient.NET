@@ -28,7 +28,7 @@
         /// <param name="address">The address.</param>
         /// <exception cref="ArgumentNullException">If <paramref name="info"/> is null.</exception>
         /// <exception cref="System.ArgumentNullException">If <paramref name="address"/> or <paramref name="info"/> is null</exception>
-        public AddressRecord(ResourceRecordInfo info, IPAddress address)
+        public AddressRecord(ResourceRecord info, IPAddress address)
             : base(info)
         {
             Address = address ?? throw new ArgumentNullException(nameof(address));

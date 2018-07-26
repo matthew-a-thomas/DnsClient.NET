@@ -111,7 +111,7 @@
         }
 
         public OptRecord(int size = 4096, int version = 0, int length = 0)
-            : base(new ResourceRecordInfo(DnsString.RootLabel, ResourceRecordType.Opt, (QueryClass)size, version, length))
+            : base(new ResourceRecord(DnsString.RootLabel, ResourceRecordType.Opt, (QueryClass)size, version, length))
         {
         }
 

@@ -42,7 +42,7 @@
         /// <param name="info">The information.</param>
         /// <param name="anything">Anything.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="info"/> or <paramref name="anything"/> is null.</exception>
-        public NullRecord(ResourceRecordInfo info, byte[] anything)
+        public NullRecord(ResourceRecord info, byte[] anything)
             : base(info)
         {
             Anything = anything ?? throw new ArgumentNullException(nameof(anything));

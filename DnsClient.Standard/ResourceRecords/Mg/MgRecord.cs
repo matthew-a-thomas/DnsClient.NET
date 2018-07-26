@@ -42,7 +42,7 @@
         /// <param name="info">The information.</param>
         /// <param name="domainName">The domain name.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="domainName"/> or <paramref name="info"/> is null.</exception>
-        public MgRecord(ResourceRecordInfo info, DnsString domainName)
+        public MgRecord(ResourceRecord info, DnsString domainName)
             : base(info)
         {
             MgName = domainName ?? throw new ArgumentNullException(nameof(domainName));

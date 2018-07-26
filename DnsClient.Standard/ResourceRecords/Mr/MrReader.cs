@@ -8,7 +8,7 @@
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Mr;
 
         public MrRecord ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader) => new MrRecord(info, reader.ReadDnsName());
     }
 }

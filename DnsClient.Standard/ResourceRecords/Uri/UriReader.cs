@@ -8,7 +8,7 @@
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Uri;
 
         public UriRecord ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader)
         {
             var prio = reader.ReadUInt16NetworkOrder();

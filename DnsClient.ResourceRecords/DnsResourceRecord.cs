@@ -6,15 +6,15 @@
     /// <summary>
     /// Base class for all resource records.
     /// </summary>
-    /// <seealso cref="ResourceRecordInfo" />
-    public abstract class DnsResourceRecord : ResourceRecordInfo
+    /// <seealso cref="ResourceRecord" />
+    public abstract class DnsResourceRecord : ResourceRecord
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DnsResourceRecord" /> class.
         /// </summary>
         /// <param name="info">The information.</param>
         /// <exception cref="ArgumentNullException">If <paramref name="info"/> is null.</exception>
-        public DnsResourceRecord(ResourceRecordInfo info)
+        public DnsResourceRecord(ResourceRecord info)
             : base(
                   info?.DomainName ?? throw new ArgumentNullException(nameof(info)),
                   info.RecordType,
@@ -31,7 +31,7 @@
         }
 
         /// <summary>
-        /// Same as <c>ToString</c> but offsets the <see cref="ResourceRecordInfo.DomainName"/>
+        /// Same as <c>ToString</c> but offsets the <see cref="ResourceRecord.DomainName"/>
         /// by <paramref name="offset"/>.
         /// Set the offset to -32 for example to make it print nicely in consols.
         /// </summary>

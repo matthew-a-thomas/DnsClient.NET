@@ -56,7 +56,7 @@
         /// <param name="type">The type.</param>
         /// <param name="name">The name.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="info"/> or <paramref name="name"/> is null.</exception>
-        public AfsDbRecord(ResourceRecordInfo info, AfsType type, DnsString name) : base(info)
+        public AfsDbRecord(ResourceRecord info, AfsType type, DnsString name) : base(info)
         {
             SubType = type;
             Hostname = name ?? throw new ArgumentNullException(nameof(name));

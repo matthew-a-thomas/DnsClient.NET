@@ -44,7 +44,7 @@
         /// <param name="info">The information.</param>
         /// <param name="canonicalName">The canonical name.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="canonicalName"/> or <paramref name="info"/> is null.</exception>
-        public CNameRecord(ResourceRecordInfo info, DnsString canonicalName)
+        public CNameRecord(ResourceRecord info, DnsString canonicalName)
             : base(info)
         {
             CanonicalName = canonicalName ?? throw new ArgumentNullException(nameof(canonicalName));

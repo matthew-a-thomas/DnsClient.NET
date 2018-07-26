@@ -8,7 +8,7 @@
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.AfsDb;
 
         public AfsDbRecord ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader) => new AfsDbRecord(
             info,
             (AfsType) reader.ReadUInt16NetworkOrder(),

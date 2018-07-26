@@ -95,7 +95,7 @@
         /// <exception cref="System.ArgumentNullException">
         /// If <paramref name="info"/> or <paramref name="mailbox"/> or <paramref name="textName"/> is null.
         /// </exception>
-        public RpRecord(ResourceRecordInfo info, DnsString mailbox, DnsString textName)
+        public RpRecord(ResourceRecord info, DnsString mailbox, DnsString textName)
             : base(info)
         {
             MailboxDomainName = mailbox ?? throw new ArgumentNullException(nameof(mailbox));

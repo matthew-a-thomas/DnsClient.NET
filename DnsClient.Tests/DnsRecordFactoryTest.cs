@@ -35,7 +35,7 @@
         {
             var data = new byte[0];
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ptr, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Ptr, QueryClass.In, 0, data.Length);
 
             Action act = () => factory.GetRecord(info, reader);
 
@@ -47,7 +47,7 @@
         {
             var data = new byte[] { 0 };
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ptr, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Ptr, QueryClass.In, 0, data.Length);
 
             var result = factory.GetRecord(info, reader) as PtrRecord ?? throw new Exception();
 
@@ -61,7 +61,7 @@
             var writer = new DnsDatagramWriter();
             writer.WriteHostName(name.Value);
             var factory = GetFactory(writer.Data.ToArray(), out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ptr, QueryClass.In, 0, writer.Data.Count);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Ptr, QueryClass.In, 0, writer.Data.Count);
 
             var result = factory.GetRecord(info, reader) as PtrRecord ?? throw new Exception();
 
@@ -75,7 +75,7 @@
             var writer = new DnsDatagramWriter();
             writer.WriteHostName(name.Value);
             var factory = GetFactory(writer.Data.ToArray(), out var reader);
-            var info = new ResourceRecordInfo("Müsli.de", ResourceRecordType.Mb, QueryClass.In, 0, writer.Data.Count);
+            var info = new ResourceRecord(DnsString.Parse("Müsli.de"), ResourceRecordType.Mb, QueryClass.In, 0, writer.Data.Count);
 
             var result = factory.GetRecord(info, reader) as MbRecord ?? throw new Exception();
 
@@ -88,7 +88,7 @@
         {
             var data = new byte[] { 23, 23, 23 };
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("example.com", ResourceRecordType.A, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("example.com"), ResourceRecordType.A, QueryClass.In, 0, data.Length);
 
             Action act = () => factory.GetRecord(info, reader);
 
@@ -100,7 +100,7 @@
         {
             var data = new byte[] { 23, 24, 25, 26 };
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("example.com", ResourceRecordType.A, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("example.com"), ResourceRecordType.A, QueryClass.In, 0, data.Length);
 
             var result = factory.GetRecord(info, reader) as ARecord ?? throw new Exception();
 
@@ -112,7 +112,7 @@
         {
             var data = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("example.com", ResourceRecordType.Aaaa, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("example.com"), ResourceRecordType.Aaaa, QueryClass.In, 0, data.Length);
 
             Action act = () => factory.GetRecord(info, reader);
 
@@ -124,7 +124,7 @@
         {
             var data = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("example.com", ResourceRecordType.Aaaa, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("example.com"), ResourceRecordType.Aaaa, QueryClass.In, 0, data.Length);
 
             var result = factory.GetRecord(info, reader) as AaaaRecord ?? throw new Exception();
 
@@ -137,7 +137,7 @@
         {
             var data = new byte[0];
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ns, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Ns, QueryClass.In, 0, data.Length);
 
             Action act = () => factory.GetRecord(info, reader);
 
@@ -149,7 +149,7 @@
         {
             var data = new byte[] { 0 };
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ns, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Ns, QueryClass.In, 0, data.Length);
 
             var result = factory.GetRecord(info, reader) as NsRecord ?? throw new Exception();
 
@@ -163,7 +163,7 @@
             var name = DnsString.Parse("result.example.com");
             writer.WriteHostName(name.Value);
             var factory = GetFactory(writer.Data.ToArray(), out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Ns, QueryClass.In, 0, writer.Data.Count);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Ns, QueryClass.In, 0, writer.Data.Count);
 
             var result = factory.GetRecord(info, reader) as NsRecord ?? throw new Exception();
 
@@ -175,7 +175,7 @@
         {
             var data = new byte[0];
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Mx, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Mx, QueryClass.In, 0, data.Length);
 
             Action act = () => factory.GetRecord(info, reader);
 
@@ -187,7 +187,7 @@
         {
             var data = new byte[] { 1, 2 };
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Mx, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Mx, QueryClass.In, 0, data.Length);
 
             Action act = () => factory.GetRecord(info, reader);
 
@@ -199,7 +199,7 @@
         {
             var data = new byte[] { 1, 0, 0 };
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Mx, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Mx, QueryClass.In, 0, data.Length);
 
             var result = factory.GetRecord(info, reader) as MxRecord ?? throw new Exception();
 
@@ -217,7 +217,7 @@
             writer.WriteHostName(name.Value);
 
             var factory = GetFactory(writer.Data.ToArray(), out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Mx, QueryClass.In, 0, writer.Data.Count);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Mx, QueryClass.In, 0, writer.Data.Count);
 
             var result = factory.GetRecord(info, reader) as MxRecord ?? throw new Exception();
 
@@ -230,7 +230,7 @@
         {
             var data = new byte[0];
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Soa, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Soa, QueryClass.In, 0, data.Length);
 
             Action act = () => factory.GetRecord(info, reader);
 
@@ -242,7 +242,7 @@
         {
             var data = new byte[] { 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 5 };
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Soa, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Soa, QueryClass.In, 0, data.Length);
 
             var result = factory.GetRecord(info, reader) as SoaRecord ?? throw new Exception();
 
@@ -260,7 +260,7 @@
         {
             var data = new byte[0];
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Srv, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Srv, QueryClass.In, 0, data.Length);
 
             Action act = () => factory.GetRecord(info, reader);
 
@@ -276,7 +276,7 @@
             writer.WriteHostName(name.Value);
             var factory = GetFactory(writer.Data.ToArray(), out var reader);
 
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Srv, QueryClass.In, 0, writer.Data.Count);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Srv, QueryClass.In, 0, writer.Data.Count);
 
             var result = factory.GetRecord(info, reader) as SrvRecord ?? throw new Exception();
 
@@ -295,7 +295,7 @@
             data.AddRange(lineA);
 
             var factory = GetFactory(data.ToArray(), out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Txt, QueryClass.In, 0, data.Count);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Txt, QueryClass.In, 0, data.Count);
 
             Action act = () => factory.GetRecord(info, reader);
 
@@ -307,7 +307,7 @@
         {
             var data = new byte[0];
             var factory = GetFactory(data, out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Txt, QueryClass.In, 0, data.Length);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Txt, QueryClass.In, 0, data.Length);
 
             var result = factory.GetRecord(info, reader) as TxtRecord ?? throw new Exception();
 
@@ -327,7 +327,7 @@
             data.AddRange(lineB);
 
             var factory = GetFactory(data.ToArray(), out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Txt, QueryClass.In, 0, data.Count);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Txt, QueryClass.In, 0, data.Count);
 
             var result = factory.GetRecord(info, reader) as TxtRecord ?? throw new Exception();
 
@@ -352,7 +352,7 @@
             data.AddRange(fingerprintBytes);
 
             var factory = GetFactory(data.ToArray(), out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Sshfp, QueryClass.In, 0, data.Count);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Sshfp, QueryClass.In, 0, data.Count);
 
             var result = factory.GetRecord(info, reader) as SshfpRecord;
 
@@ -375,7 +375,7 @@
             data.AddRange(lineB);
 
             var factory = GetFactory(data.ToArray(), out var reader);
-            var info = new ResourceRecordInfo("query.example.com", ResourceRecordType.Txt, QueryClass.In, 0, data.Count);
+            var info = new ResourceRecord(DnsString.Parse("query.example.com"), ResourceRecordType.Txt, QueryClass.In, 0, data.Count);
 
             var result = factory.GetRecord(info, reader) as TxtRecord ?? throw new Exception();
 

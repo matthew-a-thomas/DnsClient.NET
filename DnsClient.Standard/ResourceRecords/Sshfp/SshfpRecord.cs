@@ -22,7 +22,7 @@
         /// <param name="algorithm">The algorithm.</param>
         /// <param name="fingerprintType">The fingerprint type.</param>
         /// <param name="fingerprint">The fingerprint.</param>
-        public SshfpRecord(ResourceRecordInfo info, SshfpAlgorithm algorithm, SshfpFingerprintType fingerprintType, string fingerprint) : base(info)
+        public SshfpRecord(ResourceRecord info, SshfpAlgorithm algorithm, SshfpFingerprintType fingerprintType, string fingerprint) : base(info)
         {
             Algorithm = algorithm;
             FingerprintType = fingerprintType;

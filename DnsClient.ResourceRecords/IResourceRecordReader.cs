@@ -18,7 +18,7 @@
         /// <paramref name="info"/>.
         /// </summary>
         T ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader);
     }
 }

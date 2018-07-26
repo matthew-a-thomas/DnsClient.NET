@@ -9,7 +9,7 @@
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Txt;
 
         public TxtRecord ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader)
         {
             var pos = reader.Index;

@@ -55,7 +55,7 @@
         /// <param name="preference">The preference.</param>
         /// <param name="domainName">Name of the domain.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="domainName"/> or <paramref name="info"/> is null.</exception>
-        public MxRecord(ResourceRecordInfo info, ushort preference, DnsString domainName)
+        public MxRecord(ResourceRecord info, ushort preference, DnsString domainName)
             : base(info)
         {
             Preference = preference;

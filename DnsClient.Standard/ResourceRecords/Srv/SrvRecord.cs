@@ -154,7 +154,7 @@
         /// <param name="port">The port.</param>
         /// <param name="target">The target.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="info"/> or <paramref name="target"/> is null.</exception>
-        public SrvRecord(ResourceRecordInfo info, ushort priority, ushort weigth, ushort port, DnsString target)
+        public SrvRecord(ResourceRecord info, ushort priority, ushort weigth, ushort port, DnsString target)
             : base(info)
         {
             Priority = priority;

@@ -62,7 +62,7 @@
         /// <exception cref="System.ArgumentNullException">
         /// If <paramref name="info"/> or <paramref name="utf8Values"/> or <paramref name="values"/> is null.
         /// </exception>
-        public TxtRecord(ResourceRecordInfo info, string[] values, string[] utf8Values)
+        public TxtRecord(ResourceRecord info, string[] values, string[] utf8Values)
             : base(info)
         {
             EscapedText = values ?? throw new ArgumentNullException(nameof(values));

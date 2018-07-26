@@ -50,7 +50,7 @@
         /// <param name="info">The information.</param>
         /// <param name="name">The name.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="name"/> or <paramref name="info"/> is null.</exception>
-        public NsRecord(ResourceRecordInfo info, DnsString name)
+        public NsRecord(ResourceRecord info, DnsString name)
             : base(info)
         {
             NsdName = name ?? throw new ArgumentNullException(nameof(name));

@@ -9,7 +9,7 @@
         public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Null;
 
         public NullRecord ReadResourceRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader) => new NullRecord(info, reader.ReadBytes(info.RawDataLength).ToArray());
     }
 }

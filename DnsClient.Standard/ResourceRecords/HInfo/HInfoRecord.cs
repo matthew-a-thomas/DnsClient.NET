@@ -50,7 +50,7 @@
         /// <param name="cpu">The cpu.</param>
         /// <param name="os">The os.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="info"/> is null.</exception>
-        public HInfoRecord(ResourceRecordInfo info, string cpu, string os)
+        public HInfoRecord(ResourceRecord info, string cpu, string os)
             : base(info)
         {
             Cpu = cpu;

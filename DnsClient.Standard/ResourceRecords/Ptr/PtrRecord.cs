@@ -45,7 +45,7 @@
         /// <param name="info">The information.</param>
         /// <param name="ptrDomainName">The domain name.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="info"/> or <paramref name="ptrDomainName"/> is null.</exception>
-        public PtrRecord(ResourceRecordInfo info, DnsString ptrDomainName)
+        public PtrRecord(ResourceRecord info, DnsString ptrDomainName)
             : base(info)
         {
             PtrDomainName = ptrDomainName ?? throw new ArgumentNullException(nameof(ptrDomainName));

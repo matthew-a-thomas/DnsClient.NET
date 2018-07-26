@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="info">The information.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="info"/> is null.</exception>
-        public EmptyRecord(ResourceRecordInfo info) : base(info)
+        public EmptyRecord(ResourceRecord info) : base(info)
         {
         }
 

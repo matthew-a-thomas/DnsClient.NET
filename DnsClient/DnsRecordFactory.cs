@@ -39,7 +39,7 @@
          * */
 
         public DnsResourceRecord GetRecord(
-            ResourceRecordInfo info,
+            ResourceRecord info,
             DnsDatagramReader reader)
         {
             if (info == null)

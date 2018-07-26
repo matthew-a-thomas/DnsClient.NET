@@ -65,7 +65,7 @@
         /// <param name="rmailBox">The <c>RMAILBX</c>.</param>
         /// <param name="emailBox">The <c>EMAILBX</c>.</param>
         /// <exception cref="ArgumentNullException">If <paramref name="info"/> or <paramref name="rmailBox"/> or <paramref name="emailBox"/> is null.</exception>
-        public MInfoRecord(ResourceRecordInfo info, DnsString rmailBox, DnsString emailBox)
+        public MInfoRecord(ResourceRecord info, DnsString rmailBox, DnsString emailBox)
             : base(info)
         {
             RMailBox = rmailBox ?? throw new ArgumentNullException(nameof(rmailBox));

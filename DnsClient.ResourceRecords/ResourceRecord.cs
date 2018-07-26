@@ -6,7 +6,7 @@
     /// <summary>
     /// The type represents a <see cref="DnsResourceRecord"/>.
     /// </summary>
-    public class ResourceRecordInfo
+    public class ResourceRecord
     {
         /// <summary>
         /// The domain name used to query.
@@ -34,21 +34,7 @@
         public int RawDataLength { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceRecordInfo" /> class.
-        /// </summary>
-        /// <param name="domainName">The domain name used by the query.</param>
-        /// <param name="recordType">Type of the record.</param>
-        /// <param name="recordClass">The record class.</param>
-        /// <param name="timeToLive">The time to live.</param>
-        /// <param name="rawDataLength">Length of the raw data.</param>
-        /// <exception cref="ArgumentNullException">If <paramref name="domainName"/> is null.</exception>
-        public ResourceRecordInfo(string domainName, ResourceRecordType recordType, QueryClass recordClass, int timeToLive, int rawDataLength)
-            : this(DnsString.Parse(domainName), recordType, recordClass, timeToLive, rawDataLength)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceRecordInfo" /> class.
+        /// Initializes a new instance of the <see cref="ResourceRecord" /> class.
         /// </summary>
         /// <param name="domainName">The <see cref="DnsString" /> used by the query.</param>
         /// <param name="recordType">Type of the record.</param>
@@ -56,7 +42,12 @@
         /// <param name="timeToLive">The time to live.</param>
         /// <param name="rawDataLength">Length of the raw data.</param>
         /// <exception cref="System.ArgumentNullException">If <paramref name="domainName" /> is null or empty.</exception>
-        public ResourceRecordInfo(DnsString domainName, ResourceRecordType recordType, QueryClass recordClass, int timeToLive, int rawDataLength)
+        public ResourceRecord(
+            DnsString domainName,
+            ResourceRecordType recordType,
+            QueryClass recordClass,
+            int timeToLive,
+            int rawDataLength)
         {
             DomainName = domainName ?? throw new ArgumentNullException(nameof(domainName));
             RecordType = recordType;

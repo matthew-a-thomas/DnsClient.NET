@@ -30,7 +30,7 @@
         /// Initializes a new instance of the <see cref="ARecord"/> class.
         /// </summary>
         /// <inheritdoc />
-        public ARecord(ResourceRecordInfo info, IPAddress address) : base(info, address)
+        public ARecord(ResourceRecord info, IPAddress address) : base(info, address)
         {
         }
     }

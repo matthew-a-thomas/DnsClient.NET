@@ -113,7 +113,7 @@
         /// <exception cref="System.ArgumentNullException">
         /// If <paramref name="address"/> or <paramref name="info"/> or <paramref name="bitmap"/> is null.
         /// </exception>
-        public WksRecord(ResourceRecordInfo info, IPAddress address, int protocol, byte[] bitmap)
+        public WksRecord(ResourceRecord info, IPAddress address, int protocol, byte[] bitmap)
             : base(info)
         {
             Address = address ?? throw new ArgumentNullException(nameof(address));

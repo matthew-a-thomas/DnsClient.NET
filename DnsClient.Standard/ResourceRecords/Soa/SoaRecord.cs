@@ -152,7 +152,7 @@
         /// <exception cref="System.ArgumentNullException">
         /// If <paramref name="info"/> or <paramref name="mName"/> or <paramref name="rName"/> is null.
         /// </exception>
-        public SoaRecord(ResourceRecordInfo info, DnsString mName, DnsString rName, uint serial, uint refresh, uint retry, uint expire, uint minimum)
+        public SoaRecord(ResourceRecord info, DnsString mName, DnsString rName, uint serial, uint refresh, uint retry, uint expire, uint minimum)
             : base(info)
         {
             MName = mName ?? throw new ArgumentNullException(nameof(mName));
