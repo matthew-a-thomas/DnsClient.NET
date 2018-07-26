@@ -9,8 +9,8 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
-    using ResourceRecords.Opt;
-    using ResourceRecords.Ptr;
+    using Standard.ResourceRecords.Opt;
+    using Standard.ResourceRecords.Ptr;
 
     /// <summary>
     /// The <see cref="LookupClient"/> is the main query class of this library and should be used for any kind of DNS lookup query.

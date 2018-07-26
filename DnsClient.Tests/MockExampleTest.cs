@@ -7,7 +7,7 @@
     using Core;
     using Moq;
     using ResourceRecords;
-    using ResourceRecords.A;
+    using Standard.ResourceRecords.A;
     using Xunit;
 
     public class MockExampleTest

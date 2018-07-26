@@ -8,16 +8,16 @@
     using System.Text;
     using Core;
     using ResourceRecords;
-    using ResourceRecords.A;
-    using ResourceRecords.Aaaa;
-    using ResourceRecords.Mb;
-    using ResourceRecords.Mx;
-    using ResourceRecords.Ns;
-    using ResourceRecords.Ptr;
-    using ResourceRecords.Soa;
-    using ResourceRecords.Srv;
-    using ResourceRecords.Sshfp;
-    using ResourceRecords.Txt;
+    using Standard.ResourceRecords.A;
+    using Standard.ResourceRecords.Aaaa;
+    using Standard.ResourceRecords.Mb;
+    using Standard.ResourceRecords.Mx;
+    using Standard.ResourceRecords.Ns;
+    using Standard.ResourceRecords.Ptr;
+    using Standard.ResourceRecords.Soa;
+    using Standard.ResourceRecords.Srv;
+    using Standard.ResourceRecords.Sshfp;
+    using Standard.ResourceRecords.Txt;
     using Xunit;
 
     [SuppressMessage("ReSharper",

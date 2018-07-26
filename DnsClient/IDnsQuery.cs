@@ -6,7 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
-    using ResourceRecords.Ptr;
+    using Standard.ResourceRecords.Ptr;
 
     /// <summary>
     /// Generic contract to query DNS endpoints. Implemented by <see cref="LookupClient"/>.

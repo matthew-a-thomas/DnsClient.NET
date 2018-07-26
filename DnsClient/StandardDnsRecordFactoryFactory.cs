@@ -1,6 +1,6 @@
 ﻿namespace DnsClient
 {
-    using ResourceRecords;
+    using Standard;
 
     public sealed class StandardDnsRecordFactoryFactory
     {

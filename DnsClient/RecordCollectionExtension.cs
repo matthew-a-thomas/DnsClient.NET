@@ -4,25 +4,25 @@
     using System.Collections.Generic;
     using System.Linq;
     using ResourceRecords;
-    using ResourceRecords.A;
-    using ResourceRecords.Aaaa;
-    using ResourceRecords.AfsDb;
-    using ResourceRecords.Caa;
-    using ResourceRecords.CName;
-    using ResourceRecords.HInfo;
-    using ResourceRecords.Mb;
-    using ResourceRecords.Mg;
-    using ResourceRecords.Mr;
-    using ResourceRecords.Mx;
-    using ResourceRecords.Ns;
-    using ResourceRecords.Null;
-    using ResourceRecords.Ptr;
-    using ResourceRecords.Rp;
-    using ResourceRecords.Soa;
-    using ResourceRecords.Srv;
-    using ResourceRecords.Txt;
-    using ResourceRecords.Uri;
-    using ResourceRecords.Wks;
+    using Standard.ResourceRecords.A;
+    using Standard.ResourceRecords.Aaaa;
+    using Standard.ResourceRecords.AfsDb;
+    using Standard.ResourceRecords.Caa;
+    using Standard.ResourceRecords.CName;
+    using Standard.ResourceRecords.HInfo;
+    using Standard.ResourceRecords.Mb;
+    using Standard.ResourceRecords.Mg;
+    using Standard.ResourceRecords.Mr;
+    using Standard.ResourceRecords.Mx;
+    using Standard.ResourceRecords.Ns;
+    using Standard.ResourceRecords.Null;
+    using Standard.ResourceRecords.Ptr;
+    using Standard.ResourceRecords.Rp;
+    using Standard.ResourceRecords.Soa;
+    using Standard.ResourceRecords.Srv;
+    using Standard.ResourceRecords.Txt;
+    using Standard.ResourceRecords.Uri;
+    using Standard.ResourceRecords.Wks;
 
     /// <summary>
     /// Extension methods for <see cref="IEnumerable{T}"/> where <c>T</c> is <see cref="DnsResourceRecord"/>.

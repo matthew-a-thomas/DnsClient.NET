@@ -8,7 +8,8 @@
     using System.Threading.Tasks;
     using Core;
     using ResourceRecords;
-    using ResourceRecords.CName;
+    using Standard.ResourceRecords;
+    using Standard.ResourceRecords.CName;
 
     /// <summary>
     /// Extension methods for the <see cref="IDnsQuery"/> contract.

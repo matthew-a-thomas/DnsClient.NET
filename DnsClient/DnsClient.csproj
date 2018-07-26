@@ -42,5 +42,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DnsClient.Core\DnsClient.Core.csproj" />
     <ProjectReference Include="..\DnsClient.ResourceRecords\DnsClient.ResourceRecords.csproj" />
+    <ProjectReference Include="..\DnsClient.Standard\DnsClient.Standard.csproj" />
   </ItemGroup>
 </Project>
