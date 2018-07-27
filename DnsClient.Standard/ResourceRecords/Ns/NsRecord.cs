@@ -37,6 +37,16 @@
     public class NsRecord : DnsResourceRecord
     {
         /// <summary>
+        /// An authoritative name server.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
+        /// <seealso cref="NsRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Ns",
+            value: 2
+        );
+
+        /// <summary>
         /// Gets the domain name which specifies a host which should be authoritative for the specified class and domain.
         /// </summary>
         /// <value>

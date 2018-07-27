@@ -14,6 +14,16 @@
     public class AaaaRecord : AddressRecord
     {
         /// <summary>
+        /// An IPv6 host address.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc3596#section-2.2">RFC 3596</seealso>
+        /// <seealso cref="AaaaRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Aaaa",
+            value: 28
+        );
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AaaaRecord"/> class.
         /// </summary>
         /// <inheritdoc />

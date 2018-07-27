@@ -5,7 +5,7 @@
 
     public sealed class CaaReader : IResourceRecordReader<CaaRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Caa;
+        public ResourceRecordType ResourceRecordType { get; } = CaaRecord.ResourceRecordType;
 
         public CaaRecord ReadResourceRecord(
             ResourceRecord info,

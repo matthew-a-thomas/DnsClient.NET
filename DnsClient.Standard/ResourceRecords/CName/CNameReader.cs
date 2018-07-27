@@ -5,7 +5,7 @@
 
     public sealed class CNameReader : IResourceRecordReader<CNameRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Cname;
+        public ResourceRecordType ResourceRecordType { get; } = CNameRecord.ResourceRecordType;
 
         public CNameRecord ReadResourceRecord(
             ResourceRecord info,

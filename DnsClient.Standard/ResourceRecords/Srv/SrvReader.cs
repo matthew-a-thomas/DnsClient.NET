@@ -5,7 +5,7 @@
 
     public sealed class SrvReader : IResourceRecordReader<SrvRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Srv;
+        public ResourceRecordType ResourceRecordType { get; } = SrvRecord.ResourceRecordType;
 
         public SrvRecord ReadResourceRecord(
             ResourceRecord info,

@@ -37,6 +37,16 @@
     public class UriRecord : DnsResourceRecord
     {
         /// <summary>
+        /// A Uniform Resource Identifier (URI) resource record.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc7553">RFC 7553</seealso>
+        /// <seealso cref="UriRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Uri",
+            value: 256
+        );
+
+        /// <summary>
         /// Gets or sets the target Uri.
         /// </summary>
         /// <value>

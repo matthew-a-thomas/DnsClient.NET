@@ -24,6 +24,16 @@
     public class NullRecord : DnsResourceRecord
     {
         /// <summary>
+        /// A Null resource record (EXPERIMENTAL).
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.8">RFC 1035</seealso>
+        /// <seealso cref="NullRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Null",
+            value: 10
+        );
+
+        /// <summary>
         /// Gets any data stored in this record.
         /// </summary>
         /// <value>

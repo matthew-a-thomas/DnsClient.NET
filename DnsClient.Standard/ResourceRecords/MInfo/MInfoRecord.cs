@@ -43,6 +43,16 @@
     public class MInfoRecord : DnsResourceRecord
     {
         /// <summary>
+        /// Mailbox or mail list information.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
+        /// <seealso cref="MInfoRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "MInfo",
+            value: 14
+        );
+
+        /// <summary>
         /// Gets the domain name which specifies a mailbox which is responsible for the mailing list or mailbox.
         /// </summary>
         /// <value>

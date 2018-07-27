@@ -28,6 +28,17 @@
     public class HInfoRecord : DnsResourceRecord
     {
         /// <summary>
+        /// Host information.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
+        /// <seealso href="https://tools.ietf.org/html/rfc1010">RFC 1010</seealso>
+        /// <seealso cref="HInfoRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "HInfo",
+            value: 13
+        );
+
+        /// <summary>
         /// Gets a <c>string</c> which specifies the CPU type.
         /// </summary>
         /// <value>

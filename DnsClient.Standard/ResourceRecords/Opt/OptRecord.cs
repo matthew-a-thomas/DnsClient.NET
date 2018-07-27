@@ -67,6 +67,16 @@
     /// </summary>
     public class OptRecord : DnsResourceRecord
     {
+        /// <summary>
+        /// Option record.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc6891">RFC 6891</seealso>
+        ///// <seealso cref="DnsClient.Protocol.Options.OptRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Opt",
+            value: 41
+        );
+
         private const uint ResponseCodeMask = 0xff000000;
         private const int ResponseCodeShift = 20;
         private const uint VersionMask = 0x00ff0000;
@@ -111,7 +121,7 @@
         }
 
         public OptRecord(int size = 4096, int version = 0, int length = 0)
-            : base(new ResourceRecord(DnsString.RootLabel, ResourceRecordType.Opt, (QueryClass)size, version, length))
+            : base(new ResourceRecord(DnsString.RootLabel, ResourceRecordType, (QueryClass)size, version, length))
         {
         }
 

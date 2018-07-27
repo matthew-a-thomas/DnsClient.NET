@@ -19,7 +19,7 @@
                 Audit = new LookupClientAudit()
             };
 
-            var info = new ResourceRecord(DnsString.Parse("query"), ResourceRecordType.A, QueryClass.In, 100, 4);
+            var info = new ResourceRecord(DnsString.Parse("query"), ARecord.ResourceRecordType, QueryClass.In, 100, 4);
             var ip = IPAddress.Parse("123.45.67.9");
             var answer = new ARecord(info, ip);
             responseMessage.AddAnswer(answer);
@@ -38,7 +38,7 @@
             Assert.Equal("query.", resultAnswer.DomainName.Value);
             Assert.Equal(4, resultAnswer.RawDataLength);
             Assert.Equal(QueryClass.In, resultAnswer.RecordClass);
-            Assert.Equal(ResourceRecordType.A, resultAnswer.RecordType);
+            Assert.Equal(ARecord.ResourceRecordType, resultAnswer.RecordType);
             Assert.True(resultAnswer.TimeToLive == 100);
             Assert.True(result.Header.Id == 42);
             Assert.True(result.Header.AnswerCount == 1);
@@ -61,7 +61,7 @@
 
                 var answer = message.Answers.First();
                 writer.WriteHostName(answer.DomainName.Value);
-                writer.WriteUInt16NetworkOrder((ushort)answer.RecordType);
+                writer.WriteUInt16NetworkOrder(answer.RecordType.Value);
                 writer.WriteUInt16NetworkOrder((ushort)answer.RecordClass);
                 writer.WriteUInt32NetworkOrder((uint)answer.TimeToLive);
                 writer.WriteUInt16NetworkOrder((ushort)answerData.Length);

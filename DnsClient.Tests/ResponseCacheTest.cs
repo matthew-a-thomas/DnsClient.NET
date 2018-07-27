@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using Core;
     using ResourceRecords;
+    using Standard.ResourceRecords.A;
     using Xunit;
 
     public class ResponseCacheTest
@@ -29,7 +30,7 @@
         public void Cache_SupportsInfinite()
         {
             var cache = new ResponseCache(true, Timeout.InfiniteTimeSpan);
-            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 0, 100));
+            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 0, 100));
             var response = new DnsResponseMessage(new DnsResponseHeader(1, 256, 1, 1, 0, 0), 0)
             {
                 Audit = new LookupClientAudit()
@@ -49,7 +50,7 @@
         {
             var minTtl = 2000;
             var cache = new ResponseCache(true, TimeSpan.FromMilliseconds(minTtl));
-            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 0, 100));
+            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 0, 100));
             var response = new DnsResponseMessage(new DnsResponseHeader(1, 256, 1, 1, 0, 0), 0)
             {
                 Audit = new LookupClientAudit()
@@ -71,7 +72,7 @@
         public void Cache_DoesNotCacheIfDisabled()
         {
             var cache = new ResponseCache(false);
-            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 100, 100));
+            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 100, 100));
             var response = new DnsResponseMessage(new DnsResponseHeader(1, 256, 1, 1, 0, 0), 0)
             {
                 Audit = new LookupClientAudit()
@@ -90,7 +91,7 @@
         public void Cache_DoesNotCacheIfZeroTTL()
         {
             var cache = new ResponseCache();
-            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 0, 100));
+            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 0, 100));
             var response = new DnsResponseMessage(new DnsResponseHeader(1, 256, 1, 1, 0, 0), 0)
             {
                 Audit = new LookupClientAudit()
@@ -109,7 +110,7 @@
         public void Cache_DoesNotCacheIfZeroTTLWithZeroMinTtl()
         {
             var cache = new ResponseCache(true, TimeSpan.Zero);
-            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 0, 100));
+            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 0, 100));
             var response = new DnsResponseMessage(new DnsResponseHeader(1, 256, 1, 1, 0, 0), 0)
             {
                 Audit = new LookupClientAudit()
@@ -128,9 +129,9 @@
         public async Task Cache_EntriesLowestTT_Expires()
         {
             var cache = new ResponseCache();
-            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 1000, 100));
-            var recordB = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 100, 100));
-            var recordC = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 1, 100));
+            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 1000, 100));
+            var recordB = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 100, 100));
+            var recordC = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 1, 100));
             var response = new DnsResponseMessage(new DnsResponseHeader(1, 256, 1, 1, 0, 0), 0)
             {
                 Audit = new LookupClientAudit()
@@ -157,9 +158,9 @@
         public void Cache_EntriesLowestTTLWins()
         {
             var cache = new ResponseCache();
-            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 1000, 100));
-            var recordB = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 100, 100));
-            var recordC = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 0, 100));
+            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 1000, 100));
+            var recordB = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 100, 100));
+            var recordC = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 0, 100));
             var response = new DnsResponseMessage(new DnsResponseHeader(1, 256, 1, 1, 0, 0), 0)
             {
                 Audit = new LookupClientAudit()
@@ -180,7 +181,7 @@
         public void Cache_GetOrAdd()
         {
             var cache = new ResponseCache();
-            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 100, 100));
+            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 100, 100));
             var response = new DnsResponseMessage(new DnsResponseHeader(1, 256, 1, 1, 0, 0), 0)
             {
                 Audit = new LookupClientAudit()
@@ -198,7 +199,7 @@
         public void Cache_GetOrAddExists()
         {
             var cache = new ResponseCache();
-            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 100, 100));
+            var record = new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 100, 100));
             var response = new DnsResponseMessage(new DnsResponseHeader(1, 256, 1, 1, 0, 0), 0)
             {
                 Audit = new LookupClientAudit()
@@ -208,7 +209,7 @@
             var success = cache.Add("key", response.AsQueryResponse(new NameServer(IPAddress.Any)));
             Assert.True(success);
 
-            response.AddAnswer(new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ResourceRecordType.A, QueryClass.In, 100, 100)));
+            response.AddAnswer(new EmptyRecord(new ResourceRecord(DnsString.Parse("a"), ARecord.ResourceRecordType, QueryClass.In, 100, 100)));
             var fail = cache.Add("key", response.AsQueryResponse(new NameServer(IPAddress.Any)));
 
             Assert.False(fail);

@@ -30,6 +30,16 @@
     public class MrRecord : DnsResourceRecord
     {
         /// <summary>
+        /// A mailbox rename domain name (EXPERIMENTAL).
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.8">RFC 1035</seealso>
+        /// <seealso cref="MrRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Mr",
+            value: 9
+        );
+
+        /// <summary>
         /// Gets the domain name which specifies a mailbox which is the proper rename of the specified mailbox.
         /// </summary>
         /// <value>

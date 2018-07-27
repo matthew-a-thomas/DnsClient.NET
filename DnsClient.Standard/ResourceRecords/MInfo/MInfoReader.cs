@@ -5,7 +5,7 @@
 
     public sealed class MInfoReader : IResourceRecordReader<MInfoRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Minfo;
+        public ResourceRecordType ResourceRecordType { get; } = MInfoRecord.ResourceRecordType;
 
         public MInfoRecord ReadResourceRecord(
             ResourceRecord info,

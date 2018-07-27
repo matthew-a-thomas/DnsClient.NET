@@ -29,6 +29,16 @@
     public class MgRecord : DnsResourceRecord
     {
         /// <summary>
+        /// A mail group member (EXPERIMENTAL).
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.6">RFC 1035</seealso>
+        /// <seealso cref="MgRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Mg",
+            value: 8
+        );
+
+        /// <summary>
         /// Gets a domain name which specifies a mailbox which is a member of the mail group specified by the domain nam.
         /// </summary>
         /// <value>

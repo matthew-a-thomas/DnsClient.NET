@@ -27,6 +27,16 @@
     public class ARecord : AddressRecord
     {
         /// <summary>
+        /// A host address.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035">RFC 1035</seealso>
+        /// <seealso cref="ARecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "A",
+            value: 1
+        );
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ARecord"/> class.
         /// </summary>
         /// <inheritdoc />

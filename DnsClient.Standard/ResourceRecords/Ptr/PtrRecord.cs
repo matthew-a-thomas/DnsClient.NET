@@ -32,6 +32,16 @@
     public class PtrRecord : DnsResourceRecord
     {
         /// <summary>
+        /// A domain name pointer.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.12">RFC 1035</seealso>
+        /// <seealso cref="PtrRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Ptr",
+            value: 12
+        );
+
+        /// <summary>
         /// Gets the domain name which points to some location in the domain name space.
         /// </summary>
         /// <value>

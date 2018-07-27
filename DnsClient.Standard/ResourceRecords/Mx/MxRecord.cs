@@ -37,6 +37,17 @@
     public class MxRecord : DnsResourceRecord
     {
         /// <summary>
+        /// Mail exchange.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.9">RFC 1035</seealso>
+        /// <seealso href="https://tools.ietf.org/html/rfc974">RFC 974</seealso>
+        /// <seealso cref="MxRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Mx",
+            value: 15
+        );
+
+        /// <summary>
         /// Gets a 16 bit integer which specifies the preference given to
         /// this RR among others at the same owner.
         /// Lower values are preferred.

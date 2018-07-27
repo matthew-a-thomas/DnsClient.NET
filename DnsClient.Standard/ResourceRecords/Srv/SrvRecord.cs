@@ -114,6 +114,16 @@
     public class SrvRecord : DnsResourceRecord
     {
         /// <summary>
+        /// A resource record which specifies the location of the server(s) for a specific protocol and domain.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc2782">RFC 2782</seealso>
+        /// <seealso cref="SrvRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Srv",
+            value: 33
+        );
+
+        /// <summary>
         /// Gets the port.
         /// </summary>
         /// <value>

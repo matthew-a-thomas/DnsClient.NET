@@ -5,7 +5,7 @@
 
     public sealed class PtrReader : IResourceRecordReader<PtrRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Ptr;
+        public ResourceRecordType ResourceRecordType { get; } = PtrRecord.ResourceRecordType;
 
         public PtrRecord ReadResourceRecord(
             ResourceRecord info,

@@ -18,7 +18,7 @@
             // arrange
             var lookupMock = new Mock<IDnsQuery>();
 
-            var aRecord = new ARecord(new ResourceRecord(DnsString.Parse("query"), ResourceRecordType.A, QueryClass.In, 0, 0), IPAddress.Any);
+            var aRecord = new ARecord(new ResourceRecord(DnsString.Parse("query"), ARecord.ResourceRecordType, QueryClass.In, 0, 0), IPAddress.Any);
 
             var responseMsg = new DnsResponseMessage(new DnsResponseHeader(123, 256, 1, 1, 0, 1), 123);
             responseMsg.Answers.Add(aRecord);

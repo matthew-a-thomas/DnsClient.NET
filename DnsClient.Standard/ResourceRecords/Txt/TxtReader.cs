@@ -6,7 +6,7 @@
 
     public sealed class TxtReader : IResourceRecordReader<TxtRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Txt;
+        public ResourceRecordType ResourceRecordType { get; } = TxtRecord.ResourceRecordType;
 
         public TxtRecord ReadResourceRecord(
             ResourceRecord info,

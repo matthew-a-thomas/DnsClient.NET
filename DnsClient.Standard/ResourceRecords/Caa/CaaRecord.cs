@@ -94,6 +94,16 @@
     public class CaaRecord : DnsResourceRecord
     {
         /// <summary>
+        /// A certification authority authorization.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc6844">RFC 6844</seealso>
+        /// <seealso cref="CaaRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Caa",
+            value: 257
+        );
+
+        /// <summary>
         /// One octet containing the flags.
         /// </summary>
         public byte Flags { get; }

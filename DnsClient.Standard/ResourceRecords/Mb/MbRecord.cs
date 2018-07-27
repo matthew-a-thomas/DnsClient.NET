@@ -27,6 +27,16 @@
     public class MbRecord : DnsResourceRecord
     {
         /// <summary>
+        /// A mailbox domain name (EXPERIMENTAL).
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.3">RFC 1035</seealso>
+        /// <seealso cref="MbRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Mb",
+            value: 7
+        );
+
+        /// <summary>
         /// Gets the domain name which specifies a host which has the specified mailbox.
         /// </summary>
         /// <value>

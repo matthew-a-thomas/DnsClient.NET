@@ -5,7 +5,7 @@
 
     public sealed class MbReader : IResourceRecordReader<MbRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Mb;
+        public ResourceRecordType ResourceRecordType { get; } = MbRecord.ResourceRecordType;
 
         public MbRecord ReadResourceRecord(
             ResourceRecord info,

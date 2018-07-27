@@ -71,6 +71,16 @@
     public class RpRecord : DnsResourceRecord
     {
         /// <summary>
+        /// Responsible Person.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1183">RFC 1183</seealso>
+        /// <seealso cref="RpRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Rp",
+            value: 17
+        );
+
+        /// <summary>
         /// Gets a domain name that specifies the mailbox for the responsible person.
         /// </summary>
         /// <value>

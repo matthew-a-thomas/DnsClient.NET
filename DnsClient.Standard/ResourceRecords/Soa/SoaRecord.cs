@@ -78,6 +78,16 @@
     [CLSCompliant(false)]
     public class SoaRecord : DnsResourceRecord
     {
+	    /// <summary>
+	    /// Marks the start of a zone of authority.
+	    /// </summary>
+	    /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.13">RFC 1035</seealso>
+	    /// <seealso cref="SoaRecord"/>
+	    public static ResourceRecordType ResourceRecordType = new ResourceRecordType(
+		    abbreviation: "Soa",
+		    value: 6
+		);
+
         /// <summary>
         /// Gets a 32 bit time value that specifies the upper limit on
         /// the time interval that can elapse before the zone is no

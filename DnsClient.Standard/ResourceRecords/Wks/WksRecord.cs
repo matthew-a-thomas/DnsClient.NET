@@ -71,6 +71,16 @@
     public class WksRecord : DnsResourceRecord
     {
         /// <summary>
+        /// A well known service description.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc3232">RFC 3232</seealso>
+        /// <seealso cref="WksRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "Wks",
+            value: 11
+        );
+
+        /// <summary>
         /// Gets the address.
         /// </summary>
         /// <value>

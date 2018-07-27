@@ -5,7 +5,7 @@
 
     public sealed class OptReader : IResourceRecordReader<OptRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = ResourceRecordType.Opt;
+        public ResourceRecordType ResourceRecordType { get; } = OptRecord.ResourceRecordType;
 
         public OptRecord ReadResourceRecord(
             ResourceRecord info,

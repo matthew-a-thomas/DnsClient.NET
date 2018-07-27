@@ -31,6 +31,16 @@
     public class CNameRecord : DnsResourceRecord
     {
         /// <summary>
+        /// The canonical name for an alias.
+        /// </summary>
+        /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.1">RFC 1035</seealso>
+        /// <seealso cref="CNameRecord"/>
+        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+            abbreviation: "CName",
+            value: 5
+        );
+
+        /// <summary>
         /// Gets the canonical name for an alias.
         /// </summary>
         /// <value>

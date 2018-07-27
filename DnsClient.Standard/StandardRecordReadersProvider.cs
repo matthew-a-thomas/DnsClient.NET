@@ -27,31 +27,44 @@
 
     public sealed class StandardRecordReadersProvider
     {
-        public IReadOnlyDictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>> RecordReaders { get; }
-            = new Dictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>>
-            {
-                {ResourceRecordType.A, new AReader()},
-                {ResourceRecordType.Aaaa, new AaaaReader()},
-                {ResourceRecordType.AfsDb, new AfsDbReader()},
-                {ResourceRecordType.Caa, new CaaReader()},
-                {ResourceRecordType.Cname, new CNameReader()},
-                {ResourceRecordType.Hinfo, new HInfoReader()},
-                {ResourceRecordType.Mb, new MbReader()},
-                {ResourceRecordType.Mg, new MgReader()},
-                {ResourceRecordType.Minfo, new MInfoReader()},
-                {ResourceRecordType.Mr, new MrReader()},
-                {ResourceRecordType.Mx, new MxReader()},
-                {ResourceRecordType.Ns, new NsReader()},
-                {ResourceRecordType.Null, new NullReader()},
-                {ResourceRecordType.Opt, new OptReader()},
-                {ResourceRecordType.Ptr, new PtrReader()},
-                {ResourceRecordType.Rp, new RpReader()},
-                {ResourceRecordType.Soa, new SoaReader()},
-                {ResourceRecordType.Srv, new SrvReader()},
-                {ResourceRecordType.Sshfp, new SshfpReader()},
-                {ResourceRecordType.Txt, new TxtReader()},
-                {ResourceRecordType.Uri, new UriReader()},
-                {ResourceRecordType.Wks, new WksReader()}
-            };
+        private readonly Dictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>> _dictionary
+            = new Dictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>>();
+
+        public IReadOnlyDictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>> RecordReaders =>
+            _dictionary;
+
+        public StandardRecordReadersProvider()
+        {
+            Add<AReader>();
+            Add<AReader>();
+            Add<AaaaReader>();
+            Add<AfsDbReader>();
+            Add<CaaReader>();
+            Add<CNameReader>();
+            Add<HInfoReader>();
+            Add<MbReader>();
+            Add<MgReader>();
+            Add<MInfoReader>();
+            Add<MrReader>();
+            Add<MxReader>();
+            Add<NsReader>();
+            Add<NullReader>();
+            Add<OptReader>();
+            Add<PtrReader>();
+            Add<RpReader>();
+            Add<SoaReader>();
+            Add<SrvReader>();
+            Add<SshfpReader>();
+            Add<TxtReader>();
+            Add<UriReader>();
+            Add<WksReader>();
+        }
+
+        private void Add<T>()
+            where T : IResourceRecordReader<DnsResourceRecord>, new()
+        {
+            var instance = new T();
+            _dictionary[instance.ResourceRecordType] = instance;
+        }
     }
 }

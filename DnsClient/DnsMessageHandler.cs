@@ -1,14 +1,20 @@
 ﻿namespace DnsClient
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
+    using ResourceRecords;
+    using Standard;
     using Standard.ResourceRecords.Opt;
 
     internal abstract class DnsMessageHandler
     {
+        private readonly IReadOnlyDictionary<ushort, ResourceRecordType> _resourceRecordTypes =
+            new StandardResourceRecordTypesProvider().ResourceRecordTypes;
+
         public abstract DnsResponseMessage Query(IPEndPoint endpoint, DnsRequestMessage request, TimeSpan timeout);
 
         public abstract Task<DnsResponseMessage> QueryAsync(IPEndPoint server, DnsRequestMessage request, CancellationToken cancellationToken,
@@ -66,10 +72,29 @@
             var opt = new OptRecord();
 
             writer.WriteHostName("");
-            writer.WriteUInt16NetworkOrder((ushort)opt.RecordType);
+            writer.WriteUInt16NetworkOrder(opt.RecordType.Value);
             writer.WriteUInt16NetworkOrder((ushort)opt.RecordClass);
             writer.WriteUInt32NetworkOrder((ushort)opt.TimeToLive);
             writer.WriteUInt16NetworkOrder(0);
+        }
+
+        /// <summary>
+        /// Reads a <see cref="ResourceRecord"/> from this <see cref="DnsDatagramReader"/>.
+        /// </summary>
+        private ResourceRecord ReadRecordInfo(DnsDatagramReader reader)
+        {
+            var type = reader.ReadUInt16NetworkOrder();
+            if (!_resourceRecordTypes.TryGetValue(type, out var resourceRecordType))
+                resourceRecordType = new ResourceRecordType(
+                    abbreviation: "Unknown - machine generated",
+                    value: type
+                );
+            return new ResourceRecord(
+                reader.ReadQuestionQueryString(),                      // name
+                resourceRecordType,   // type
+                (QueryClass)reader.ReadUInt16NetworkOrder(),           // class
+                (int)reader.ReadUInt32NetworkOrder(),                  // ttl - 32bit!!
+                reader.ReadUInt16NetworkOrder());                      // RDLength
         }
 
         public DnsResponseMessage GetResponseMessage(ArraySegment<byte> responseData)
@@ -95,21 +120,21 @@
 
             for (var answerIndex = 0; answerIndex < answerCount; answerIndex++)
             {
-                var info = reader.ReadRecordInfo();
+                var info = ReadRecordInfo(reader);
                 var record = factory.GetRecord(info, reader);
                 response.AddAnswer(record);
             }
 
             for (var serverIndex = 0; serverIndex < nameServerCount; serverIndex++)
             {
-                var info = reader.ReadRecordInfo();
+                var info = ReadRecordInfo(reader);
                 var record = factory.GetRecord(info, reader);
                 response.AddAuthority(record);
             }
 
             for (var additionalIndex = 0; additionalIndex < additionalCount; additionalIndex++)
             {
-                var info = reader.ReadRecordInfo();
+                var info = ReadRecordInfo(reader);
                 var record = factory.GetRecord(info, reader);
                 response.AddAdditional(record);
             }
