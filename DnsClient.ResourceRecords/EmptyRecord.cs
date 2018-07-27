@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// A <see cref="DnsResourceRecord"/> not representing any specifc resource record.
-    /// Used if unsupported <see cref="ResourceRecordType"/>s are found in the result.
+    /// Used if unsupported <see cref="PseudoResourceRecordType"/>s are found in the result.
     /// </summary>
     /// <seealso cref="DnsResourceRecord" />
     public class EmptyRecord : DnsResourceRecord

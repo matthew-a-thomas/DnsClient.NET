@@ -39,7 +39,7 @@
         /// <seealso href="https://tools.ietf.org/html/rfc1183#section-1">RFC 1183</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc5864">RFC 5864</seealso>
         /// <seealso cref="AfsDbRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "AfsDb",
             value: 18
         );

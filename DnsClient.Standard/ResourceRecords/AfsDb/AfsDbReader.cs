@@ -5,7 +5,7 @@
 
     public sealed class AfsDbReader : IResourceRecordReader<AfsDbRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = AfsDbRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = AfsDbRecord.ResourceRecordType;
 
         public AfsDbRecord ReadResourceRecord(
             ResourceRecord info,

@@ -27,10 +27,10 @@
 
     public sealed class StandardRecordReadersProvider
     {
-        private readonly Dictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>> _dictionary
-            = new Dictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>>();
+        private readonly Dictionary<PseudoResourceRecordType, IResourceRecordReader<DnsResourceRecord>> _dictionary
+            = new Dictionary<PseudoResourceRecordType, IResourceRecordReader<DnsResourceRecord>>();
 
-        public IReadOnlyDictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>> RecordReaders =>
+        public IReadOnlyDictionary<PseudoResourceRecordType, IResourceRecordReader<DnsResourceRecord>> RecordReaders =>
             _dictionary;
 
         public StandardRecordReadersProvider()

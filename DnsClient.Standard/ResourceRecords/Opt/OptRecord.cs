@@ -72,7 +72,7 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc6891">RFC 6891</seealso>
         ///// <seealso cref="DnsClient.Protocol.Options.OptRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "Opt",
             value: 41
         );

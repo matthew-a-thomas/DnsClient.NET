@@ -227,9 +227,9 @@
         /// which have the <paramref name="type"/>.
         /// </summary>
         /// <param name="records">The records.</param>
-        /// <param name="type">The <see cref="ResourceRecordType"/> to filter for.</param>
+        /// <param name="type">The <see cref="PseudoResourceRecordType"/> to filter for.</param>
         /// <returns>The list of <see cref="ARecord"/>.</returns>
-        public static IEnumerable<DnsResourceRecord> OfRecordType(this IEnumerable<DnsResourceRecord> records, ResourceRecordType type)
+        public static IEnumerable<DnsResourceRecord> OfRecordType(this IEnumerable<DnsResourceRecord> records, PseudoResourceRecordType type)
         {
             return records.Where(p => p.RecordType == type);
         }

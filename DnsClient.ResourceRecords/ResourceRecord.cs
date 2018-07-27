@@ -16,7 +16,7 @@
         /// <summary>
         /// Specifies type of resource record.
         /// </summary>
-        public ResourceRecordType RecordType { get; }
+        public PseudoResourceRecordType RecordType { get; }
 
         /// <summary>
         /// Specifies type class of resource record, mostly IN but can be CS, CH or HS .
@@ -44,7 +44,7 @@
         /// <exception cref="System.ArgumentNullException">If <paramref name="domainName" /> is null or empty.</exception>
         public ResourceRecord(
             DnsString domainName,
-            ResourceRecordType recordType,
+            PseudoResourceRecordType recordType,
             QueryClass recordClass,
             int timeToLive,
             int rawDataLength)

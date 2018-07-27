@@ -31,7 +31,7 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.3">RFC 1035</seealso>
         /// <seealso cref="MbRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "Mb",
             value: 7
         );

@@ -12,7 +12,7 @@
 
     internal abstract class DnsMessageHandler
     {
-        private readonly IReadOnlyDictionary<ushort, ResourceRecordType> _resourceRecordTypes =
+        private readonly IReadOnlyDictionary<ushort, PseudoResourceRecordType> _resourceRecordTypes =
             new StandardResourceRecordTypesProvider().ResourceRecordTypes;
 
         public abstract DnsResponseMessage Query(IPEndPoint endpoint, DnsRequestMessage request, TimeSpan timeout);
@@ -85,7 +85,7 @@
         {
             var type = reader.ReadUInt16NetworkOrder();
             if (!_resourceRecordTypes.TryGetValue(type, out var resourceRecordType))
-                resourceRecordType = new ResourceRecordType(
+                resourceRecordType = new PseudoResourceRecordType(
                     abbreviation: "Unknown - machine generated",
                     value: type
                 );

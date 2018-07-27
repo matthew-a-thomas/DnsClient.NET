@@ -46,7 +46,7 @@
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc1464">RFC 1464</seealso>
         /// <seealso cref="TxtRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "Txt",
             value: 16
         );

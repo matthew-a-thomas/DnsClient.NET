@@ -31,7 +31,7 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035">RFC 1035</seealso>
         /// <seealso cref="ARecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "A",
             value: 1
         );

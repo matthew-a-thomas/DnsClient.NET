@@ -19,7 +19,7 @@
         /// SSH finger print record
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc4255">RFC 4255</seealso>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "SshFp",
             value: 44
         );

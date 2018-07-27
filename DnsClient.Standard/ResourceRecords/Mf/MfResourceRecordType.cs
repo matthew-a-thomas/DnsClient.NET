@@ -10,7 +10,7 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035">RFC 1035</seealso>
         [Obsolete("Use MX")]
-        public static readonly ResourceRecordType Instance = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType Instance = new PseudoResourceRecordType(
             abbreviation: "Mf",
             value: 4
         );

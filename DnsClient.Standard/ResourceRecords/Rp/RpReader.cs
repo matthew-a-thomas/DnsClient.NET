@@ -5,7 +5,7 @@
 
     public sealed class RpReader : IResourceRecordReader<RpRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = RpRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = RpRecord.ResourceRecordType;
 
         public RpRecord ReadResourceRecord(
             ResourceRecord info,

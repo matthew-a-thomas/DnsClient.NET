@@ -33,7 +33,7 @@
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc1010">RFC 1010</seealso>
         /// <seealso cref="HInfoRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "HInfo",
             value: 13
         );

@@ -5,7 +5,7 @@
 
     public sealed class SoaReader : IResourceRecordReader<SoaRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = SoaRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = SoaRecord.ResourceRecordType;
 
         public SoaRecord ReadResourceRecord(
             ResourceRecord info,

@@ -11,7 +11,7 @@
         /// The type of <see cref="DnsResourceRecord"/> that this <see cref="IResourceRecordReader{T}"/> knows how to
         /// get.
         /// </summary>
-        ResourceRecordType ResourceRecordType { get; }
+        PseudoResourceRecordType ResourceRecordType { get; }
 
         /// <summary>
         /// Reads a <see cref="DnsResourceRecord"/> from the given <see cref="DnsDatagramReader"/> using the given

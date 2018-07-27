@@ -30,10 +30,10 @@
 
     public sealed class StandardResourceRecordTypesProvider
     {
-        private readonly Dictionary<ushort, ResourceRecordType> _dictionary =
-            new Dictionary<ushort, ResourceRecordType>();
+        private readonly Dictionary<ushort, PseudoResourceRecordType> _dictionary =
+            new Dictionary<ushort, PseudoResourceRecordType>();
 
-        public IReadOnlyDictionary<ushort, ResourceRecordType> ResourceRecordTypes => _dictionary;
+        public IReadOnlyDictionary<ushort, PseudoResourceRecordType> ResourceRecordTypes => _dictionary;
 
         public StandardResourceRecordTypesProvider()
         {
@@ -66,6 +66,6 @@
             Add(WksRecord.ResourceRecordType);
         }
 
-        private void Add(ResourceRecordType type) => _dictionary[type.Value] = type;
+        private void Add(PseudoResourceRecordType type) => _dictionary[type.Value] = type;
     }
 }

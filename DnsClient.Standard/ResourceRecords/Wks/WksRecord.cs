@@ -75,7 +75,7 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3232">RFC 3232</seealso>
         /// <seealso cref="WksRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "Wks",
             value: 11
         );

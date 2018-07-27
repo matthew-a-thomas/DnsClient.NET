@@ -5,7 +5,7 @@
 
     public sealed class HInfoReader : IResourceRecordReader<HInfoRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = HInfoRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = HInfoRecord.ResourceRecordType;
 
         public HInfoRecord ReadResourceRecord(
             ResourceRecord info,

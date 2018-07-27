@@ -5,7 +5,7 @@
 
     public sealed class NsReader : IResourceRecordReader<NsRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = NsRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = NsRecord.ResourceRecordType;
 
         public NsRecord ReadResourceRecord(
             ResourceRecord info,

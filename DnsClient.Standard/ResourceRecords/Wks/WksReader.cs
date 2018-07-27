@@ -6,7 +6,7 @@
 
     public sealed class WksReader : IResourceRecordReader<WksRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = WksRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = WksRecord.ResourceRecordType;
 
         public WksRecord ReadResourceRecord(
             ResourceRecord info,

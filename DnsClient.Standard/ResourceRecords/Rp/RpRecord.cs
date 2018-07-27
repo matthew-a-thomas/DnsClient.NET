@@ -75,7 +75,7 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1183">RFC 1183</seealso>
         /// <seealso cref="RpRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "Rp",
             value: 17
         );

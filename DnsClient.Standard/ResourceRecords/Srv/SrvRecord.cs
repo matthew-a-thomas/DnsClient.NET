@@ -118,7 +118,7 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc2782">RFC 2782</seealso>
         /// <seealso cref="SrvRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "Srv",
             value: 33
         );

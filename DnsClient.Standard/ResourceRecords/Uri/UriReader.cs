@@ -5,7 +5,7 @@
 
     public sealed class UriReader : IResourceRecordReader<UriRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = UriRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = UriRecord.ResourceRecordType;
 
         public UriRecord ReadResourceRecord(
             ResourceRecord info,

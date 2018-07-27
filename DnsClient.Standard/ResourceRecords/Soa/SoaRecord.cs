@@ -83,7 +83,7 @@
 	    /// </summary>
 	    /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.13">RFC 1035</seealso>
 	    /// <seealso cref="SoaRecord"/>
-	    public static ResourceRecordType ResourceRecordType = new ResourceRecordType(
+	    public static PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
 		    abbreviation: "Soa",
 		    value: 6
 		);

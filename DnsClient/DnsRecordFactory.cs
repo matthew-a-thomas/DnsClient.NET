@@ -7,10 +7,10 @@
 
     public sealed class DnsRecordFactory
     {
-        private readonly IReadOnlyDictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>> _recordReaders;
+        private readonly IReadOnlyDictionary<PseudoResourceRecordType, IResourceRecordReader<DnsResourceRecord>> _recordReaders;
 
         public DnsRecordFactory(
-            IReadOnlyDictionary<ResourceRecordType, IResourceRecordReader<DnsResourceRecord>> recordReaders
+            IReadOnlyDictionary<PseudoResourceRecordType, IResourceRecordReader<DnsResourceRecord>> recordReaders
         )
         {
             _recordReaders = recordReaders;

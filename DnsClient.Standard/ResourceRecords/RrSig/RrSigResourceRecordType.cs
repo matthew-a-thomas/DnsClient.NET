@@ -8,7 +8,7 @@
         /// RRSIG rfc3755.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3755">RFC 3755</seealso>
-        public static readonly ResourceRecordType Instance = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType Instance = new PseudoResourceRecordType(
             abbreviation: "RrSig",
             value: 46
         );

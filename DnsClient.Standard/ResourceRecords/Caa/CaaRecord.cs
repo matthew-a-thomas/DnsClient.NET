@@ -98,7 +98,7 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc6844">RFC 6844</seealso>
         /// <seealso cref="CaaRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "Caa",
             value: 257
         );

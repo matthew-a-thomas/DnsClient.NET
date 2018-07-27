@@ -6,7 +6,7 @@
 
     public sealed class NullReader : IResourceRecordReader<NullRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = NullRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = NullRecord.ResourceRecordType;
 
         public NullRecord ReadResourceRecord(
             ResourceRecord info,

@@ -41,7 +41,7 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc7553">RFC 7553</seealso>
         /// <seealso cref="UriRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "Uri",
             value: 256
         );

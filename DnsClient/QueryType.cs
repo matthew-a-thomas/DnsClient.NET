@@ -31,7 +31,7 @@
 
     /// <summary>
     /// The query type field appear in the question part of a query.
-    /// Query types are a superset of <see cref="ResourceRecordType"/>.
+    /// Query types are a superset of <see cref="PseudoResourceRecordType"/>.
     /// </summary>
     [SuppressMessage("ReSharper",
         "UnusedMember.Global")]
@@ -42,84 +42,84 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035">RFC 1035</seealso>
         /// <seealso cref="ARecord"/>
-        A = ResourceRecordType.A,
+        A = PseudoResourceRecordType.A,
 
         /// <summary>
         /// An authoritative name server.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
         /// <seealso cref="NsRecord"/>
-        Ns = ResourceRecordType.Ns,
+        Ns = PseudoResourceRecordType.Ns,
 
         /// <summary>
         /// A mail destination (OBSOLETE - use MX).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035">RFC 1035</seealso>
         [Obsolete("Use MX")]
-        Md = ResourceRecordType.Md,
+        Md = PseudoResourceRecordType.Md,
 
         /// <summary>
         /// A mail forwarder (OBSOLETE - use MX).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035">RFC 1035</seealso>
         [Obsolete("Use MX")]
-        Mf = ResourceRecordType.Mf,
+        Mf = PseudoResourceRecordType.Mf,
 
         /// <summary>
         /// The canonical name for an alias.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.1">RFC 1035</seealso>
         /// <seealso cref="CNameRecord"/>
-        Cname = ResourceRecordType.Cname,
+        Cname = PseudoResourceRecordType.Cname,
 
         /// <summary>
         /// Marks the start of a zone of authority.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.13">RFC 1035</seealso>
         /// <seealso cref="SoaRecord"/>
-        Soa = ResourceRecordType.Soa,
+        Soa = PseudoResourceRecordType.Soa,
 
         /// <summary>
         /// A mailbox domain name (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.3">RFC 1035</seealso>
         /// <seealso cref="MbRecord"/>
-        Mb = ResourceRecordType.Mb,
+        Mb = PseudoResourceRecordType.Mb,
 
         /// <summary>
         /// A mail group member (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.6">RFC 1035</seealso>
         /// <seealso cref="MgRecord"/>
-        Mg = ResourceRecordType.Mg,
+        Mg = PseudoResourceRecordType.Mg,
 
         /// <summary>
         /// A mailbox rename domain name (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.8">RFC 1035</seealso>
         /// <seealso cref="MrRecord"/>
-        Mr = ResourceRecordType.Mr,
+        Mr = PseudoResourceRecordType.Mr,
 
         /// <summary>
         /// A Null resource record (EXPERIMENTAL).
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.8">RFC 1035</seealso>
         /// <seealso cref="NullRecord"/>
-        Null = ResourceRecordType.Null,
+        Null = PseudoResourceRecordType.Null,
 
         /// <summary>
         /// A well known service description.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3232">RFC 3232</seealso>
         /// <seealso cref="WksRecord"/>
-        Wks = ResourceRecordType.Wks,
+        Wks = PseudoResourceRecordType.Wks,
 
         /// <summary>
         /// A domain name pointer.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.12">RFC 1035</seealso>
         /// <seealso cref="PtrRecord"/>
-        Ptr = ResourceRecordType.Ptr,
+        Ptr = PseudoResourceRecordType.Ptr,
 
         /// <summary>
         /// Host information.
@@ -127,14 +127,14 @@
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc1010">RFC 1010</seealso>
         /// <seealso cref="HInfoRecord"/>
-        Hinfo = ResourceRecordType.Hinfo,
+        Hinfo = PseudoResourceRecordType.Hinfo,
 
         /// <summary>
         /// Mailbox or mail list information.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.11">RFC 1035</seealso>
         /// <seealso cref="MInfoRecord"/>
-        Minfo = ResourceRecordType.Minfo,
+        Minfo = PseudoResourceRecordType.Minfo,
 
         /// <summary>
         /// Mail exchange.
@@ -142,7 +142,7 @@
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.9">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc974">RFC 974</seealso>
         /// <seealso cref="MxRecord"/>
-        Mx = ResourceRecordType.Mx,
+        Mx = PseudoResourceRecordType.Mx,
 
         /// <summary>
         /// Text resources.
@@ -150,14 +150,14 @@
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc1464">RFC 1464</seealso>
         /// <seealso cref="TxtRecord"/>
-        Txt = ResourceRecordType.Txt,
+        Txt = PseudoResourceRecordType.Txt,
 
         /// <summary>
         /// Responsible Person.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc1183">RFC 1183</seealso>
         /// <seealso cref="RpRecord"/>
-        Rp = ResourceRecordType.Rp,
+        Rp = PseudoResourceRecordType.Rp,
 
         /// <summary>
         /// AFS Data Base location.
@@ -165,27 +165,27 @@
         /// <seealso href="https://tools.ietf.org/html/rfc1183#section-1">RFC 1183</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc5864">RFC 5864</seealso>
         /// <seealso cref="AfsDbRecord"/>
-        Afsdb = ResourceRecordType.AfsDb,
+        Afsdb = PseudoResourceRecordType.AfsDb,
 
         /// <summary>
         /// An IPv6 host address.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3596#section-2.2">RFC 3596</seealso>
         /// <seealso cref="AaaaRecord"/>
-        Aaaa = ResourceRecordType.Aaaa,
+        Aaaa = PseudoResourceRecordType.Aaaa,
 
         /// <summary>
         /// A resource record which specifies the location of the server(s) for a specific protocol and domain.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc2782">RFC 2782</seealso>
         /// <seealso cref="SrvRecord"/>
-        Srv = ResourceRecordType.Srv,
+        Srv = PseudoResourceRecordType.Srv,
 
         /// <summary>
         /// RRSIG rfc3755.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc3755">RFC 3755</seealso>
-        Rrsig = ResourceRecordType.Rrsig,
+        Rrsig = PseudoResourceRecordType.Rrsig,
 
         /// <summary>
         /// DNS zone transfer request.
@@ -206,20 +206,20 @@
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc7553">RFC 7553</seealso>
         /// <seealso cref="UriRecord"/>
-        Uri = ResourceRecordType.Uri,
+        Uri = PseudoResourceRecordType.Uri,
 
         /// <summary>
         /// A certification authority authorization.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc6844">RFC 6844</seealso>
         /// <seealso cref="CaaRecord"/>
-        Caa = ResourceRecordType.Caa,
+        Caa = PseudoResourceRecordType.Caa,
 
         /// <summary>
         /// A SSH Fingerprint resource record.
         /// </summary>
         /// <seealso href="https://tools.ietf.org/html/rfc4255">RFC 4255</seealso>
         /// <seealso cref="SshfpRecord"/>
-        Sshfp = ResourceRecordType.Sshfp
+        Sshfp = PseudoResourceRecordType.Sshfp
     }
 }

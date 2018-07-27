@@ -5,7 +5,7 @@
 
     public sealed class MgReader : IResourceRecordReader<MgRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = MgRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = MgRecord.ResourceRecordType;
 
         public MgRecord ReadResourceRecord(
             ResourceRecord info,

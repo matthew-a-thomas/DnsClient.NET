@@ -42,7 +42,7 @@
         /// <seealso href="https://tools.ietf.org/html/rfc1035#section-3.3.9">RFC 1035</seealso>
         /// <seealso href="https://tools.ietf.org/html/rfc974">RFC 974</seealso>
         /// <seealso cref="MxRecord"/>
-        public static readonly ResourceRecordType ResourceRecordType = new ResourceRecordType(
+        public static readonly PseudoResourceRecordType ResourceRecordType = new PseudoResourceRecordType(
             abbreviation: "Mx",
             value: 15
         );

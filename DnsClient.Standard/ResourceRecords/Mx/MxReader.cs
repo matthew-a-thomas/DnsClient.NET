@@ -5,7 +5,7 @@
 
     public sealed class MxReader : IResourceRecordReader<MxRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = MxRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = MxRecord.ResourceRecordType;
 
         public MxRecord ReadResourceRecord(
             ResourceRecord info,

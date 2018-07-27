@@ -1,24 +1,20 @@
 ﻿namespace DnsClient.ResourceRecords
 {
     using System;
-
-    /*
-     * RFC 1035 (https://tools.ietf.org/html/rfc1035#section-3.2.2)
-     * */
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// A resource record type used to identify any <see cref="DnsResourceRecord"/>.
-    /// <para>
-    /// Resource record types are a subset of <see cref="QueryType"/>.
-    /// </para>
+    /// A pseudo resource record type used to identify any <see cref="DnsResourceRecord"/> or pseudo resource record.
     /// </summary>
     /// <seealso cref="DnsResourceRecord"/>
     /// <remarks>
-    /// <see cref="ResourceRecordType"/>s are equal to one another if their <see cref="Value"/>s are equal.
+    /// <see cref="PseudoResourceRecordType"/>s are equal to one another if their <see cref="Value"/>s are equal.
+    ///
+    /// RFC 1035 (https://tools.ietf.org/html/rfc1035#section-3.2.2) defines a few resource record types.
     /// </remarks>
-    public sealed class ResourceRecordType : IEquatable<ResourceRecordType>
+    public sealed class PseudoResourceRecordType : IEquatable<PseudoResourceRecordType>
     {
-        public ResourceRecordType(
+        public PseudoResourceRecordType(
             string abbreviation,
             ushort value)
         {
@@ -27,8 +23,10 @@
         }
 
         /// <summary>
-        /// A human-readable abbreviation for this <see cref="ResourceRecordType"/>.
+        /// A human-readable abbreviation for this <see cref="PseudoResourceRecordType"/>.
         /// </summary>
+        [SuppressMessage("ReSharper",
+            "MemberCanBePrivate.Global")]
         public string Abbreviation { get; }
 
         /// <summary>
@@ -39,7 +37,7 @@
         public override string ToString() => Abbreviation;
 
         public bool Equals(
-            ResourceRecordType other)
+            PseudoResourceRecordType other)
         {
             if (ReferenceEquals(
                 null,
@@ -53,7 +51,7 @@
         }
 
         public override bool Equals(
-            object obj) => obj is ResourceRecordType type && Equals(type);
+            object obj) => obj is PseudoResourceRecordType type && Equals(type);
 
         public override int GetHashCode() => Value.GetHashCode();
     }

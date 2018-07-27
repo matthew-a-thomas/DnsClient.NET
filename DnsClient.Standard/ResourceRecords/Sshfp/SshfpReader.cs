@@ -6,7 +6,7 @@
 
     public sealed class SshfpReader : IResourceRecordReader<SshfpRecord>
     {
-        public ResourceRecordType ResourceRecordType { get; } = SshfpRecord.ResourceRecordType;
+        public PseudoResourceRecordType ResourceRecordType { get; } = SshfpRecord.ResourceRecordType;
 
         public SshfpRecord ReadResourceRecord(
             ResourceRecord info,
