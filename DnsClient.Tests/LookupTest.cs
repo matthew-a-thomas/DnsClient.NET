@@ -6,7 +6,14 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
+    using ResourceRecords;
+    using Standard.PseudoResourceRecords.Any;
     using Standard.ResourceRecords.A;
+    using Standard.ResourceRecords.Aaaa;
+    using Standard.ResourceRecords.Mx;
+    using Standard.ResourceRecords.Ns;
+    using Standard.ResourceRecords.Soa;
+    using Standard.ResourceRecords.Txt;
     using Xunit;
 
     public class LookupTest
@@ -46,12 +53,12 @@
         {
             var client = new LookupClient();
 
-            var result = await client.QueryAsync("localhost", QueryType.A);
+            var result = await client.QueryAsync("localhost", ARecord.ResourceRecordType);
 
             var answer = result.Answers.OfType<ARecord>().First();
             Assert.Equal("127.0.0.1", answer.Address.ToString());
             Assert.Equal(QueryClass.In, result.Questions.First().QuestionClass);
-            Assert.Equal(QueryType.A, result.Questions.First().QuestionType);
+            Assert.Equal(ARecord.ResourceRecordType, result.Questions.First().QuestionType);
             Assert.True(result.Header.AnswerCount > 0);
         }
 
@@ -60,12 +67,12 @@
         {
             var client = new LookupClient();
 
-            var result = client.Query("localhost", QueryType.A);
+            var result = client.Query("localhost", ARecord.ResourceRecordType);
 
             var answer = result.Answers.OfType<ARecord>().First();
             Assert.Equal("127.0.0.1", answer.Address.ToString());
             Assert.Equal(QueryClass.In, result.Questions.First().QuestionClass);
-            Assert.Equal(QueryType.A, result.Questions.First().QuestionType);
+            Assert.Equal(ARecord.ResourceRecordType, result.Questions.First().QuestionType);
             Assert.True(result.Header.AnswerCount > 0);
         }
 
@@ -76,10 +83,10 @@
             var client = new LookupClient { Timeout = TimeSpan.FromMilliseconds(500) };
 
             client.EnableAuditTrail = true;
-            var result = await client.QueryAsync("127.0.0.1", QueryType.A);
+            var result = await client.QueryAsync("127.0.0.1", ARecord.ResourceRecordType);
 
             Assert.Equal(QueryClass.In, result.Questions.First().QuestionClass);
-            Assert.Equal(QueryType.A, result.Questions.First().QuestionType);
+            Assert.Equal(ARecord.ResourceRecordType, result.Questions.First().QuestionType);
             Assert.True(result.Header.AnswerCount == 0);
         }
 
@@ -90,10 +97,10 @@
             var client = new LookupClient { Timeout = TimeSpan.FromMilliseconds(500) };
 
             client.EnableAuditTrail = true;
-            var result = client.Query("127.0.0.1", QueryType.A);
+            var result = client.Query("127.0.0.1", ARecord.ResourceRecordType);
 
             Assert.Equal(QueryClass.In, result.Questions.First().QuestionClass);
-            Assert.Equal(QueryType.A, result.Questions.First().QuestionType);
+            Assert.Equal(ARecord.ResourceRecordType, result.Questions.First().QuestionType);
             Assert.True(result.Header.AnswerCount == 0);
         }
 
@@ -105,7 +112,7 @@
                 ThrowDnsErrors = true
             };
 
-            Action act = () => client.QueryAsync("lalacom", (QueryType)12345).GetAwaiter().GetResult();
+            Action act = () => client.QueryAsync("lalacom", new PseudoResourceRecordType("", 12345)).GetAwaiter().GetResult();
 
             var ex = Record.Exception(act) as DnsResponseException ?? throw new Exception();
 
@@ -120,7 +127,7 @@
                 ThrowDnsErrors = true
             };
 
-            Action act = () => client.Query("lalacom", (QueryType)12345);
+            Action act = () => client.Query("lalacom", new PseudoResourceRecordType("", 12345));
 
             var ex = Record.Exception(act) as DnsResponseException ?? throw new Exception();
 
@@ -140,7 +147,7 @@
                 };
 
                 // ReSharper disable once PossibleNullReferenceException <-- ???
-                var exe = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", QueryType.A));
+                var exe = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", ARecord.ResourceRecordType));
 
                 var ex = exe as DnsResponseException;
                 Assert.NotNull(ex);
@@ -158,7 +165,7 @@
                     UseTcpFallback = false
                 };
 
-                var exe = Record.Exception(() => client.Query("lala.com", QueryType.A));
+                var exe = Record.Exception(() => client.Query("lala.com", ARecord.ResourceRecordType));
 
                 var ex = exe as DnsResponseException;
                 Assert.NotNull(ex);
@@ -177,7 +184,7 @@
                 };
 
                 // ReSharper disable once PossibleNullReferenceException <-- ???
-                var exe = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", QueryType.A));
+                var exe = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", ARecord.ResourceRecordType));
 
                 var ex = exe as DnsResponseException;
                 Assert.NotNull(ex);
@@ -195,7 +202,7 @@
                     UseTcpOnly = true
                 };
 
-                var exe = Record.Exception(() => client.Query("lala.com", QueryType.A));
+                var exe = Record.Exception(() => client.Query("lala.com", ARecord.ResourceRecordType));
 
                 var ex = exe as DnsResponseException;
                 Assert.NotNull(ex);
@@ -214,7 +221,7 @@
 
             var tokenSource = new CancellationTokenSource();
             var token = tokenSource.Token;
-            Action act = () => client.QueryAsync("lala.com", QueryType.A, cancellationToken: token).GetAwaiter().GetResult();
+            Action act = () => client.QueryAsync("lala.com", ARecord.ResourceRecordType, cancellationToken: token).GetAwaiter().GetResult();
             tokenSource.Cancel();
 
             var ex = Record.Exception(act) as OperationCanceledException;
@@ -233,7 +240,7 @@
 
             var tokenSource = new CancellationTokenSource();
             var token = tokenSource.Token;
-            Action act = () => client.QueryAsync("lala.com", QueryType.A, cancellationToken: token).GetAwaiter().GetResult();
+            Action act = () => client.QueryAsync("lala.com", ARecord.ResourceRecordType, cancellationToken: token).GetAwaiter().GetResult();
             tokenSource.Cancel();
 
             var ex = Record.Exception(act) as OperationCanceledException;
@@ -259,7 +266,7 @@
                 var token = tokenSource.Token;
 
                 // ReSharper disable once PossibleNullReferenceException <-- ???
-                var ex = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", QueryType.A, cancellationToken: token));
+                var ex = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", ARecord.ResourceRecordType, cancellationToken: token));
                 Assert.True(ex is OperationCanceledException);
                 Assert.Equal(token, ((OperationCanceledException)ex).CancellationToken);
             }
@@ -279,7 +286,7 @@
                 var token = tokenSource.Token;
 
                 // ReSharper disable once PossibleNullReferenceException <-- ???
-                var ex = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", QueryType.A, cancellationToken: token));
+                var ex = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", ARecord.ResourceRecordType, cancellationToken: token));
                 Assert.True(ex is OperationCanceledException);
                 Assert.Equal(token, ((OperationCanceledException)ex).CancellationToken);
             }
@@ -299,7 +306,7 @@
                 var token = tokenSource.Token;
 
                 // ReSharper disable once PossibleNullReferenceException <-- ???
-                var ex = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", QueryType.A, cancellationToken: token));
+                var ex = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", ARecord.ResourceRecordType, cancellationToken: token));
                 Assert.True(ex is OperationCanceledException);
                 Assert.Equal(token, ((OperationCanceledException)ex).CancellationToken);
             }
@@ -319,7 +326,7 @@
                 var token = tokenSource.Token;
 
                 // ReSharper disable once PossibleNullReferenceException <-- ???
-                var ex = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", QueryType.A, cancellationToken: token));
+                var ex = await Record.ExceptionAsync(() => client.QueryAsync("lala.com", ARecord.ResourceRecordType, cancellationToken: token));
                 Assert.True(ex is OperationCanceledException);
                 Assert.Equal(token, ((OperationCanceledException)ex).CancellationToken);
             }
@@ -356,7 +363,7 @@
         public async Task Lookup_Query_AAAA()
         {
             var client = new LookupClient();
-            var result = await client.QueryAsync("google.com", QueryType.Aaaa);
+            var result = await client.QueryAsync("google.com", AaaaRecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers.AaaaRecords());
             Assert.NotNull(result.Answers.AaaaRecords().First().Address);
@@ -366,7 +373,7 @@
         public void Lookup_Query_AAAA_Sync()
         {
             var client = new LookupClient();
-            var result = client.Query("google.com", QueryType.Aaaa);
+            var result = client.Query("google.com", AaaaRecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers.AaaaRecords());
             Assert.NotNull(result.Answers.AaaaRecords().First().Address);
@@ -376,7 +383,7 @@
         public async Task Lookup_Query_Any()
         {
             var client = new LookupClient();
-            var result = await client.QueryAsync("google.com", QueryType.Any);
+            var result = await client.QueryAsync("google.com", AnyResourceRecordType.Instance);
 
             Assert.NotEmpty(result.Answers);
             Assert.NotEmpty(result.Answers.ARecords());
@@ -387,7 +394,7 @@
         public void Lookup_Query_Any_Sync()
         {
             var client = new LookupClient();
-            var result = client.Query("google.com", QueryType.Any);
+            var result = client.Query("google.com", AnyResourceRecordType.Instance);
 
             Assert.NotEmpty(result.Answers);
             Assert.NotEmpty(result.Answers.ARecords());
@@ -398,7 +405,7 @@
         public async Task Lookup_Query_Mx()
         {
             var client = new LookupClient();
-            var result = await client.QueryAsync("google.com", QueryType.Mx);
+            var result = await client.QueryAsync("google.com", MxRecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers.MxRecords());
             Assert.NotNull(result.Answers.MxRecords().First().Exchange);
@@ -409,7 +416,7 @@
         public void Lookup_Query_Mx_Sync()
         {
             var client = new LookupClient();
-            var result = client.Query("google.com", QueryType.Mx);
+            var result = client.Query("google.com", MxRecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers.MxRecords());
             Assert.NotNull(result.Answers.MxRecords().First().Exchange);
@@ -420,7 +427,7 @@
         public async Task Lookup_Query_NS()
         {
             var client = new LookupClient();
-            var result = await client.QueryAsync("google.com", QueryType.Ns);
+            var result = await client.QueryAsync("google.com", NsRecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers.NsRecords());
             Assert.NotNull(result.Answers.NsRecords().First().NsdName);
@@ -430,7 +437,7 @@
         public void Lookup_Query_NS_Sync()
         {
             var client = new LookupClient();
-            var result = client.Query("google.com", QueryType.Ns);
+            var result = client.Query("google.com", NsRecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers.NsRecords());
             Assert.NotNull(result.Answers.NsRecords().First().NsdName);
@@ -440,7 +447,7 @@
         public async Task Lookup_Query_TXT()
         {
             var client = new LookupClient();
-            var result = await client.QueryAsync("google.com", QueryType.Txt);
+            var result = await client.QueryAsync("google.com", TxtRecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers.TxtRecords());
             Assert.NotEmpty(result.Answers.TxtRecords().First().EscapedText);
@@ -451,7 +458,7 @@
         public void Lookup_Query_TXT_Sync()
         {
             var client = new LookupClient();
-            var result = client.Query("google.com", QueryType.Txt);
+            var result = client.Query("google.com", TxtRecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers.TxtRecords());
             Assert.NotEmpty(result.Answers.TxtRecords().First().EscapedText);
@@ -462,7 +469,7 @@
         public async Task Lookup_Query_SOA()
         {
             var client = new LookupClient();
-            var result = await client.QueryAsync("google.com", QueryType.Soa);
+            var result = await client.QueryAsync("google.com", SoaRecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers.SoaRecords());
             Assert.NotNull(result.Answers.SoaRecords().First().MName);
@@ -473,7 +480,7 @@
         public void Lookup_Query_SOA_Sync()
         {
             var client = new LookupClient();
-            var result = client.Query("google.com", QueryType.Soa);
+            var result = client.Query("google.com", SoaRecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers.SoaRecords());
             Assert.NotNull(result.Answers.SoaRecords().First().MName);
@@ -484,7 +491,7 @@
         public async Task Lookup_Query_Puny()
         {
             var client = new LookupClient(IPAddress.Parse("8.8.8.8"));
-            var result = await client.QueryAsync("müsli.de", QueryType.A);
+            var result = await client.QueryAsync("müsli.de", ARecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers);
             Assert.NotEmpty(result.Answers.ARecords());
@@ -494,7 +501,7 @@
         public void Lookup_Query_Puny_Sync()
         {
             var client = new LookupClient(IPAddress.Parse("8.8.8.8"));
-            var result = client.Query("müsli.de", QueryType.A);
+            var result = client.Query("müsli.de", ARecord.ResourceRecordType);
 
             Assert.NotEmpty(result.Answers);
             Assert.NotEmpty(result.Answers.ARecords());
@@ -504,7 +511,7 @@
         public void Lookup_Query_Puny2()
         {
             var client = new LookupClient();
-            var result = client.Query("müsli.com", QueryType.Any);
+            var result = client.Query("müsli.com", AnyResourceRecordType.Instance);
 
             Assert.NotEmpty(result.Answers);
             Assert.NotEmpty(result.Answers.ARecords());
@@ -515,7 +522,7 @@
         {
             var client = new LookupClient(IPAddress.Parse("8.8.8.8"));
 
-            Func<IDnsQueryResponse> act = () => client.QueryAsync("müsliiscool!.de", QueryType.A).Result;
+            Func<IDnsQueryResponse> act = () => client.QueryAsync("müsliiscool!.de", ARecord.ResourceRecordType).Result;
 
             Assert.ThrowsAny<ArgumentException>(act);
         }
@@ -693,7 +700,7 @@
         public async Task GetHostEntryAsync_ByManyIps()
         {
             var client = new LookupClient(NameServer.GooglePublicDns);
-            var nsServers = client.Query("google.com", QueryType.Ns).Answers.NsRecords().ToArray();
+            var nsServers = client.Query("google.com", NsRecord.ResourceRecordType).Answers.NsRecords().ToArray();
 
             Assert.True(nsServers.Length > 0, "Should have more than 0 NS servers");
 

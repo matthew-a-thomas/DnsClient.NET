@@ -7,10 +7,10 @@
 
     public sealed class DnsRecordFactory
     {
-        private readonly IReadOnlyDictionary<PseudoResourceRecordType, IResourceRecordReader<DnsResourceRecord>> _recordReaders;
+        private readonly IReadOnlyDictionary<ushort, IResourceRecordReader<DnsResourceRecord>> _recordReaders;
 
         public DnsRecordFactory(
-            IReadOnlyDictionary<PseudoResourceRecordType, IResourceRecordReader<DnsResourceRecord>> recordReaders
+            IReadOnlyDictionary<ushort, IResourceRecordReader<DnsResourceRecord>> recordReaders
         )
         {
             _recordReaders = recordReaders;
@@ -50,7 +50,7 @@
             var oldIndex = reader.Index;
             DnsResourceRecord result;
 
-            if (_recordReaders.TryGetValue(info.RecordType, out var recordReader))
+            if (_recordReaders.TryGetValue(info.RecordType.Value, out var recordReader))
             {
                 result = recordReader.ReadResourceRecord(info, reader);
             }

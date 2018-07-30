@@ -75,7 +75,7 @@
                 ":",
                 (short) question.QuestionClass,
                 ":",
-                (short) question.QuestionType);
+                question.QuestionType.Value);
         }
 
         public IDnsQueryResponse Get(

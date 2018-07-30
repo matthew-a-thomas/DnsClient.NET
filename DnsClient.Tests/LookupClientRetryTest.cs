@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
+    using Standard.ResourceRecords.A;
     using Xunit;
 
     public class LookupClientRetryTest
@@ -37,7 +38,7 @@
             {
                 var request = new DnsRequestMessage(
                    new DnsRequestHeader(i, DnsOpCode.Query),
-                   new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                   new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
                 var result = lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false);
                 Assert.False(result.HasError);
@@ -76,7 +77,7 @@
             {
                 var request = new DnsRequestMessage(
                    new DnsRequestHeader(i, DnsOpCode.Query),
-                   new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                   new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
                 var result = await lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false);
                 Assert.False(result.HasError);
@@ -116,7 +117,7 @@
             {
                 var request = new DnsRequestMessage(
                    new DnsRequestHeader(i, DnsOpCode.Query),
-                   new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                   new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
                 var result = lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false);
                 Assert.False(result.HasError);
@@ -159,7 +160,7 @@
             {
                 var request = new DnsRequestMessage(
                    new DnsRequestHeader(i, DnsOpCode.Query),
-                   new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                   new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
                 var result = await lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false);
                 Assert.False(result.HasError);
@@ -201,7 +202,7 @@
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
             var result = lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false);
 
@@ -240,7 +241,7 @@
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
             var result = await lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false);
 
@@ -285,7 +286,7 @@
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
             // all three servers have been called and we get the last exception thrown
             var result = Assert.ThrowsAny<DnsResponseException>(() => lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false));
@@ -330,7 +331,7 @@
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
             // all three servers have been called and we get the last exception thrown
             var result = await Assert.ThrowsAnyAsync<DnsResponseException>(() => lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false));
@@ -365,7 +366,7 @@
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
             var result = lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false);
 
@@ -399,7 +400,7 @@
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
             var result = await lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false);
 
@@ -435,7 +436,7 @@
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
             var result = Assert.ThrowsAny<DnsResponseException>(() => lookup.ResolveQuery(lookup.GetNextServers(), messageHandler, request, false));
 
@@ -468,7 +469,7 @@
 
             var request = new DnsRequestMessage(
                 new DnsRequestHeader(0, DnsOpCode.Query),
-                new DnsQuestion("test.com", QueryType.A, QueryClass.In));
+                new DnsQuestion("test.com", ARecord.ResourceRecordType, QueryClass.In));
 
             var result = await Assert.ThrowsAnyAsync<DnsResponseException>(() => lookup.ResolveQueryAsync(lookup.GetNextServers(), messageHandler, request, false));
 

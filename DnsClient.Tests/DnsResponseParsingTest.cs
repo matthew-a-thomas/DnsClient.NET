@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using Core;
     using ResourceRecords;
+    using Standard.ResourceRecords.A;
     using Standard.ResourceRecords.Aaaa;
     using Standard.ResourceRecords.AfsDb;
     using Standard.ResourceRecords.Caa;
@@ -31,7 +32,7 @@
     public class DnsResponseParsingTest
     {
         private static readonly DnsRequestMessage NullRequestMessage =
-            new DnsRequestMessage(new DnsRequestHeader(0, DnsOpCode.Query), new DnsQuestion("bla", QueryType.A, QueryClass.In));
+            new DnsRequestMessage(new DnsRequestHeader(0, DnsOpCode.Query), new DnsQuestion("bla", ARecord.ResourceRecordType, QueryClass.In));
 
         private readonly LookupClient _client;
 

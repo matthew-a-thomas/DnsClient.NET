@@ -9,6 +9,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
+    using ResourceRecords;
     using Standard.ResourceRecords.Opt;
     using Standard.ResourceRecords.Ptr;
 
@@ -369,7 +370,7 @@
             var arpa = ipAddress.GetArpaName();
             return Query(
                 arpa,
-                QueryType.Ptr);
+                PtrRecord.ResourceRecordType);
         }
 
         /// <summary>
@@ -395,7 +396,7 @@
             var arpa = ipAddress.GetArpaName();
             return QueryAsync(
                 arpa,
-                QueryType.Ptr,
+                PtrRecord.ResourceRecordType,
                 QueryClass.In,
                 cancellationToken);
         }
@@ -448,7 +449,7 @@
             return QueryServer(
                 servers,
                 arpa,
-                QueryType.Ptr);
+                PtrRecord.ResourceRecordType);
         }
 
         /// <summary>
@@ -506,7 +507,7 @@
             return QueryServerAsync(
                 servers,
                 arpa,
-                QueryType.Ptr);
+                PtrRecord.ResourceRecordType);
         }
 
         /// <summary>
@@ -526,7 +527,7 @@
         /// </remarks>
         public IDnsQueryResponse Query(
             string query,
-            QueryType queryType,
+            PseudoResourceRecordType queryType,
             QueryClass queryClass = QueryClass.In)
             => QueryInternal(
                 GetNextServers(),
@@ -554,7 +555,7 @@
         /// </remarks>
         public Task<IDnsQueryResponse> QueryAsync(
             string query,
-            QueryType queryType,
+            PseudoResourceRecordType queryType,
             QueryClass queryClass = QueryClass.In,
             CancellationToken cancellationToken = default)
             => QueryInternalAsync(
@@ -586,7 +587,7 @@
         public IDnsQueryResponse QueryServer(
             IReadOnlyCollection<IPAddress> servers,
             string query,
-            QueryType queryType,
+            PseudoResourceRecordType queryType,
             QueryClass queryClass = QueryClass.In)
             => QueryServer(
                 servers?.Select(
@@ -619,7 +620,7 @@
         public IDnsQueryResponse QueryServer(
             IReadOnlyCollection<IPEndPoint> servers,
             string query,
-            QueryType queryType,
+            PseudoResourceRecordType queryType,
             QueryClass queryClass = QueryClass.In)
             => QueryInternal(
                 servers?.Select(p => new NameServer(p))
@@ -652,7 +653,7 @@
         public Task<IDnsQueryResponse> QueryServerAsync(
             IReadOnlyCollection<IPAddress> servers,
             string query,
-            QueryType queryType,
+            PseudoResourceRecordType queryType,
             QueryClass queryClass = QueryClass.In,
             CancellationToken cancellationToken = default)
             => QueryServerAsync(
@@ -689,7 +690,7 @@
         public Task<IDnsQueryResponse> QueryServerAsync(
             IReadOnlyCollection<IPEndPoint> servers,
             string query,
-            QueryType queryType,
+            PseudoResourceRecordType queryType,
             QueryClass queryClass = QueryClass.In,
             CancellationToken cancellationToken = default)
             => QueryInternalAsync(

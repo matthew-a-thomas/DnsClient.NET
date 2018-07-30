@@ -9,7 +9,10 @@
     using Core;
     using ResourceRecords;
     using Standard.ResourceRecords;
+    using Standard.ResourceRecords.A;
+    using Standard.ResourceRecords.Aaaa;
     using Standard.ResourceRecords.CName;
+    using Standard.ResourceRecords.Srv;
 
     /// <summary>
     /// Extension methods for the <see cref="IDnsQuery"/> contract.
@@ -333,8 +336,8 @@
             }
 
             var hostString = DnsString.FromResponseQueryString(hostName);
-            var ipv4Result = query.Query(hostString, QueryType.A);
-            var ipv6Result = query.Query(hostString, QueryType.Aaaa);
+            var ipv4Result = query.Query(hostString, ARecord.ResourceRecordType);
+            var ipv6Result = query.Query(hostString, AaaaRecord.ResourceRecordType);
 
             var allRecords = ipv4Result
                 .Answers.Concat(ipv6Result.Answers)
@@ -351,8 +354,8 @@
             }
 
             var hostString = DnsString.FromResponseQueryString(hostName);
-            var ipv4Result = query.QueryAsync(hostString, QueryType.A);
-            var ipv6Result = query.QueryAsync(hostString, QueryType.Aaaa);
+            var ipv4Result = query.QueryAsync(hostString, ARecord.ResourceRecordType);
+            var ipv6Result = query.QueryAsync(hostString, AaaaRecord.ResourceRecordType);
 
             await Task.WhenAll(ipv4Result, ipv6Result).ConfigureAwait(false);
 
@@ -576,7 +579,7 @@
 
             var queryString = ConcatResolveServiceName(baseDomain, serviceName, tag);
 
-            var result = query.Query(queryString, QueryType.Srv);
+            var result = query.Query(queryString, SrvRecord.ResourceRecordType);
 
             return ResolveServiceProcessResult(result);
         }
@@ -616,7 +619,7 @@
 
             var queryString = ConcatResolveServiceName(baseDomain, serviceName, tag);
 
-            var result = await query.QueryAsync(queryString, QueryType.Srv).ConfigureAwait(false);
+            var result = await query.QueryAsync(queryString, SrvRecord.ResourceRecordType).ConfigureAwait(false);
 
             return ResolveServiceProcessResult(result);
         }

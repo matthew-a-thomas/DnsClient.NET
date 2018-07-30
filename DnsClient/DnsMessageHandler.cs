@@ -15,6 +15,10 @@
         private readonly IReadOnlyDictionary<ushort, PseudoResourceRecordType> _resourceRecordTypes =
             new StandardResourceRecordTypesProvider().ResourceRecordTypes;
 
+        private readonly DnsRecordFactory _dnsRecordFactory = new StandardDnsRecordFactoryFactory().Create();
+        private readonly IReadOnlyDictionary<ushort, PseudoResourceRecordType> _queryTypes
+            = new StandardQueryTypesProvider().QueryTypes;
+
         public abstract DnsResponseMessage Query(IPEndPoint endpoint, DnsRequestMessage request, TimeSpan timeout);
 
         public abstract Task<DnsResponseMessage> QueryAsync(IPEndPoint server, DnsRequestMessage request, CancellationToken cancellationToken,
@@ -53,7 +57,7 @@
             writer.WriteInt16NetworkOrder(1); // one additional for the Opt record.
 
             writer.WriteHostName(question.QueryName);
-            writer.WriteUInt16NetworkOrder((ushort)question.QuestionType);
+            writer.WriteUInt16NetworkOrder(question.QuestionType.Value);
             writer.WriteUInt16NetworkOrder((ushort)question.QuestionClass);
 
             /*
@@ -83,24 +87,27 @@
         /// </summary>
         private ResourceRecord ReadRecordInfo(DnsDatagramReader reader)
         {
+            var queryString = reader.ReadQuestionQueryString();
             var type = reader.ReadUInt16NetworkOrder();
             if (!_resourceRecordTypes.TryGetValue(type, out var resourceRecordType))
                 resourceRecordType = new PseudoResourceRecordType(
                     abbreviation: "Unknown - machine generated",
                     value: type
                 );
+            var queryClass = reader.ReadUInt16NetworkOrder();
+            var ttl = reader.ReadUInt32NetworkOrder();
+            var rdLength = reader.ReadUInt16NetworkOrder();
             return new ResourceRecord(
-                reader.ReadQuestionQueryString(),                      // name
+                queryString,                      // name
                 resourceRecordType,   // type
-                (QueryClass)reader.ReadUInt16NetworkOrder(),           // class
-                (int)reader.ReadUInt32NetworkOrder(),                  // ttl - 32bit!!
-                reader.ReadUInt16NetworkOrder());                      // RDLength
+                (QueryClass)queryClass,           // class
+                (int)ttl,                  // ttl - 32bit!!
+                rdLength);                      // RDLength
         }
 
         public DnsResponseMessage GetResponseMessage(ArraySegment<byte> responseData)
         {
             var reader = new DnsDatagramReader(responseData);
-            var factory = new StandardDnsRecordFactoryFactory().Create();
 
             var id = reader.ReadUInt16NetworkOrder();
             var flags = reader.ReadUInt16NetworkOrder();
@@ -114,28 +121,36 @@
 
             for (var questionIndex = 0; questionIndex < questionCount; questionIndex++)
             {
-                var question = new DnsQuestion(reader.ReadQuestionQueryString(), (QueryType)reader.ReadUInt16NetworkOrder(), (QueryClass)reader.ReadUInt16NetworkOrder());
+                var questionQueryString = reader.ReadQuestionQueryString();
+                var queryTypeValue = reader.ReadUInt16NetworkOrder();
+                var queryClass = reader.ReadUInt16NetworkOrder();
+                if (!_queryTypes.TryGetValue(queryTypeValue, out var queryType))
+                    queryType = new PseudoResourceRecordType(
+                        abbreviation: "Unknown",
+                        value: queryTypeValue
+                    );
+                var question = new DnsQuestion(questionQueryString, queryType, (QueryClass)queryClass);
                 response.AddQuestion(question);
             }
 
             for (var answerIndex = 0; answerIndex < answerCount; answerIndex++)
             {
                 var info = ReadRecordInfo(reader);
-                var record = factory.GetRecord(info, reader);
+                var record = _dnsRecordFactory.GetRecord(info, reader);
                 response.AddAnswer(record);
             }
 
             for (var serverIndex = 0; serverIndex < nameServerCount; serverIndex++)
             {
                 var info = ReadRecordInfo(reader);
-                var record = factory.GetRecord(info, reader);
+                var record = _dnsRecordFactory.GetRecord(info, reader);
                 response.AddAuthority(record);
             }
 
             for (var additionalIndex = 0; additionalIndex < additionalCount; additionalIndex++)
             {
                 var info = ReadRecordInfo(reader);
-                var record = factory.GetRecord(info, reader);
+                var record = _dnsRecordFactory.GetRecord(info, reader);
                 response.AddAdditional(record);
             }
 

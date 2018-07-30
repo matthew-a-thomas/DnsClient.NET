@@ -27,10 +27,10 @@
 
     public sealed class StandardRecordReadersProvider
     {
-        private readonly Dictionary<PseudoResourceRecordType, IResourceRecordReader<DnsResourceRecord>> _dictionary
-            = new Dictionary<PseudoResourceRecordType, IResourceRecordReader<DnsResourceRecord>>();
+        private readonly Dictionary<ushort, IResourceRecordReader<DnsResourceRecord>> _dictionary
+            = new Dictionary<ushort, IResourceRecordReader<DnsResourceRecord>>();
 
-        public IReadOnlyDictionary<PseudoResourceRecordType, IResourceRecordReader<DnsResourceRecord>> RecordReaders =>
+        public IReadOnlyDictionary<ushort, IResourceRecordReader<DnsResourceRecord>> RecordReaders =>
             _dictionary;
 
         public StandardRecordReadersProvider()
@@ -64,7 +64,7 @@
             where T : IResourceRecordReader<DnsResourceRecord>, new()
         {
             var instance = new T();
-            _dictionary[instance.ResourceRecordType] = instance;
+            _dictionary[instance.ResourceRecordType.Value] = instance;
         }
     }
 }

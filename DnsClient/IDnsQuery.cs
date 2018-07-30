@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
+    using ResourceRecords;
     using Standard.ResourceRecords.Ptr;
 
     /// <summary>
@@ -24,7 +25,10 @@
         /// </returns>
         /// <exception cref="ArgumentNullException">If <paramref name="query"/> is null.</exception>
         /// <exception cref="DnsResponseException">After retries and fallbacks, if none of the servers were accessible, timed out or (if <see cref="ILookupClient.ThrowDnsErrors"/> is enabled) returned error results.</exception>
-        IDnsQueryResponse Query(string query, QueryType queryType, QueryClass queryClass = QueryClass.In);
+        IDnsQueryResponse Query(
+            string query,
+            PseudoResourceRecordType queryType,
+            QueryClass queryClass = QueryClass.In);
 
         /// <summary>
         /// Performs a DNS lookup for the given <paramref name="query" />, <paramref name="queryType" /> and <paramref name="queryClass" />
@@ -39,7 +43,11 @@
         /// <exception cref="ArgumentNullException">If <paramref name="query"/> is null.</exception>
         /// <exception cref="OperationCanceledException">If cancellation has been requested for the passed in <paramref name="cancellationToken"/>.</exception>
         /// <exception cref="DnsResponseException">After retries and fallbacks, if none of the servers were accessible, timed out or (if <see cref="ILookupClient.ThrowDnsErrors"/> is enabled) returned error results.</exception>
-        Task<IDnsQueryResponse> QueryAsync(string query, QueryType queryType, QueryClass queryClass = QueryClass.In, CancellationToken cancellationToken = default);
+        Task<IDnsQueryResponse> QueryAsync(
+            string query,
+            PseudoResourceRecordType queryType,
+            QueryClass queryClass = QueryClass.In,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Does a reverse lookup for the <paramref name="ipAddress"/>.
@@ -83,7 +91,11 @@
         /// <exception cref="ArgumentOutOfRangeException">If the <paramref name="servers"/> collection doesn't contain any elements.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="query"/> is null.</exception>
         /// <exception cref="DnsResponseException">After retries and fallbacks, if none of the servers were accessible, timed out or (if <see cref="ILookupClient.ThrowDnsErrors"/> is enabled) returned error results.</exception>
-        IDnsQueryResponse QueryServer(IReadOnlyCollection<IPAddress> servers, string query, QueryType queryType, QueryClass queryClass = QueryClass.In);
+        IDnsQueryResponse QueryServer(
+            IReadOnlyCollection<IPAddress> servers,
+            string query,
+            PseudoResourceRecordType queryType,
+            QueryClass queryClass = QueryClass.In);
 
         /// <summary>
         /// Performs a DNS lookup for the given <paramref name="query" />, <paramref name="queryType" /> and <paramref name="queryClass" />
@@ -103,7 +115,11 @@
         /// <exception cref="ArgumentOutOfRangeException">If the <paramref name="servers"/> collection doesn't contain any elements.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="query"/> is null.</exception>
         /// <exception cref="DnsResponseException">After retries and fallbacks, if none of the servers were accessible, timed out or (if <see cref="ILookupClient.ThrowDnsErrors"/> is enabled) returned error results.</exception>
-        IDnsQueryResponse QueryServer(IReadOnlyCollection<IPEndPoint> servers, string query, QueryType queryType, QueryClass queryClass = QueryClass.In);
+        IDnsQueryResponse QueryServer(
+            IReadOnlyCollection<IPEndPoint> servers,
+            string query,
+            PseudoResourceRecordType queryType,
+            QueryClass queryClass = QueryClass.In);
 
         /// <summary>
         /// Performs a DNS lookup for the given <paramref name="query" />, <paramref name="queryType" /> and <paramref name="queryClass" />
@@ -125,7 +141,12 @@
         /// <exception cref="ArgumentNullException">If <paramref name="query"/> is null.</exception>
         /// <exception cref="OperationCanceledException">If cancellation has been requested for the passed in <paramref name="cancellationToken"/>.</exception>
         /// <exception cref="DnsResponseException">After retries and fallbacks, if none of the servers were accessible, timed out or (if <see cref="ILookupClient.ThrowDnsErrors"/> is enabled) returned error results.</exception>
-        Task<IDnsQueryResponse> QueryServerAsync(IReadOnlyCollection<IPAddress> servers, string query, QueryType queryType, QueryClass queryClass = QueryClass.In, CancellationToken cancellationToken = default);
+        Task<IDnsQueryResponse> QueryServerAsync(
+            IReadOnlyCollection<IPAddress> servers,
+            string query,
+            PseudoResourceRecordType queryType,
+            QueryClass queryClass = QueryClass.In,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs a DNS lookup for the given <paramref name="query" />, <paramref name="queryType" /> and <paramref name="queryClass" />
@@ -147,7 +168,12 @@
         /// <exception cref="ArgumentNullException">If <paramref name="query"/> is null.</exception>
         /// <exception cref="OperationCanceledException">If cancellation has been requested for the passed in <paramref name="cancellationToken"/>.</exception>
         /// <exception cref="DnsResponseException">After retries and fallbacks, if none of the servers were accessible, timed out or (if <see cref="ILookupClient.ThrowDnsErrors"/> is enabled) returned error results.</exception>
-        Task<IDnsQueryResponse> QueryServerAsync(IReadOnlyCollection<IPEndPoint> servers, string query, QueryType queryType, QueryClass queryClass = QueryClass.In, CancellationToken cancellationToken = default);
+        Task<IDnsQueryResponse> QueryServerAsync(
+            IReadOnlyCollection<IPEndPoint> servers,
+            string query,
+            PseudoResourceRecordType queryType,
+            QueryClass queryClass = QueryClass.In,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Does a reverse lookup for the <paramref name="ipAddress" />

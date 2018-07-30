@@ -31,11 +31,11 @@
             //        .Returns(new DnsResourceRecord[] { aRecord });
 
             var response = Task.FromResult(dnsResponse);
-            lookupMock.Setup(f => f.QueryAsync(It.IsAny<string>(), QueryType.A, QueryClass.In, new CancellationToken())).Returns(response);
+            lookupMock.Setup(f => f.QueryAsync(It.IsAny<string>(), ARecord.ResourceRecordType, QueryClass.In, new CancellationToken())).Returns(response);
             var lookup = lookupMock.Object;
 
             // act
-            var result = await lookup.QueryAsync("query", QueryType.A);
+            var result = await lookup.QueryAsync("query", ARecord.ResourceRecordType);
 
             // assert
             Assert.Equal(1, result.Header.AnswerCount);
