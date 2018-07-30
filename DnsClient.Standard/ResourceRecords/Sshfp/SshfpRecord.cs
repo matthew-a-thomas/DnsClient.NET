@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.Sshfp
 {
     using System.Diagnostics.CodeAnalysis;
+    using Core;
     using DnsClient.ResourceRecords;
 
     /// <summary>

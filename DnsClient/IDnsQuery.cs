@@ -6,7 +6,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Core;
-    using ResourceRecords;
     using Standard.ResourceRecords.Ptr;
 
     /// <summary>

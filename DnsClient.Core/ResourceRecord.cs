@@ -1,10 +1,9 @@
-﻿namespace DnsClient.ResourceRecords
+﻿namespace DnsClient.Core
 {
     using System;
-    using Core;
 
     /// <summary>
-    /// The type represents a <see cref="DnsResourceRecord"/>.
+    /// A resource record.
     /// </summary>
     public class ResourceRecord
     {

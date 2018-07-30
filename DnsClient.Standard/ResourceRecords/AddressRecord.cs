@@ -4,6 +4,7 @@
     using System.Net;
     using A;
     using Aaaa;
+    using Core;
     using DnsClient.ResourceRecords;
 
     /// <summary>

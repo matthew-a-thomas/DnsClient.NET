@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.Uri
 {
     using System;
+    using Core;
     using DnsClient.ResourceRecords;
 
     /*

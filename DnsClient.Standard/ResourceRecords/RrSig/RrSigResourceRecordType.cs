@@ -1,6 +1,6 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.RrSig
 {
-    using DnsClient.ResourceRecords;
+    using Core;
 
     public static class RrSigResourceRecordType
     {

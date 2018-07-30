@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.Aaaa
 {
     using System.Net;
+    using Core;
     using DnsClient.ResourceRecords;
 
     /// <summary>

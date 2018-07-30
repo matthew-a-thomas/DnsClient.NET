@@ -1,7 +1,7 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.Mf
 {
     using System;
-    using DnsClient.ResourceRecords;
+    using Core;
 
     public static class MfResourceRecordType
     {

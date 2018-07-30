@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.Caa
 {
     using Core;
-    using DnsClient.ResourceRecords;
 
     public sealed class CaaReader : IResourceRecordReader<CaaRecord>
     {

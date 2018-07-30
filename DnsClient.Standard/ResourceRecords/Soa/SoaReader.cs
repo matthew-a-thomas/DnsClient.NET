@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.Soa
 {
     using Core;
-    using DnsClient.ResourceRecords;
 
     public sealed class SoaReader : IResourceRecordReader<SoaRecord>
     {

@@ -2,7 +2,6 @@
 {
     using System.Linq;
     using Core;
-    using DnsClient.ResourceRecords;
 
     public sealed class SshfpReader : IResourceRecordReader<SshfpRecord>
     {

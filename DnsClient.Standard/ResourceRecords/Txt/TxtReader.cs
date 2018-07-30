@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using Core;
-    using DnsClient.ResourceRecords;
 
     public sealed class TxtReader : IResourceRecordReader<TxtRecord>
     {

@@ -1,6 +1,6 @@
 ﻿namespace DnsClient.Standard.PseudoResourceRecords.Axfr
 {
-    using DnsClient.ResourceRecords;
+    using Core;
 
     public static class AxfrResourceRecordType
     {

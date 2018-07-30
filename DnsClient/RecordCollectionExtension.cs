@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Core;
     using ResourceRecords;
     using Standard.ResourceRecords.A;
     using Standard.ResourceRecords.Aaaa;

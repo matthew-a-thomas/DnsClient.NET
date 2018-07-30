@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using Core;
 
     /// <summary>
     /// Base class for all resource records.

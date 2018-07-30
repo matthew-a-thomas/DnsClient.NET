@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.Mg
 {
     using Core;
-    using DnsClient.ResourceRecords;
 
     public sealed class MgReader : IResourceRecordReader<MgRecord>
     {

@@ -1,7 +1,7 @@
 ﻿namespace DnsClient.Standard
 {
     using System.Collections.Generic;
-    using DnsClient.ResourceRecords;
+    using Core;
     using ResourceRecords.A;
     using ResourceRecords.Aaaa;
     using ResourceRecords.AfsDb;

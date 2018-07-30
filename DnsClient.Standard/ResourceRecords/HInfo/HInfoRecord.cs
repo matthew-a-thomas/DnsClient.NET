@@ -1,5 +1,6 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.HInfo
 {
+    using Core;
     using DnsClient.ResourceRecords;
 
     /*

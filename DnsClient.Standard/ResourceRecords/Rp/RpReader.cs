@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.Rp
 {
     using Core;
-    using DnsClient.ResourceRecords;
 
     public sealed class RpReader : IResourceRecordReader<RpRecord>
     {

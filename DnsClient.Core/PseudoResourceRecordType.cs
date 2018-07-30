@@ -1,12 +1,11 @@
-﻿namespace DnsClient.ResourceRecords
+﻿namespace DnsClient.Core
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// A pseudo resource record type used to identify any <see cref="DnsResourceRecord"/> or pseudo resource record.
+    /// A pseudo resource record type used to identify any <see cref="ResourceRecord"/> or pseudo resource record.
     /// </summary>
-    /// <seealso cref="DnsResourceRecord"/>
     /// <remarks>
     /// <see cref="PseudoResourceRecordType"/>s are equal to one another if their <see cref="Value"/>s are equal.
     ///

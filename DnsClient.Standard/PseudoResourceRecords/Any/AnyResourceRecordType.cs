@@ -1,6 +1,6 @@
 ﻿namespace DnsClient.Standard.PseudoResourceRecords.Any
 {
-    using DnsClient.ResourceRecords;
+    using Core;
 
     public static class AnyResourceRecordType
     {

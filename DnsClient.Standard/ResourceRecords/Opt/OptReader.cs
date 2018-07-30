@@ -1,7 +1,6 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.Opt
 {
     using Core;
-    using DnsClient.ResourceRecords;
 
     public sealed class OptReader : IResourceRecordReader<OptRecord>
     {

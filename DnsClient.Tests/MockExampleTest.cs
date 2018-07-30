@@ -6,7 +6,6 @@
     using System.Threading.Tasks;
     using Core;
     using Moq;
-    using ResourceRecords;
     using Standard.ResourceRecords.A;
     using Xunit;
 

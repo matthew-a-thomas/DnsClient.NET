@@ -7,7 +7,6 @@
     using System.Net;
     using System.Text;
     using Core;
-    using ResourceRecords;
     using Standard.ResourceRecords.A;
     using Standard.ResourceRecords.Aaaa;
     using Standard.ResourceRecords.Mb;

@@ -1,6 +1,7 @@
 ﻿namespace DnsClient.Standard.ResourceRecords.Caa
 {
     using System;
+    using Core;
     using DnsClient.ResourceRecords;
 
     /* RFC 6844 (https://tools.ietf.org/html/rfc6844#section-5.1)
