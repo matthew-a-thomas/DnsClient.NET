@@ -89,8 +89,8 @@
             cancellationToken.ThrowIfCancellationRequested();
             // use a pooled buffer to writer the data + the length of the data later into the frist two bytes
             using (var memory = new PooledBytes(DnsDatagramWriter.BufferSize + 2))
-            using (var writer = new DnsDatagramWriter(new ArraySegment<byte>(memory.Buffer, 2, memory.Buffer.Length - 2)))
             {
+                var writer = new DnsDatagramWriter(new ArraySegment<byte>(memory.Buffer, 2, memory.Buffer.Length - 2));
                 GetRequestData(request, writer);
                 var dataLength = writer.Index;
                 memory.Buffer[0] = (byte)((dataLength >> 8) & 0xff);

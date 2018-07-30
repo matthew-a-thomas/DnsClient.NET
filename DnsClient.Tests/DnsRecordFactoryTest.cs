@@ -57,29 +57,59 @@
         public void DnsRecordFactory_PTRRecord()
         {
             var name = DnsString.Parse("result.example.com");
-            var writer = new DnsDatagramWriter();
-            writer.WriteHostName(name.Value);
-            var factory = GetFactory(writer.Data.ToArray(), out var reader);
-            var info = new ResourceRecord(DnsString.Parse("query.example.com"), PtrRecord.ResourceRecordType, QueryClass.In, 0, writer.Data.Count);
+            using (var pool = new PooledBytes(DnsDatagramWriter.BufferSize))
+            {
+                var writer = new DnsDatagramWriter(new ArraySegment<byte>(pool.Buffer));
+                writer.WriteHostName(name.Value);
+                var factory = GetFactory(
+                    writer.Data.ToArray(),
+                    out var reader);
+                var info = new ResourceRecord(
+                    DnsString.Parse("query.example.com"),
+                    PtrRecord.ResourceRecordType,
+                    QueryClass.In,
+                    0,
+                    writer.Data.Count);
 
-            var result = factory.GetRecord(info, reader) as PtrRecord ?? throw new Exception();
+                var result = factory.GetRecord(
+                                 info,
+                                 reader) as PtrRecord ?? throw new Exception();
 
-            Assert.Equal(result.PtrDomainName, name);
+                Assert.Equal(
+                    result.PtrDomainName,
+                    name);
+            }
         }
 
         [Fact]
         public void DnsRecordFactory_MBRecord()
         {
             var name = DnsString.Parse("Müsli.de");
-            var writer = new DnsDatagramWriter();
-            writer.WriteHostName(name.Value);
-            var factory = GetFactory(writer.Data.ToArray(), out var reader);
-            var info = new ResourceRecord(DnsString.Parse("Müsli.de"), MbRecord.ResourceRecordType, QueryClass.In, 0, writer.Data.Count);
+            using (var pool = new PooledBytes(DnsDatagramWriter.BufferSize))
+            {
+                var writer = new DnsDatagramWriter(new ArraySegment<byte>(pool.Buffer));
+                writer.WriteHostName(name.Value);
+                var factory = GetFactory(
+                    writer.Data.ToArray(),
+                    out var reader);
+                var info = new ResourceRecord(
+                    DnsString.Parse("Müsli.de"),
+                    MbRecord.ResourceRecordType,
+                    QueryClass.In,
+                    0,
+                    writer.Data.Count);
 
-            var result = factory.GetRecord(info, reader) as MbRecord ?? throw new Exception();
+                var result = factory.GetRecord(
+                                 info,
+                                 reader) as MbRecord ?? throw new Exception();
 
-            Assert.Equal(result.MadName, name);
-            Assert.Equal("müsli.de.", result.MadName.Original);
+                Assert.Equal(
+                    result.MadName,
+                    name);
+                Assert.Equal(
+                    "müsli.de.",
+                    result.MadName.Original);
+            }
         }
 
         [Fact]
@@ -158,15 +188,29 @@
         [Fact]
         public void DnsRecordFactory_NSRecord()
         {
-            var writer = new DnsDatagramWriter();
-            var name = DnsString.Parse("result.example.com");
-            writer.WriteHostName(name.Value);
-            var factory = GetFactory(writer.Data.ToArray(), out var reader);
-            var info = new ResourceRecord(DnsString.Parse("query.example.com"), NsRecord.ResourceRecordType, QueryClass.In, 0, writer.Data.Count);
+            using (var pool = new PooledBytes(DnsDatagramWriter.BufferSize))
+            {
+                var writer = new DnsDatagramWriter(new ArraySegment<byte>(pool.Buffer));
+                var name = DnsString.Parse("result.example.com");
+                writer.WriteHostName(name.Value);
+                var factory = GetFactory(
+                    writer.Data.ToArray(),
+                    out var reader);
+                var info = new ResourceRecord(
+                    DnsString.Parse("query.example.com"),
+                    NsRecord.ResourceRecordType,
+                    QueryClass.In,
+                    0,
+                    writer.Data.Count);
 
-            var result = factory.GetRecord(info, reader) as NsRecord ?? throw new Exception();
+                var result = factory.GetRecord(
+                                 info,
+                                 reader) as NsRecord ?? throw new Exception();
 
-            Assert.Equal(result.NsdName, name);
+                Assert.Equal(
+                    result.NsdName,
+                    name);
+            }
         }
 
         [Fact]
@@ -210,18 +254,34 @@
         public void DnsRecordFactory_MXRecord()
         {
             var name = DnsString.Parse("result.example.com");
-            var writer = new DnsDatagramWriter();
-            writer.WriteByte(0);
-            writer.WriteByte(1);
-            writer.WriteHostName(name.Value);
+            using (var pool = new PooledBytes(DnsDatagramWriter.BufferSize))
+            {
+                var writer = new DnsDatagramWriter(new ArraySegment<byte>(pool.Buffer));
+                writer.WriteByte(0);
+                writer.WriteByte(1);
+                writer.WriteHostName(name.Value);
 
-            var factory = GetFactory(writer.Data.ToArray(), out var reader);
-            var info = new ResourceRecord(DnsString.Parse("query.example.com"), MxRecord.ResourceRecordType, QueryClass.In, 0, writer.Data.Count);
+                var factory = GetFactory(
+                    writer.Data.ToArray(),
+                    out var reader);
+                var info = new ResourceRecord(
+                    DnsString.Parse("query.example.com"),
+                    MxRecord.ResourceRecordType,
+                    QueryClass.In,
+                    0,
+                    writer.Data.Count);
 
-            var result = factory.GetRecord(info, reader) as MxRecord ?? throw new Exception();
+                var result = factory.GetRecord(
+                                 info,
+                                 reader) as MxRecord ?? throw new Exception();
 
-            Assert.Equal(1, result.Preference);
-            Assert.Equal(result.Exchange, name);
+                Assert.Equal(
+                    1,
+                    result.Preference);
+                Assert.Equal(
+                    result.Exchange,
+                    name);
+            }
         }
 
         [Fact]
@@ -270,19 +330,35 @@
         public void DnsRecordFactory_SRVRecord()
         {
             var name = DnsString.Parse("result.example.com");
-            var writer = new DnsDatagramWriter();
-            writer.WriteBytes(new byte[] { 0, 1, 1, 0, 2, 3 }, 6);
-            writer.WriteHostName(name.Value);
-            var factory = GetFactory(writer.Data.ToArray(), out var reader);
+            using (var pool = new PooledBytes(DnsDatagramWriter.BufferSize))
+            {
+                var writer = new DnsDatagramWriter(new ArraySegment<byte>(pool.Buffer));
+                writer.WriteBytes(
+                    new byte[] {0, 1, 1, 0, 2, 3},
+                    6);
+                writer.WriteHostName(name.Value);
+                var factory = GetFactory(
+                    writer.Data.ToArray(),
+                    out var reader);
 
-            var info = new ResourceRecord(DnsString.Parse("query.example.com"), SrvRecord.ResourceRecordType, QueryClass.In, 0, writer.Data.Count);
+                var info = new ResourceRecord(
+                    DnsString.Parse("query.example.com"),
+                    SrvRecord.ResourceRecordType,
+                    QueryClass.In,
+                    0,
+                    writer.Data.Count);
 
-            var result = factory.GetRecord(info, reader) as SrvRecord ?? throw new Exception();
+                var result = factory.GetRecord(
+                                 info,
+                                 reader) as SrvRecord ?? throw new Exception();
 
-            Assert.Equal(result.Target, name);
-            Assert.True(result.Priority == 1);
-            Assert.True(result.Weight == 256);
-            Assert.True(result.Port == 515);
+                Assert.Equal(
+                    result.Target,
+                    name);
+                Assert.True(result.Priority == 1);
+                Assert.True(result.Weight == 256);
+                Assert.True(result.Port == 515);
+            }
         }
 
         [Fact]

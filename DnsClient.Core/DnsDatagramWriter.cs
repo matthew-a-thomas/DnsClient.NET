@@ -5,14 +5,12 @@
     using System.Net;
     using System.Text;
 
-    public sealed class DnsDatagramWriter : IDisposable
+    public sealed class DnsDatagramWriter
     {
         // queries can only be 255 octets + some header bytes, so that size is pretty safe...
         public const int BufferSize = 1024;
 
         private const byte DotByte = 46;
-
-        private readonly PooledBytes _pooledBytes;
 
         private readonly ArraySegment<byte> _buffer;
 
@@ -26,12 +24,6 @@
         }
 
         public int Index { get; set; }
-
-        public DnsDatagramWriter()
-        {
-            _pooledBytes = new PooledBytes(BufferSize);
-            _buffer = new ArraySegment<byte>(_pooledBytes.Buffer, 0, BufferSize);
-        }
 
         public DnsDatagramWriter(ArraySegment<byte> useBuffer)
         {
@@ -96,18 +88,5 @@
         public void WriteUInt16NetworkOrder(ushort value) => WriteInt16NetworkOrder((short)value);
 
         public void WriteUInt32NetworkOrder(uint value) => WriteInt32NetworkOrder((int)value);
-
-        public void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _pooledBytes?.Dispose();
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
     }
 }

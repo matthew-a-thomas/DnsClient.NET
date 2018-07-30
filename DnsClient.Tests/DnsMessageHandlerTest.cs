@@ -45,8 +45,9 @@
 
         private static byte[] GetResponseBytes(IDnsQueryResponse message, byte[] answerData)
         {
-            using (var writer = new DnsDatagramWriter())
+            using (var pool = new PooledBytes(DnsDatagramWriter.BufferSize))
             {
+                var writer = new DnsDatagramWriter(new ArraySegment<byte>(pool.Buffer));
                 writer.WriteUInt16NetworkOrder((ushort)message.Header.Id);
                 writer.WriteUInt16NetworkOrder((ushort)message.Header.HeaderFlags);
                 // lets iterate answers only, makes it easier

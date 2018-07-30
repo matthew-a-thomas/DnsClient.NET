@@ -42,8 +42,9 @@
             var mustDispose = false;
             try
             {
-                using (var writer = new DnsDatagramWriter())
+                using (var pool = new PooledBytes(DnsDatagramWriter.BufferSize))
                 {
+                    var writer = new DnsDatagramWriter(new ArraySegment<byte>(pool.Buffer));
                     GetRequestData(request, writer);
                     Debug.Assert(writer.Data.Array != null);
                     udpClient.Client.SendTo(writer.Data.Array, writer.Data.Offset, writer.Data.Count, SocketFlags.None, server);
@@ -106,8 +107,9 @@
                     udpClient.Close();
                 });
 
-                using (var writer = new DnsDatagramWriter())
+                using (var pool = new PooledBytes(DnsDatagramWriter.BufferSize))
                 {
+                    var writer = new DnsDatagramWriter(new ArraySegment<byte>(pool.Buffer));
                     GetRequestData(request, writer);
                     await udpClient.SendAsync(writer.Data.Array, writer.Data.Count, server).ConfigureAwait(false);
                 }
